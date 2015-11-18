@@ -14,6 +14,12 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
+# iottly-console
+The *iottly-console* repo hosts the html and js files for the iottly console frontend:
+- files are served by the [iottly-core](https://github.com/iottly/iottly-core) service;
+- it connects to the [iottly-core](https://github.com/iottly/iottly-core) service via websockets to receives messages in real-time.
+
+
 # Setup instructions
 
 Please refer to [Iottly docker](https://github.com/iottly/iottly-docker) for prerequisites and full Iottly setup.
