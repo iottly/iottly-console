@@ -1,0 +1,50 @@
+<!-- 
+
+Copyright 2015 Stefano Terna
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+<button 
+  type="button" 
+  class="btn btn-default collapse-toggle collapsed"
+  data-target=".firmware-panel.area-{{area}}"
+  title="{{command.desc}}">{{command.name}} <code class="hidden-xs">{{command.cmd_msg}}</code>
+</button>
+<div class="firmware-panel area-{{area}} collapsible-command-panel collapsed">
+  <form class="form-horizontal" role="form">
+    <div class="row">
+      <div class="col-xs-12 col-sm-10">
+        <input class="fw-md5" name="fw.md5" type="hidden"/>
+        <select name="fw.file" data-area="{{area}}" class="fw-chooser form-control">
+          <option selected disabled>{{chooser_text}}</option>
+          {% for fw in files() %}
+          <option data-size="{{fw['size']}}" data-md5="{{fw['md5']}}" value="{{fw['filename']}}">{{fw['filename']}} - {{fw['lastmodified'].isoformat()}} - {{fw['size']}} B</option>
+          {% end %}
+        </select>
+      </div>
+      <div class="col-xs-12 col-sm-2">
+        <button 
+            type="submit" 
+            data-command="{{command.name}}"
+            class="command btn btn-default {{'cmd-warn' if command.warn else ''}}">Start Flashing</button>
+      </div>
+      <div class="col-xs-12 progress-row"> 
+        <div class="progress">
+          <div class="progress-bar area-{{area}} progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
