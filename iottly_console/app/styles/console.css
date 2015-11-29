@@ -1,3 +1,101 @@
+[ng\:cloak],[ng-cloak],.ng-cloak{display:none !important}
+
+
+/* responsive text queries */
+@media screen and (max-width: 992px) {
+  p,.btn,input,div,span,h4 {
+    font-size: 95%;
+  }
+  h1 {
+    font-size: 24px;  
+  }
+  h2 {
+    font-size: 22px;  
+  }
+  h3 {
+    font-size: 18px;  
+  }
+}
+
+@media screen and (max-width: 768px) {
+  p,.btn,input,div,span,h4 {
+    font-size: 90%;
+  }
+  h1 {
+    font-size: 20px;  
+  }
+  h2 {
+    font-size: 18px;  
+  }
+  h3 {
+    font-size: 16px;  
+  }
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+/*
+body > .container {
+  padding: 60px 15px 0;
+}
+*/
+.container .text-muted {
+  margin: 20px 0;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+code {
+  font-size: 80%;
+}
+
+
+.navbar {
+  margin-bottom: 20px;
+}
+
+.jumbotron {
+  padding-top: 1px;
+}
+
+.CodeMirror {
+  height: 100% !important;
+}
+
+.next {
+  margin-top:20px;
+}
+
+.css-form input.ng-invalid.ng-touched {
+border-color: #FA787E;
+}
+
+.css-form input.ng-valid.ng-touched {
+border-color: #78FA89;
+}
+
 
 
 /* ==========================================================================
@@ -5,17 +103,20 @@
    ========================================================================== */
 
 body, .banner-row {
-  background-color: #333;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  /*background-color: #333;*/
+  margin-bottom: 60px;
 }
 
 #ib-board-chooser {
   /*margin-bottom: 20px;*/
 }
 
-.vcenter {
-  /*display: inline-block;*/
-  /*vertical-align: middle;*/
-  /*float: none;*/
+.vcenterloading {
+  display: inline-block;
+  vertical-align: middle;
+  float: none;
 }
 
 #presence-container {
@@ -108,7 +209,7 @@ body, .banner-row {
 }
 
 .commands-panel {
-  display: none;
+  /*display: none;*/
   margin-top: 20px;
 }
 

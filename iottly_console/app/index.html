@@ -2,18 +2,23 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>IOTTLY Beta for makers</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="icon" type="image/png" href="img/logo-iottly-sq.png">
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
+    <link rel="stylesheet" href="styles/codemirror.css">
+    <link rel="stylesheet" href="styles/select2.css">
+    <link rel="stylesheet" href="styles/select2-bootstrap.css">
+    <link rel="stylesheet" href="styles/console.css">
   </head>
   <body ng-app="consoleApp">
     <!--[if lte IE 8]>
@@ -21,36 +26,247 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="header">
-      <div class="navbar navbar-default" role="navigation">
-        <div class="container">
-          <div class="navbar-header">
+    <div class="container" ng-hide="codeCtrl.loaded">
+      <img src="img/logo-iottly.png" style="width: 200px;" class="img-responsive center-block">
+      <h2 class="text-center">Loading ...</h2>
+    </div>
 
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#js-navbar-collapse">
+    <div class="container" ng-controller="PanelController as panel" ng-cloak>
+
+      <!-- Static navbar -->
+      <nav class="navbar navbar-default">
+        <div class="container-fluid">
+          <div class="navbar-header">        
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
               <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
+            <a class="navbar-brand" href="#">
+              <img alt="Brand" src="img/logo-iottly.png" style="width: 145px;margin-top: -10px;">
+            </a>    
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li ng-class="{ active:panel.isSet(0) }"><a href ng-click="panel.setTab(0)">IOTTLY Projects</a></li>
+              <li ng-class="{ active:panel.isSet(1) }"><a href ng-click="panel.setTab(1)">Messages</a></li>
+              <li ng-class="{ active:panel.isSet(2) }"><a href ng-click="panel.setTab(2)">Device Code</a></li>
+              <li ng-class="{ active:panel.isSet(3) }"><a href ng-click="panel.setTab(3)">Device Admin Console</a></li>
 
-            <a class="navbar-brand" href="#/">console</a>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div><!--/.container-fluid -->
+      </nav>
+
+      <!-- Main component for a primary marketing message or call to action -->
+      <div class="jumbotron" ng-show="panel.isSet(0)" ng-controller="ProjectController as projectCtrl">
+        <h2><span class="label label-success">{{ projectCtrl.project.name }}</span>  <small>Board: {{ projectCtrl.project.board }}, Board language: {{ projectCtrl.fwlanguage() }}</small></h2>
+        <h2>Create your IoT project <small>and add one ore more boards to it.</small></h2>
+        <form name="createProjectForm" class="css-form" novalidate>
+          <!--  Live Preview -->
+          <div class="well well-lg">
+            <div class="row">
+              <div class="col-md-6">              
+                    
+                <fieldset class="form-group">
+                  <input ng-model="projectCtrl.project.name" type="text" class="form-control" placeholder="Project name ..." title="Project" required=""></input>
+                </fieldset>
+                <fieldset class="form-group">
+                  <select ng-model="projectCtrl.project.board" class="form-control" ng-options="board for board in ['Arduino','Raspberry Pi','UDOO']"  title="Board" required> 
+                    <option value="">Select the board for your project</option>
+                  </select>
+                  <div ng-hide="projectCtrl.checkBoard()" class="alert alert-danger">'OK, this is a demo. You can just choose Raspberry PI!'</div>
+                </fieldset>
+              </div>
+
+              <div class="col-md-6" ng-controller="BoardsController as boardsCtrl" name="createboard" ng-form>              
+                
+                <table class="table table-condensed">
+                  <thead>
+                    <tr>
+                      <th>Board name</th>
+                      <th>Board unique ID</th>
+                      <th><span class="pull-right">IOTTLY ready base Firmware</span></th>                    
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="board in projectCtrl.project.boards">
+                      <td>{{ board.name }}</td>
+                      <td>{{ board.ID }}</td>
+                      <td>
+                        <button class="btn btn-warning btn-xs pull-right" ng-click=""><i class="glyphicon glyphicon-download-alt"></i> FW for {{ board.ID }}</button>
+                      </td>
+                      
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="well well-sm" ng-hide="projectCtrl.checkBoardList()" style="margin-bottom:5px;">Add at least a board to the project.</div>
+
+                <div class="form-inline">
+                  <fieldset class="form-group">
+                    <input ng-model="boardsCtrl.board.name" type="text" class="form-control" placeholder="Board name ..." title="Board name" name"boardname"></input>
+                  </fieldset>
+  <!--                 <fieldset class="form-group" disabled>
+                    <input ng-model="boardsCtrl.board.ID" type="text" class="form-control" placeholder="Board ID ..." title="Board ID">{{ boardsCtrl.board.ID }}</input>
+                  </fieldset> -->
+                  <button class="btn btn-sm pull-right" ng-click="boardsCtrl.checkBoardName() && boardsCtrl.addBoard(projectCtrl.project.boards)" style="vertical-align: middle;"><i class="glyphicon glyphicon-plus"></i></button>                
+                </div>
+              </div>      
+            </div>
           </div>
 
-          <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="#/">Home</a></li>
-              <li><a ng-href="#/about">About</a></li>
-              <li><a ng-href="#/">Contact</a></li>
-            </ul>
+          <fieldset class="form-group">
+            <button type="submit" class="btn btn-primary btn-lg pull-right next" ng-click="projectCtrl.validateBoard() && createProjectForm.$valid && projectCtrl.createProject(panel)">Next <i class="glyphicon glyphicon-arrow-right"></i></button>
+          </fieldset>
+        </form>
+      </div>
+
+      <div class="jumbotron container-fluid" ng-show="panel.isSet(1)" ng-controller="MessagesController as messagesCtrl">
+        <h2><span class="label label-success">{{ panel.project.name }}</span>  <small>Board: {{ panel.project.board }}, Board language: {{ panel.project.fwlanguage }}</small></h2>
+
+        <h2>Design your messages  <small>specifying which "keywords" the board should understand.</small></h2>
+
+                
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Message type</th>
+              <th>Message description</th>
+              <th>Message format</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="message in panel.project.messages">
+              <td>{{ message.type }}</td>
+              <td>{{ message.description }}</td>
+              <td><code>{{ messagesCtrl.messagetoJSON(message) }}</code></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="well well-sm" ng-show="panel.checkMessages()" style="margin-bottom:10px;">You didn't configured any messages yet.</div>
+        <div class="well well-lg">
+          <form name="createMessageForm" class="css-form" ng-submit="createMessageForm.$valid && !messagesCtrl.checkKeys() && messagesCtrl.addMessage(panel.project.messages)" novalidate>
+            <div class="row">
+              <div class="col-md-6">              
+                <fieldset class="form-group">
+                  <input ng-model="messagesCtrl.message.type" type="text" class="form-control" placeholder="Message type ..." title="Type" required></input>
+                </fieldset>
+                <fieldset class="form-group">
+                  <input ng-model="messagesCtrl.message.description" type="text" class="form-control" placeholder="Message description ..." title="description" required></input>
+                </fieldset>
+              </div>
+              <div class="col-md-6" ng-controller="KeysController as keysCtrl">              
+                <table class="table table-condensed">
+                  <thead>
+                    <tr>
+                      <th>key</th>
+                      <th>value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="key in messagesCtrl.message.keys">
+                      <td>{{ key.key }}</td>
+                      <td>{{ key.value }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="well well-sm" ng-show="messagesCtrl.checkKeys()" style="margin-bottom:5px;">Add some keyworks to tell the board what to do.</div>
+                <div class="form-inline">
+                  <fieldset class="form-group">
+                    <input ng-model="keysCtrl.key.key" type="text" class="form-control" placeholder="Key ..." title="Key"></input>
+                  </fieldset>
+                  <fieldset class="form-group">
+                    <input ng-model="keysCtrl.key.value" type="text" class="form-control" placeholder="Value ..." title="value"></input>
+                  </fieldset>
+                  <button type="button" class="btn btn-sm pull-right" ng-click="keysCtrl.addKey(messagesCtrl.message.keys)" style="vertical-align: middle;"><i class="glyphicon glyphicon-plus"></i></button>                
+                </div>
+              </div>      
+            </div>         
+            <fieldset class="form-group">
+              <input type="submit" class="btn btn-warning btn-sm pull-left" value="Add message"></input>
+            </fieldset>                     
+          </form>      
+        </div>
+        <button type="button" class="btn btn-primary btn-lg pull-right next" ng-click="!panel.checkMessages() && panel.editCode(codeCtrl)">Next <i class="glyphicon glyphicon-arrow-right"></i></button>                
+      </div>
+
+      <div class="jumbotron container-fluid" ng-show="panel.isSet(2)">
+        <h2><span class="label label-success">{{ panel.project.name }}</span>  <small>Board: {{ panel.project.board }}, Board language: {{ panel.project.fwlanguage }}</small></h2>
+        <h2>IOTTLY writes the communication code <small>leaving the fun part to you!</small></h2>
+        <div class="well well-lg">
+          <textarea ui-codemirror="{ onLoad : codeCtrl.codemirrorLoaded }" ui-codemirror-opts="editorOptions" ng-model="codeCtrl.code"></textarea>
+          <button type="button" class="btn btn-warning btn-sm" style="margin-top:20px;">Copy to clipboard</button>
+          <button type="button" class="btn btn-warning btn-sm" style="margin-top:20px;">Save ...</button>
+        </div>
+        <button type="button" class="btn btn-primary btn-lg pull-right next" ng-click="panel.setTab(3)">Next <i class="glyphicon glyphicon-arrow-right"></i></button>         
+      </div>
+
+
+      <div class="jumbotron" ng-show="panel.isSet(3)" ng-controller="DeviceConsoleController as deviceCtrl">
+        <h2><span class="label label-success">{{ panel.project.name }}</span>  <small>Board: {{ panel.project.board }}, Board language: {{ panel.project.fwlanguage }}</small></h2>        
+        <h2>Control your boards from the Internet <small>and check if they are doing what you want!</small></h2>
+
+
+
+        <div id="command-console" class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Command console</h3>
+          </div>
+          <div class="panel-body">
+              <select class="form-control" ng-model="deviceCtrl.selectedboardstr">
+                <option ng-repeat="board in panel.project.boards" value="{{ board }}">{{ board.name + ' - unique ID: ' + board.ID }}</option>
+              </select>
+            <div class=" commands-panel" ng-show="deviceCtrl.boardisSelected()">
+              <div class="well">
+                <div class="row">
+                  <div id="sms-container" class="col-sm-9 col-xs-10">
+                    <span class="inline-lbl hidden-xs">Use the following to send commands to the board:</span>
+                  </div>
+                  <div id="presence-container" class="col-sm-3 col-xs-2 text-right">
+                    <span class="inline-lbl hidden-xs">Your board is connected!</span>
+                    <div class="led-container led-large">
+                      <div id="presence-indicator" class="led led-green"></div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="btn-group-vertical col-xs-12">
+                    <button ng-repeat="command in panel.commands" class="command btn btn-default" title="{{ command.description }}" ng-click="deviceCtrl.send(command, panel.project)">{{ command.type }} <code class="hidden-xs">{{ deviceCtrl.messagetoJSON(command) }}</code></button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
 
-    <div class="container">
-    <div ng-view=""></div>
-    </div>
+        <div id="messages-panel" class="panel panel-default">
+          <div class="panel-heading">
+            <div>
+              <h3 class="panel-title pull-left">Message console</h3>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="messages-container row">
+
+              <div class="well message" ng-repeat="event in deviceCtrl.events">
+                <div class="col-xs-12 col-md-4 msg-attr"><div class="label label-default msg-lbl">timestamp:</div><code>{{event.timestamp}}</code></div>
+                <div class="col-xs-12 col-md-4 msg-attr"><div class="label label-default msg-lbl">from:</div><code>{{event.from}}</code></div>
+                <div class="col-xs-12 col-md-4 msg-attr"><div class="label label-default msg-lbl">to:</div><code>{{event.to}}</code></div>
+                <div class="row msg-object">
+                  <pre>{{event.json}}</pre>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+
+    </div> <!-- /container -->
 
     <div class="footer">
       <div class="container">
@@ -72,15 +288,15 @@
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="bower_components/angular-resource/angular-resource.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="../bower_components/jquery/dist/jquery.js"></script>
+    <script src="../bower_components/angular/angular.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="../bower_components/angular-animate/angular-animate.js"></script>
+    <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="../bower_components/angular-resource/angular-resource.js"></script>
+    <script src="../bower_components/angular-route/angular-route.js"></script>
+    <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="../bower_components/angular-touch/angular-touch.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -88,6 +304,7 @@
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/controllers/messages.js"></script>
         <!-- endbuild -->
 </body>
 </html>
