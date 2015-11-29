@@ -32,7 +32,7 @@ angular
       .when('/messages', {
         templateUrl: 'views/messages.html',
         controller: 'MessagesCtrl',
-        controllerAs: 'messages'
+        controllerAs: 'messagesCtrl'
       })
       .otherwise({
         redirectTo: '/'
