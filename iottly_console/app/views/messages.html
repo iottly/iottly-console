@@ -1,1 +1,68 @@
-<p>This is the messages view.</p>
+<div class="jumbotron container-fluid" ng-controller="MessagesController as messagesCtrl">
+        <h2><span class="label label-success">{{ panel.project.name }}</span>  <small>Board: {{ panel.project.board }}, Board language: {{ panel.project.fwlanguage }}</small></h2>
+
+        <h2>Design your messages  <small>specifying which "keywords" the board should understand.</small></h2>
+
+                
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Message type</th>
+              <th>Message description</th>
+              <th>Message format</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="message in panel.project.messages">
+              <td>{{ message.type }}</td>
+              <td>{{ message.description }}</td>
+              <td><code>{{ messagesCtrl.messagetoJSON(message) }}</code></td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="well well-sm" ng-show="panel.checkMessages()" style="margin-bottom:10px;">You didn't configured any messages yet.</div>
+        <div class="well well-lg">
+          <form name="createMessageForm" class="css-form" ng-submit="createMessageForm.$valid && !messagesCtrl.checkKeys() && messagesCtrl.addMessage(panel.project.messages)" novalidate>
+            <div class="row">
+              <div class="col-md-6">              
+                <fieldset class="form-group">
+                  <input ng-model="messagesCtrl.message.type" type="text" class="form-control" placeholder="Message type ..." title="Type" required></input>
+                </fieldset>
+                <fieldset class="form-group">
+                  <input ng-model="messagesCtrl.message.description" type="text" class="form-control" placeholder="Message description ..." title="description" required></input>
+                </fieldset>
+              </div>
+              <div class="col-md-6" ng-controller="KeysController as keysCtrl">              
+                <table class="table table-condensed">
+                  <thead>
+                    <tr>
+                      <th>key</th>
+                      <th>value</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="key in messagesCtrl.message.keys">
+                      <td>{{ key.key }}</td>
+                      <td>{{ key.value }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="well well-sm" ng-show="messagesCtrl.checkKeys()" style="margin-bottom:5px;">Add some keyworks to tell the board what to do.</div>
+                <div class="form-inline">
+                  <fieldset class="form-group">
+                    <input ng-model="keysCtrl.key.key" type="text" class="form-control" placeholder="Key ..." title="Key"></input>
+                  </fieldset>
+                  <fieldset class="form-group">
+                    <input ng-model="keysCtrl.key.value" type="text" class="form-control" placeholder="Value ..." title="value"></input>
+                  </fieldset>
+                  <button type="button" class="btn btn-sm pull-right" ng-click="keysCtrl.addKey(messagesCtrl.message.keys)" style="vertical-align: middle;"><i class="glyphicon glyphicon-plus"></i></button>                
+                </div>
+              </div>      
+            </div>         
+            <fieldset class="form-group">
+              <input type="submit" class="btn btn-warning btn-sm pull-left" value="Add message"></input>
+            </fieldset>                     
+          </form>      
+        </div>
+        <button type="button" class="btn btn-primary btn-lg pull-right next" ng-click="!panel.checkMessages() && panel.editCode(codeCtrl)">Next <i class="glyphicon glyphicon-arrow-right"></i></button>                
+      </div>
