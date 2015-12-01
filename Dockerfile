@@ -14,9 +14,6 @@
 # limitations under the License.
 # 
 
-#sudo docker build -t frmgoal .
-#sudo docker run -d --name goal frmgoal
-
 FROM ubuntu:latest
 MAINTAINER iottly
 
@@ -29,3 +26,12 @@ ADD /iottly_console /iottly_console
 #    && sudo npm install -g \
 #    && sudo npm install -g bower \
 #    && bower install --allow-root --force-latest
+
+VOLUME /iottly_console
+WORKDIR /iottly_console
+
+# ensure that all files have readonly permissions for "others", 
+# since nginx is running as non root user
+# run `docker-compose start iottlyconsole` to set permissions over all static files
+COPY docker-entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
