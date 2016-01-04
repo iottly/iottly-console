@@ -1,0 +1,62 @@
+<div class="jumbotron">
+        <h2><span class="label label-success">{{ projectCtrl.project.name }}</span>  <small>Board: {{ projectCtrl.project.board }}, Board language: {{ projectCtrl.fwlanguage() }}</small></h2>
+        <h2>Create your IoT project <small>and add one ore more boards to it.</small></h2>
+        <form name="createProjectForm" class="css-form" novalidate>
+          <!--  Live Preview -->
+          <div class="well well-lg">
+            <div class="row">
+              <div class="col-md-6">              
+                    
+                <fieldset class="form-group">
+                  <input ng-model="projectCtrl.project.name" type="text" class="form-control" placeholder="Project name ..." title="Project" required=""></input>
+                </fieldset>
+                <fieldset class="form-group">
+                  <select ng-model="projectCtrl.project.board" class="form-control" ng-options="board for board in ['Arduino','Raspberry Pi','UDOO']"  title="Board" required> 
+                    <option value="">Select the board for your project</option>
+                  </select>
+                  <div ng-hide="projectCtrl.checkBoard()" class="alert alert-danger">'OK, this is a demo. You can just choose Raspberry PI!'</div>
+                </fieldset>
+              </div>
+
+              <div class="col-md-6" ng-controller="BoardsController as boardsCtrl" name="createboard" ng-form>              
+                
+                <table class="table table-condensed">
+                  <thead>
+                    <tr>
+                      <th>Board name</th>
+                      <th>Board unique ID</th>
+                      <th><span class="pull-right">IOTTLY ready base Firmware</span></th>                    
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="board in projectCtrl.project.boards">
+                      <td>{{ board.name }}</td>
+                      <td>{{ board.ID }}</td>
+                      <td>
+                        <button class="btn btn-warning btn-xs pull-right" ng-click=""><i class="glyphicon glyphicon-download-alt"></i> FW for {{ board.ID }}</button>
+                      </td>
+                      
+                    </tr>
+                  </tbody>
+                </table>
+                <div class="well well-sm" ng-hide="projectCtrl.checkBoardList()" style="margin-bottom:5px;">Add at least a board to the project.</div>
+
+                <div class="form-inline">
+                  <fieldset class="form-group">
+                    <input ng-model="boardsCtrl.board.name" type="text" class="form-control" placeholder="Board name ..." title="Board name" name"boardname"></input>
+                  </fieldset>
+  <!--                 <fieldset class="form-group" disabled>
+                    <input ng-model="boardsCtrl.board.ID" type="text" class="form-control" placeholder="Board ID ..." title="Board ID">{{ boardsCtrl.board.ID }}</input>
+                  </fieldset> -->
+                  <button class="btn btn-sm pull-right" ng-click="boardsCtrl.checkBoardName() && boardsCtrl.addBoard(projectCtrl.project.boards)" style="vertical-align: middle;"><i class="glyphicon glyphicon-plus"></i></button>                
+                </div>
+              </div>      
+            </div>
+          </div>
+
+
+          <fieldset class="form-group">
+            <button type="submit" class="btn btn-primary btn-lg pull-right next" ng-click="projectCtrl.validateBoard() && createProjectForm.$valid && projectCtrl.createProject(panel)">Next <i class="glyphicon glyphicon-arrow-right"></i></button>
+          </fieldset>
+        </form>
+      </div>

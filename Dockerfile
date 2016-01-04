@@ -22,5 +22,10 @@ MAINTAINER iottly
 
 
 RUN mkdir /iottly_console
-ADD /iottly_console/static /iottly_console/static
-ADD /iottly_console/templates /iottly_console/templates
+ADD /iottly_console /iottly_console
+
+# npm installs -- only for dev #FIXME -- bower_comps are committed
+#RUN cd /iottly_console \
+#    && sudo npm install -g \
+#    && sudo npm install -g bower \
+#    && bower install --allow-root --force-latest

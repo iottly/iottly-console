@@ -1,0 +1,11 @@
+<div class="jumbotron container-fluid" ng-show="panel.isSet(2)">
+        <h2><span class="label label-success">{{ panel.project.name }}</span>  <small>Board: {{ panel.project.board }}, Board language: {{ panel.project.fwlanguage }}</small></h2>
+        <h2>IOTTLY writes the communication code <small>leaving the fun part to you!</small></h2>
+        <div class="well well-lg">
+          <div codeeditor></div codeeditor>
+          <textarea ui-codemirror="{ onLoad : codeCtrl.codemirrorLoaded }" ui-codemirror-opts="editorOptions" ng-model="codeCtrl.code"></textarea>
+          <button type="button" class="btn btn-warning btn-sm" style="margin-top:20px;">Copy to clipboard</button>
+          <button type="button" class="btn btn-warning btn-sm" style="margin-top:20px;">Save ...</button>
+        </div>
+        <button type="button" class="btn btn-primary btn-lg pull-right next" ng-click="panel.setTab(3)">Next <i class="glyphicon glyphicon-arrow-right"></i></button>         
+</div>

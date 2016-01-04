@@ -23,3 +23,19 @@ The *iottly-console* repo hosts the html and js files for the iottly console fro
 # Setup instructions
 
 Please refer to [Iottly docker](https://github.com/iottly/iottly-docker) for prerequisites and full Iottly setup.
+
+# Yeoman app Generator
+
+To generate web app components use following expressions for yeoman (https://github.com/yeoman/generator-angular). Install it locally with npm -g (develop only).
+
+- angular:controller
+- angular:directive
+- angular:filter
+- angular:route
+- angular:service
+- angular:provider
+- angular:factory
+- angular:value
+- angular:constant
+- angular:decorator
+- angular:view
