@@ -1,83 +1,230 @@
-.browsehappy {
-  margin: 0.2em 0;
-  background: #ccc;
-  color: #000;
-  padding: 0.2em 0;
+
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+body, .banner-row {
+  background-color: #333;
 }
 
-body {
-  padding: 0;
+#ib-board-chooser {
+  /*margin-bottom: 20px;*/
 }
 
-/* Everything but the jumbotron gets side spacing for mobile first views */
-.header,
-.marketing,
-.footer {
-  padding-left: 15px;
+.vcenter {
+  /*display: inline-block;*/
+  /*vertical-align: middle;*/
+  /*float: none;*/
+}
+
+#presence-container {
+  top: 5px;
+}
+
+#messages-panel .panel-body {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.messages-container {
+  height: 500px;
+  overflow-y: auto;
+}
+
+.message {
+  padding: 10px;
+  margin: 10px;
+}
+
+.wordwrap {
+   white-space: pre-wrap;      /* CSS3 */
+   white-space: -moz-pre-wrap; /* Firefox */
+   white-space: -pre-wrap;     /* Opera <7 */
+   white-space: -o-pre-wrap;   /* Opera 7 */
+   word-wrap: break-word;      /* IE */
+}
+
+.inline-lbl {
+  padding-right: 10px;
+}
+
+.msg-attr {
+  padding-left: 1px;
+  padding-bottom: 8px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+}
+
+.msg-lbl {
+  display: inline-block;
+  margin-right: 8px;
+  vertical-align: middle;
+  padding: 5px;
+  background-color: #aaa;
+}
+
+.msg-object pre {
+  background-color: #ffffff;
+}
+
+.progress-row {
   padding-right: 15px;
+  padding-left: 15px;
 }
 
-/* Custom page header */
-.header {
-  border-bottom: 1px solid #e5e5e5;
-  margin-bottom: 10px;
-}
-/* Make the masthead heading the same height as the navigation */
-.header h3 {
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 40px;
-  padding-bottom: 19px;
+.progress-row .progress {
+  margin-bottom: 0px;
 }
 
-/* Custom page footer */
-.footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
+.msg-object.row {
+  margin-left: 0px;
+  margin-right: 0px;
 }
 
-.container-narrow > hr {
-  margin: 30px 0;
+.lbl {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  margin-top: -22px;
+  z-index: 10;
+  background-color: #e6e6e6;
+  padding: 2px 4px;
 }
 
-/* Main marketing message and sign up button */
-.jumbotron {
-  text-align: center;
-  border-bottom: 1px solid #e5e5e5;
-}
-.jumbotron .btn {
-  font-size: 21px;
-  padding: 14px 24px;
-}
-
-/* Supporting marketing content */
-.marketing {
-  margin: 40px 0;
-}
-.marketing p + h4 {
-  margin-top: 28px;
+.float-lbl:after {
+  content: attr(data-lbl);
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #9da0a4;
+  border-radius: 4px 0 4px 0;
 }
 
-/* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
-  .container {
-    max-width: 730px;
-  }
+.commands-panel {
+  display: none;
+  margin-top: 20px;
+}
 
-  /* Remove the padding we set earlier */
-  .header,
-  .marketing,
-  .footer {
-    padding-left: 0;
-    padding-right: 0;
-  }
-  /* Space out the masthead */
-  .header {
-    margin-bottom: 30px;
-  }
-  /* Remove the bottom border on the jumbotron for visual effect */
-  .jumbotron {
-    border-bottom: 0;
-  }
+.row + .row {
+  margin-top: 20px;
+}
+
+.ib-option {
+  padding-left: 5px;
+}
+
+.collapsible-command-panel {
+  width: 100%;
+  max-width: 100%;
+  padding: 10px;
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+  display: none;
+}
+
+.form-horizontal .row > * {
+  margin: 10px auto;
+}
+
+.btn-group-vertical>.btn+div+.btn {
+  margin-top: -1px;
+  margin-left: 0;
+}
+
+.panel-title, .panel-clear {
+  line-height: 30px;
+}
+
+#messages-panel .panel-heading > div:first-of-type {
+  min-height: 40px;
+}
+
+.filter-form {
+  margin: 10px auto;
+}
+
+.filter-form > * {
+  margin: 5px auto;
+}
+
+button.filter {
+  width: 100%;
+}
+
+button.collapse-toggle:after {
+    /* symbol for "opening" panels */
+    font-family: 'Glyphicons Halflings';  /* essential for enabling glyphicon */
+    content: "\e114";
+    color: grey;
+    position: absolute;
+    right: 6px;
+}
+
+button.collapse-toggle.collapsed:after {
+    /* symbol for "collapsed" panels */
+    content: "\e080";    /* adjust as needed, taken from bootstrap.css */
+}
+
+/* LEDS Adapted from http://austinrobertson.com/blog/2013/01/30/css-led/*/
+.led-small {
+  height: 10px;
+  width: 10px;
+  margin-top: -3px;
+}
+
+.led-large {
+  height: 24px;
+  width: 24px;
+}
+
+.led-container {
+  vertical-align: middle;
+  display: inline-block;
+  background-color: #222;
+  border-radius: 50%;
+}
+
+.led {
+    /*margin: 20px auto;*/
+    transition: background-color 200ms linear;
+    height: inherit;
+    position:absolute;
+    width: inherit;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.25);
+    box-shadow: #222 0 0px 6px 1px;
+}
+.led-red {
+    background-color: #F00;
+    box-shadow: #222 0 0px 6px 1px, inset #600 0 -1px 8px, #F00 0 3px 11px;
+}
+.led-orange {
+    background-color: #FF7000;
+    box-shadow: #222 0 0px 6px 1px, inset #630 0 -1px 8px, #FF7000 0 3px 11px;
+}
+
+.led-yellow {
+    background-color: #FF0;
+    box-shadow: #222 0 0px 6px 1px, inset #660 0 -1px 8px, #FF0 0 3px 11px;
+}
+
+.led-green {
+    background-color: #80FF00;
+    box-shadow: #222 0 0px 6px 1px, inset #460 0 -1px 8px, #80FF00 0 3px 11px;
+}
+
+.led-blue {
+    background-color: #06F;
+    box-shadow: #222 0 0px 6px 1px, inset #006 0 -1px 8px, #06F 0 3px 11px;
+}
+
+.sensor-panel button {
+  width: 100%;
 }

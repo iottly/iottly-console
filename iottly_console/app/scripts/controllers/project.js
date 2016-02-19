@@ -8,7 +8,7 @@
  * Controller of the consoleApp
  */
 angular.module('consoleApp')
-  .controller('ProjectCtrl', function () {
+  .controller('ProjectCtrl', function (httpRequestService) {
     this.project = {
       'boards':[]
     };
@@ -22,7 +22,8 @@ angular.module('consoleApp')
         panel.project = this.project;
 
         panel.setTab(1);
-  
+        
+        httpRequestService.createProject(panel.project);
         return true;        
       }
       else

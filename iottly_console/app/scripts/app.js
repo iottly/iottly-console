@@ -56,7 +56,7 @@ angular
   });
 
 angular
-  .module('consoleApp').controller('AppCtrl', function ($scope, $rootScope, $location) {
+  .module('consoleApp').controller('AppCtrl', function ($scope, $rootScope, $location, httpRequestService) {
         //this.tab = 0;
     
       

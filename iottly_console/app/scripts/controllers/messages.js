@@ -47,6 +47,7 @@ angular.module('consoleApp')
 
 angular.module('consoleApp')
   .controller('KeysController', function () {
+    console.log('NEW KeysController');
     this.key = {};
 
     this.addKey = function(keys){
