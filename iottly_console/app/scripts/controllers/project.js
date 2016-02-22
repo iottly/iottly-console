@@ -18,16 +18,15 @@ angular.module('consoleApp')
       if (this.checkBoardList()) {
         this.project.fwlanguage = this.fwlanguage();
         this.project.messages = [];
-
-        panel.project = this.project;
-
-        panel.setTab(1);
-        
-        httpRequestService.createProject(panel.project);
-        return true;        
-      }
-      else
-        return false;
+        httpRequestService.createProject(this.project).then(function(data){
+          panel.project = this.project;
+          panel.setTab(1);
+        }, function (error) {
+          //TODO error message
+          console.error(error);
+        });
+               
+      }       
     };
     this.fwlanguage = function(){
       if (this.project.board === 'Arduino')
