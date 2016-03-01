@@ -14,20 +14,10 @@
 # limitations under the License.
 # 
 
-FROM node:latest
+FROM ubuntu:latest
 MAINTAINER iottly
+
 
 RUN mkdir /iottly_console
 ADD /iottly_console /iottly_console
 
-WORKDIR /iottly_console 
-
-RUN npm install -g grunt-cli bower yo generator-karma generator-angular
-
-
-RUN adduser --disabled-password --gecos "" yeoman && \
-  echo "yeoman ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-
-USER yeoman
-
-CMD /bin/bash

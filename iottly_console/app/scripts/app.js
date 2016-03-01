@@ -74,9 +74,9 @@ angular
   });
 
 angular
-  .module('consoleApp').controller('AppCtrl', function ($scope, $rootScope, $location, httpRequestService) {
+  .module('consoleApp').controller('AppCtrl', function ($scope, $rootScope, $location, httpRequestService, websocketService) {
         //this.tab = 0;
-    
+    websocketService.init();    
       
     // this.project = {
     //   'name': 'LEGO motor remote control', 

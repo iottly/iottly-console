@@ -27,17 +27,18 @@ limitations under the License.
  */
 angular.module('consoleApp')
   .controller('BoardsController', function ($scope) {
-    this.board = {};
+    // this.board = {};
 
     this.addBoard = function(boards){
-      this.board.ID = Math.random().toString(36).substring(7);
-      boards.push(this.board);
-      this.board = {};
-      $scope.createboard.$setUntouched();
+    //   this.board.ID = Math.random().toString(36).substring(7);
+    //   boards.push(this.board);
+    //   this.board = {};
+    //   $scope.createboard.$setUntouched();
       
     };
 
     this.checkBoardName = function(){
-      return typeof this.board.name !== "undefined" &&  this.board.name !== '';
+      // return typeof this.board.name !== "undefined" &&  this.board.name !== '';
+      return true;
     };
   });

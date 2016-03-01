@@ -110,16 +110,16 @@ angular.module('consoleApp')
 
     var _createProject = function  (projectObj) {
     	console.log('create project');
-    	_post('project', projectObj);
+    	return _post('project', projectObj);
     };
     
 	return { 	
 			"createProject" : _createProject,
 			"list": _list,
-		    "get": _get,
-		    "post": _post,
-		    "create": _update,
-      		"update":  _update,
-      		"remove": _delete
+	    "get": _get,
+	    "post": _post,
+	    "create": _update,
+  		"update":  _update,
+  		"remove": _delete
     };
 });

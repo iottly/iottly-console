@@ -26,19 +26,23 @@ limitations under the License.
  * Controller of the consoleApp
  */
 angular.module('consoleApp')
-  .controller('ProjectCtrl', function (httpRequestService) {
-    this.project = {
-      'boards':[]
-    };
-    this.boardalert = '';
+  .controller('ProjectCtrl', function (httpRequestService, websocketService) {
+    self = this;
 
-    this.createProject = function(panel){
-      if (this.checkBoardList()) {
-        this.project.fwlanguage = this.fwlanguage();
-        this.project.messages = [];
-        httpRequestService.createProject(this.project).then(function(data){
-          panel.project = this.project;
-          panel.setTab(1);
+    self.project = {
+      //'boards':[]
+    };
+    self.boardalert = '';
+
+    self.createProject = function(panel){
+      if (self.checkBoardList()) {
+        self.project.fwlanguage = self.fwlanguage();
+        self.project.messages = [];
+        self.project.user = {'email': 'test@test.test'};
+
+        httpRequestService.createProject(self.project).then(function(data){
+          console.log(self);
+          self.project = data;
         }, function (error) {
           //TODO error message
           console.error(error);
@@ -46,23 +50,31 @@ angular.module('consoleApp')
                
       }       
     };
-    this.fwlanguage = function(){
-      if (this.project.board === 'Arduino')
+
+
+
+    self.fwlanguage = function(){
+      if (self.project.board === 'Arduino')
         return 'Wiring';
-      else if (this.project.board)
+      else if (self.project.board)
         return 'Python';
       else return '';
     };
 
-    this.checkBoard = function(){
-      return typeof this.project.board === "undefined" || this.project.board === 'Raspberry Pi';
+    self.checkBoard = function(){
+      return typeof self.project.board === "undefined" || self.project.board === 'Raspberry Pi' || self.project.board === 'Dev Docker Device';
     };
 
-    this.validateBoard = function(){
-      return this.project.board === 'Raspberry Pi';
+    self.validateBoard = function(){
+      return self.project.board === 'Raspberry Pi';
     };
 
-    this.checkBoardList = function(){
-      return this.project.boards.length > 0;
+    self.validateProject = function(){
+      return self.project._id;
+    }
+
+    self.checkBoardList = function(){
+      //return self.project.boards.length > 0;
+      return true;
     };
   });
