@@ -14,9 +14,6 @@
 # limitations under the License.
 # 
 
-#sudo docker build -t frmgoal .
-#sudo docker run -d --name goal frmgoal
-
 FROM ubuntu:latest
 MAINTAINER iottly
 
