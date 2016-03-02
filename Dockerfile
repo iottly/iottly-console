@@ -18,7 +18,7 @@ FROM node:latest
 MAINTAINER iottly
 
 RUN mkdir /iottly_console
-ADD /iottly_console /iottly_console
+#ADD /iottly_console /iottly_console
 
 WORKDIR /iottly_console 
 
