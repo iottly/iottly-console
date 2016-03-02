@@ -26,7 +26,7 @@ limitations under the License.
  * Service in the consoleApp.
  */
 angular.module('consoleApp')
-  .service('websocketService', function () {
+  .service('websocketService', function ($rootScope) {
     
     var bigboss = {};
 
@@ -103,6 +103,7 @@ angular.module('consoleApp')
         bigboss.eventManager.addEventListener('onmessage', {
           handleEvent: function(e) {
             console.log("Received", e);
+            $rootScope.$emit('newmessage', e);
           }
         });
       }

@@ -26,13 +26,22 @@ limitations under the License.
  * Controller of the consoleApp
  */
 angular.module('consoleApp')
-  .controller('ProjectCtrl', function (httpRequestService, websocketService) {
+  .controller('ProjectCtrl', function ($scope, $rootScope, httpRequestService, websocketService) {
     self = this;
 
     self.project = {
       //'boards':[]
     };
     self.boardalert = '';
+
+
+    var myListener = $rootScope.$on('newmessage', function (event, data) {
+      console.log('newmessage');
+    });
+
+    $scope.$on('$destroy', myListener);
+
+
 
     self.createProject = function(panel){
       if (self.checkBoardList()) {
