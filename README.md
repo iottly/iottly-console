@@ -27,16 +27,16 @@ Please refer to [Iottly docker](https://github.com/iottly/iottly-docker) for pre
 # Yeoman app Generator
 
 A specific dev [container](https://github.com/iottly/iottly-console/blob/mvcangular/Dockerfile) is provided to manage all npm, grunt and yeoman stuff:
-- execute [`./start_nodedev.sh`](https://github.com/iottly/iottly-console/blob/mvcangular/start_nodedev.sh) to build and start the container
+- execute `[./start_nodedev.sh](https://github.com/iottly/iottly-console/blob/mvcangular/start_nodedev.sh)` to build and start the container
 - from within the container use following expressions for yeoman to generate web app components (https://github.com/yeoman/generator-angular):
-  - angular:controller
-  - angular:directive
-  - angular:filter
-  - angular:route
-  - angular:service
-  - angular:provider
-  - angular:factory
-  - angular:value
-  - angular:constant
-  - angular:decorator
-  - angular:view
+  - `yo angular:controller [controller]`
+  - yo angular:directive
+  - yo angular:filter
+  - yo angular:route
+  - yo angular:service
+  - yo angular:provider
+  - yo angular:factory
+  - yo angular:value
+  - yo angular:constant
+  - yo angular:decorator
+  - yo angular:view
