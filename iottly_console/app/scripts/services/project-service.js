@@ -8,7 +8,7 @@
  * Service in the consoleApp.
  */
 var s = angular.module('consoleApp')
-  .service('projectService', function ($q, httpRequestService) {
+  .service('projectService', function ($rootScope, $q, $timeout, httpRequestService) {
     // AngularJS will instantiate a singleton by calling "new" on this function
     var self = this;
 
@@ -55,6 +55,14 @@ var s = angular.module('consoleApp')
       return deferred.promise;
     };
 
+    var myListener = $rootScope.$on('devices', function (event, data) {
+      console.log(data);
+
+      if (data.registration.new) {
+        self.project.data.boards.push(data.registration.board);
+      }
+
+    });
 
 
   });

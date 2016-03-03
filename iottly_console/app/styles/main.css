@@ -108,7 +108,7 @@ body, .banner-row {
 }
 
 .commands-panel {
-  display: none;
+  /* display: none; */
   margin-top: 20px;
 }
 

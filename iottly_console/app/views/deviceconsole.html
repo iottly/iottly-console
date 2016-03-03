@@ -26,9 +26,9 @@ limitations under the License.
             <h3 class="panel-title">Command console</h3>
           </div>
           <div class="panel-body">
-              <select class="form-control" ng-model="deviceCtrl.selectedboardstr">
-                <option ng-repeat="board in project.data.boards" value="{{ board }}">{{ board.name + ' - unique ID: ' + board.ID }}</option>
-              </select>
+            <select class="form-control" ng-model="deviceCtrl.selectedboardstr">
+              <option ng-repeat="board in project.data.boards" value="{{ board }}">{{ board.name + ' - unique ID: ' + board.ID }}</option>
+            </select>
             <div class=" commands-panel" ng-show="deviceCtrl.boardisSelected()">
               <div class="well">
                 <div class="row">
@@ -61,12 +61,12 @@ limitations under the License.
           <div class="panel-body">
             <div class="messages-container row">
 
-              <div class="well message" ng-repeat="event in deviceCtrl.events">
+              <div class="well message" ng-repeat="event in events">
                 <div class="col-xs-12 col-md-4 msg-attr"><div class="label label-default msg-lbl">timestamp:</div><code>{{event.timestamp}}</code></div>
                 <div class="col-xs-12 col-md-4 msg-attr"><div class="label label-default msg-lbl">from:</div><code>{{event.from}}</code></div>
                 <div class="col-xs-12 col-md-4 msg-attr"><div class="label label-default msg-lbl">to:</div><code>{{event.to}}</code></div>
                 <div class="row msg-object">
-                  <pre>{{event.json}}</pre>
+                  <pre>{{event.json()}}</pre>
                 </div>
               </div>
             </div>

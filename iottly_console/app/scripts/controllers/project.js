@@ -34,8 +34,9 @@ angular.module('consoleApp')
     self.boardalert = '';
 
 
-    var myListener = $rootScope.$on('newmessage', function (event, data) {
-      console.log('newmessage');
+    var myListener = $rootScope.$on('devices', function (event, data) {
+      console.log('devices');
+      $scope.$apply();
     });
 
     $scope.$on('$destroy', myListener);

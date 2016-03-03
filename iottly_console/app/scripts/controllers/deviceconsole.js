@@ -27,28 +27,67 @@ limitations under the License.
  */
 angular.module('consoleApp')
   .controller('DeviceconsoleCtrl', function ($scope, $rootScope, $timeout, projectService) {
-    
+    var self = this;
+
     $scope.project = projectService.project;
     
-    this.selectedboardstr = '{}'
-    //this.selectedboard = {};
+    self.selectedboardstr = '{}'
+    //self.selectedboard = {};
 
-    this.events = [];
+    $scope.events = [];
 
 
-    this.selectedboard = function(){
-      return JSON.parse(this.selectedboardstr);
+    self.selectedboard = function(){
+      return JSON.parse(self.selectedboardstr);
     };
 
-    this.boardisSelected = function(){
-      return typeof this.selectedboard().ID !== 'undefined';
+    self.boardisSelected = function(){
+      return typeof self.selectedboard().ID !== 'undefined';
     };
     
-    this.messagetoJSON = function(message){
+    self.messagetoJSON = function(message){
       return messagetoJSON(message);
     };    
 
-    this.send = function(command, project){
+    var myListener = $rootScope.$on('events', function (event, data) {
+      console.log('events');
+      data.msgs.forEach(function(item){
+        self.appendMessage(item);
+      });      
+    });
+
+
+    self.appendMessage = function(message) {
+      var el = null;
+
+      function toDateString(dateInMs) {
+        if (!dateInMs) {
+          return "0000-00-00T00:00:00";
+        }
+        return new Date(dateInMs).toLocalISOString().split(/[\.\+]/)[0];
+      }
+
+      function toJSONReplacer(k, v) {
+        if ($.inArray(k, ['to', 'from', 'timestamp', '_id', '$$hashKey']) > -1) {
+          return undefined;
+        } else if ($.inArray(k, ['time', 'start', 'stop']) > -1) {
+          return toDateString(v['$date']);
+        } else
+          return v;
+      }
+
+      message.json = function () {
+        return JSON.stringify(this, toJSONReplacer, 2);
+      }
+      message['timestamp'] = toDateString(message.timestamp.$date);
+      
+      $scope.events.push(message);  
+      $scope.$apply();
+      //$msgContainer.scrollTop($msgContainer[0].scrollHeight);
+    }
+
+
+    self.send = function(command, project){
       var echo = {};
       var body = JSON.parse(messagetoJSON(command));
       delete body.$$hashKey;
@@ -58,11 +97,11 @@ angular.module('consoleApp')
       
 
       echo.to = 'iottly.org/' + project.data.name.split(' ').join('_');
-      echo.from =  this.selectedboard().name.split(' ').join('_') + '/' + this.selectedboard().ID;
+      echo.from =  self.selectedboard().name.split(' ').join('_') + '/' + self.selectedboard().ID;
       echo.timestamp = new Date;
 
       
-      $timeout(function(events){ events.push(echo); }, 1000, true, this.events);
+      $timeout(function(events){ events.push(echo); }, 1000, true, self.events);
       
     };
   });

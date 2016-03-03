@@ -103,7 +103,12 @@ angular.module('consoleApp')
         bigboss.eventManager.addEventListener('onmessage', {
           handleEvent: function(e) {
             console.log("Received", e);
-            $rootScope.$emit('newmessage', e);
+            if (e.events) {
+              $rootScope.$emit('events', e.events);
+            }
+            else if (e.devices) {
+              $rootScope.$emit('devices', e.devices); 
+            }
           }
         });
       }
