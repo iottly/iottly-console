@@ -51,7 +51,7 @@ angular
       .when('/messages', {
         templateUrl: 'views/messages.html',
         controller: 'MessagesCtrl',
-        
+        controllerAs: 'messagesCtrl'        
       })
       .when('/devicecode', {
         templateUrl: 'views/devicecode.html',
@@ -78,7 +78,7 @@ angular
         //this.tab = 0;
     websocketService.init();    
       
-    // this.project = {
+    // $rootScope.project = {
     //   'name': 'LEGO motor remote control', 
     //   'board':'Raspberry PI', 
     //   'fwlanguage':'Python',
@@ -124,7 +124,7 @@ angular
     //   ]
     // }
 
-    this.project = {
+    $rootScope.project = {
       'boards': [],
       'messages': []
     }
@@ -181,8 +181,8 @@ angular
     this.projecttoCode = function() {
       var code = '#  Kindly written by IOTTLY for you on ' + (new Date).toISOString();
       code = code + '\n';
-      code = code + '\n' + '#  Project: ' + this.project.name;
-      code = code + '\n' + '#  Board: ' + this.project.board;
+      code = code + '\n' + '#  Project: ' + $rootScope.project.name;
+      code = code + '\n' + '#  Board: ' + $rootScope.project.board;
       code = code + '\n';
 
       code = code + '\n' + 'import iottly             #The IOTTLY module';
@@ -190,7 +190,7 @@ angular
 
       code = code + '\n';
 
-      var uniquemsgs = uniqueBy(this.project.messages, function(x){ return x.typetag; });
+      var uniquemsgs = uniqueBy($rootScope.project.messages, function(x){ return x.typetag; });
 
       uniquemsgs.forEach(function(element, index, array){
         code = code + '\n' + '#  This function will be called every time';
@@ -232,7 +232,7 @@ angular
     };
 
     this.checkMessages = function(){
-      return this.project.messages.length === 0;
+      return $rootScope.project.messages.length === 0;
     };
 
 
@@ -250,12 +250,12 @@ angular
               },
               {
                 'key':'firmware_name',
-                'value': this.project.name.split(' ').join('_')
+                'value': $rootScope.project.name.split(' ').join('_')
               }
             ]
           });
 
-        this.project.messages.forEach(function(element, index, array){
+        $rootScope.project.messages.forEach(function(element, index, array){
           this.commands.push(element);
         }, this);
 

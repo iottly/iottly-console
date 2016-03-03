@@ -41,11 +41,12 @@ limitations under the License.
  };
 
 angular.module('consoleApp')
-  .controller('MessagesCtrl', function ($scope) {
+  .controller('MessagesCtrl', function ($scope, $rootScope) {
     this.message = {};
     this.message.keys = [];
 
     this.addMessage = function(messages){
+      console.log($rootScope.project);
       this.message.typetag = this.message.type.split(' ').join('_');
       messages.push(this.message);
       this.message = {};

@@ -28,10 +28,8 @@ limitations under the License.
 angular.module('consoleApp')
   .controller('ProjectCtrl', function ($scope, $rootScope, httpRequestService, websocketService) {
     self = this;
+    //$scope.project = $rootScope.project;
 
-    self.project = {
-      //'boards':[]
-    };
     self.boardalert = '';
 
 
@@ -43,15 +41,15 @@ angular.module('consoleApp')
 
 
 
-    self.createProject = function(panel){
+    self.createProject = function(){
       if (self.checkBoardList()) {
-        self.project.fwlanguage = self.fwlanguage();
-        self.project.messages = [];
-        self.project.user = {'email': 'test@test.test'};
+        $rootScope.project.fwlanguage = self.fwlanguage();
+        $rootScope.project.messages = [];
+        $rootScope.project.user = {'email': 'test@test.test'};
 
-        httpRequestService.createProject(self.project).then(function(data){
+        httpRequestService.createProject($rootScope.project).then(function(data){
           console.log(self);
-          self.project = data;
+          $rootScope.project = data;
         }, function (error) {
           //TODO error message
           console.error(error);
@@ -63,27 +61,27 @@ angular.module('consoleApp')
 
 
     self.fwlanguage = function(){
-      if (self.project.board === 'Arduino')
+      if ($rootScope.project.board === 'Arduino')
         return 'Wiring';
-      else if (self.project.board)
+      else if ($rootScope.project.board)
         return 'Python';
       else return '';
     };
 
     self.checkBoard = function(){
-      return typeof self.project.board === "undefined" || self.project.board === 'Raspberry Pi' || self.project.board === 'Dev Docker Device';
+      return typeof $rootScope.project.board === "undefined" || $rootScope.project.board === 'Raspberry Pi' || $rootScope.project.board === 'Dev Docker Device';
     };
 
     self.validateBoard = function(){
-      return self.project.board === 'Raspberry Pi';
+      return $rootScope.project.board === 'Raspberry Pi';
     };
 
     self.validateProject = function(){
-      return self.project._id;
+      return $rootScope.project._id;
     }
 
     self.checkBoardList = function(){
-      //return self.project.boards.length > 0;
+      //return $rootScope.project.boards.length > 0;
       return true;
     };
   });
