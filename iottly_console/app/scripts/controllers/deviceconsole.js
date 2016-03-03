@@ -26,7 +26,10 @@ limitations under the License.
  * Controller of the consoleApp
  */
 angular.module('consoleApp')
-  .controller('DeviceconsoleCtrl', function ($scope, $rootScope, $timeout) {
+  .controller('DeviceconsoleCtrl', function ($scope, $rootScope, $timeout, projectService) {
+    
+    $scope.project = projectService.project;
+    
     this.selectedboardstr = '{}'
     //this.selectedboard = {};
 
@@ -54,7 +57,7 @@ angular.module('consoleApp')
       echo.json = JSON.stringify(body, null, 2);
       
 
-      echo.to = 'iottly.org/' + project.name.split(' ').join('_');
+      echo.to = 'iottly.org/' + project.data.name.split(' ').join('_');
       echo.from =  this.selectedboard().name.split(' ').join('_') + '/' + this.selectedboard().ID;
       echo.timestamp = new Date;
 

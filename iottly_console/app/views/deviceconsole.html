@@ -16,7 +16,7 @@ limitations under the License.
 
 -->
 <div class="jumbotron">
-        <h2><span class="label label-success">{{ project.name }}</span>  <small>Board: {{ project.board }}, Board language: {{ project.fwlanguage }}</small></h2>        
+        <h2><span class="label label-success">{{ project.data.name }}</span>  <small>Board: {{ project.data.board }}, Board language: {{ project.data.fwlanguage }}</small></h2>        
         <h2>Control your boards from the Internet <small>and check if they are doing what you want!</small></h2>
 
 
@@ -27,7 +27,7 @@ limitations under the License.
           </div>
           <div class="panel-body">
               <select class="form-control" ng-model="deviceCtrl.selectedboardstr">
-                <option ng-repeat="board in project.boards" value="{{ board }}">{{ board.name + ' - unique ID: ' + board.ID }}</option>
+                <option ng-repeat="board in project.data.boards" value="{{ board }}">{{ board.name + ' - unique ID: ' + board.ID }}</option>
               </select>
             <div class=" commands-panel" ng-show="deviceCtrl.boardisSelected()">
               <div class="well">

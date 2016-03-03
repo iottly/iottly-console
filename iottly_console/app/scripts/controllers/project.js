@@ -26,8 +26,9 @@ limitations under the License.
  * Controller of the consoleApp
  */
 angular.module('consoleApp')
-  .controller('ProjectCtrl', function ($scope, $rootScope, httpRequestService, websocketService) {
-    self = this;
+  .controller('ProjectCtrl', function ($scope, $rootScope, httpRequestService, websocketService, projectService) {
+    $scope.project = projectService.project;
+    var self = this;
     //$scope.project = $rootScope.project;
 
     self.boardalert = '';
@@ -43,13 +44,11 @@ angular.module('consoleApp')
 
     self.createProject = function(){
       if (self.checkBoardList()) {
-        $rootScope.project.fwlanguage = self.fwlanguage();
-        $rootScope.project.messages = [];
-        $rootScope.project.user = {'email': 'test@test.test'};
-
-        httpRequestService.createProject($rootScope.project).then(function(data){
+        $scope.project.data.fwlanguage = self.fwlanguage();
+        $scope.project.data.messages = [];
+        $scope.project.data.user = {'email': 'test@test.test'};
+        projectService.createProject($scope.project).then(function(data){
           console.log(self);
-          $rootScope.project = data;
         }, function (error) {
           //TODO error message
           console.error(error);
@@ -61,27 +60,27 @@ angular.module('consoleApp')
 
 
     self.fwlanguage = function(){
-      if ($rootScope.project.board === 'Arduino')
+      if ($scope.project.data.board === 'Arduino')
         return 'Wiring';
-      else if ($rootScope.project.board)
+      else if ($scope.project.data.board)
         return 'Python';
       else return '';
     };
 
     self.checkBoard = function(){
-      return typeof $rootScope.project.board === "undefined" || $rootScope.project.board === 'Raspberry Pi' || $rootScope.project.board === 'Dev Docker Device';
+      return typeof $scope.project.data.board === "undefined" || $scope.project.data.board === 'Raspberry Pi' || $scope.project.data.board === 'Dev Docker Device';
     };
 
     self.validateBoard = function(){
-      return $rootScope.project.board === 'Raspberry Pi';
+      return $scope.project.data.board === 'Raspberry Pi';
     };
 
     self.validateProject = function(){
-      return $rootScope.project._id;
+      return $scope.project.data._id;
     }
 
     self.checkBoardList = function(){
-      //return $rootScope.project.boards.length > 0;
+      //return $scope.project.data.boards.length > 0;
       return true;
     };
   });

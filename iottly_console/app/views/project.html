@@ -16,15 +16,15 @@ limitations under the License.
 
 -->
 <div class="jumbotron">
-  <h2><span class="label label-success">{{ project.name }}</span>  <small>Board: {{ project.board }}, Board language: {{ projectCtrl.fwlanguage() }}</small></h2>
+  <h2><span class="label label-success">{{ project.data.name }}</span>  <small>Board: {{ project.data.board }}, Board language: {{ projectCtrl.fwlanguage() }}</small></h2>
   <h2>Create your IoT project <small>and add one ore more boards to it.</small></h2>
     <div class="well well-lg">
       <form name="createProjectForm" class="css-form" novalidate>
         <fieldset class="form-group">
-          <input ng-model="project.name" type="text" class="form-control" placeholder="Project name ..." title="Project" required=""></input>
+          <input ng-model="project.data.name" type="text" class="form-control" placeholder="Project name ..." title="Project" required=""></input>
         </fieldset>
         <fieldset class="form-group">
-          <select ng-model="project.board" class="form-control" ng-options="board for board in ['Dev Docker Device','Arduino','Raspberry Pi','UDOO']"  title="Board" required> 
+          <select ng-model="project.data.board" class="form-control" ng-options="board for board in ['Dev Docker Device','Arduino','Raspberry Pi','UDOO']"  title="Board" required> 
             <option value="">Select the board for your project</option>
           </select>
           <div ng-hide="projectCtrl.checkBoard()" class="alert alert-danger">'OK, this is a demo. You can just choose Raspberry PI!'</div>
@@ -37,15 +37,15 @@ limitations under the License.
 
     <div class="well well-lg" ng-show="projectCtrl.validateProject()">
       <p>Awesome! Your project has been created.</p>
-      <p>To connect your <mark>{{ project.board }}s</mark> to the project, follows these steps for each board:
+      <p>To connect your <mark>{{ project.data.board }}s</mark> to the project, follows these steps for each board:
         <ul>
-          <li>power up your {{ project.board }}</li>
+          <li>power up your {{ project.data.board }}</li>
           <li>connect it to your local network (LAN or WiFI)</li>
           <li>ssh (or putty) into the board (this will be the last and only time)</li>
-          <li>copy this command, paste it into ssh (or putty) console and hit return: <br><code>{{ project.runinstallercommand }}</code></li>
+          <li>copy this command, paste it into ssh (or putty) console and hit return: <br><code>{{ project.data.runinstallercommand }}</code></li>
         </ul>
       </p>
-      {{ project.projecturl }}
+      {{ project.data.projecturl }}
 
     </div>
 
@@ -59,7 +59,7 @@ limitations under the License.
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="board in project.boards">
+          <tr ng-repeat="board in project.data.boards">
             <td>{{ board.name }}</td>
             <td>{{ board.ID }}</td>
             <td>
@@ -69,13 +69,13 @@ limitations under the License.
           </tr>
         </tbody>
       </table>
-      <div class="well well-sm" ng-hide="projectCtrl.checkBoardList()" style="margin-bottom:5px;">Add at least a board to the project.</div>
+      <div class="well well-sm" ng-hide="projectCtrl.checkBoardList()" style="margin-bottom:5px;">Add at least a board to the project.data.</div>
 
       <div class="form-inline">
         <fieldset class="form-group">
           <input ng-model="boardsCtrl.board.name" type="text" class="form-control" placeholder="Board name ..." title="Board name" name"boardname"></input>
         </fieldset>
-        <button class="btn btn-sm pull-right" ng-click="boardsCtrl.checkBoardName() && boardsCtrl.addBoard(project.boards)" style="vertical-align: middle;"><i class="glyphicon glyphicon-plus"></i></button>                
+        <button class="btn btn-sm pull-right" ng-click="boardsCtrl.checkBoardName() && boardsCtrl.addBoard(project.data.boards)" style="vertical-align: middle;"><i class="glyphicon glyphicon-plus"></i></button>                
       </div>            
     </div>
 

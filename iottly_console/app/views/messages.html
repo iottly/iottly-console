@@ -18,7 +18,7 @@ limitations under the License.
 
 
  <div class="jumbotron container-fluid">
-        <h2><span class="label label-success">{{ project.name }}</span>  <small>Board: {{ $root.project.board }}, Board language: {{ $root.project.fwlanguage }}</small></h2>
+        <h2><span class="label label-success">{{ project.data.name }}</span>  <small>Board: {{ project.data.board }}, Board language: {{ project.data.fwlanguage }}</small></h2>
 
         <h2>Design your messages  <small>specifying which "keywords" the board should understand.</small></h2>
 
@@ -32,7 +32,7 @@ limitations under the License.
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="message in $root.project.messages">
+            <tr ng-repeat="message in project.data.messages">
               <td>{{ message.type }}</td>
               <td>{{ message.description }}</td>
               <td><code>{{ messagesCtrl.messagetoJSON(message) }}</code></td>
@@ -41,7 +41,7 @@ limitations under the License.
         </table>
         <div class="well well-sm" ng-show="panel.checkMessages()" style="margin-bottom:10px;">You didn't configured any messages yet.</div>
         <div class="well well-lg">
-          <form name="createMessageForm" class="css-form" ng-submit="createMessageForm.$valid && !messagesCtrl.checkKeys() && messagesCtrl.addMessage($root.project.messages)" novalidate>
+          <form name="createMessageForm" class="css-form" ng-submit="createMessageForm.$valid && !messagesCtrl.checkKeys() && messagesCtrl.addMessage(project.data.messages)" novalidate>
             <div class="row">
               <div class="col-md-6">              
                 <fieldset class="form-group">

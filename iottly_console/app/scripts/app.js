@@ -74,7 +74,7 @@ angular
   });
 
 angular
-  .module('consoleApp').controller('AppCtrl', function ($scope, $rootScope, $location, httpRequestService, websocketService) {
+  .module('consoleApp').controller('AppCtrl', function ($scope, $rootScope, $location, httpRequestService, websocketService, projectService) {
         //this.tab = 0;
     websocketService.init();    
       
@@ -124,10 +124,7 @@ angular
     //   ]
     // }
 
-    $rootScope.project = {
-      'boards': [],
-      'messages': []
-    }
+    $scope.project = projectService.project;
 
     this.commands = [];
     
@@ -181,8 +178,8 @@ angular
     this.projecttoCode = function() {
       var code = '#  Kindly written by IOTTLY for you on ' + (new Date).toISOString();
       code = code + '\n';
-      code = code + '\n' + '#  Project: ' + $rootScope.project.name;
-      code = code + '\n' + '#  Board: ' + $rootScope.project.board;
+      code = code + '\n' + '#  Project: ' + $scope.project.data.name;
+      code = code + '\n' + '#  Board: ' + $scope.project.data.board;
       code = code + '\n';
 
       code = code + '\n' + 'import iottly             #The IOTTLY module';
@@ -190,7 +187,7 @@ angular
 
       code = code + '\n';
 
-      var uniquemsgs = uniqueBy($rootScope.project.messages, function(x){ return x.typetag; });
+      var uniquemsgs = uniqueBy($scope.project.data.messages, function(x){ return x.typetag; });
 
       uniquemsgs.forEach(function(element, index, array){
         code = code + '\n' + '#  This function will be called every time';
@@ -232,7 +229,7 @@ angular
     };
 
     this.checkMessages = function(){
-      return $rootScope.project.messages.length === 0;
+      return $scope.project.data.messages.length === 0;
     };
 
 
@@ -250,12 +247,12 @@ angular
               },
               {
                 'key':'firmware_name',
-                'value': $rootScope.project.name.split(' ').join('_')
+                'value': $scope.project.data.name.split(' ').join('_')
               }
             ]
           });
 
-        $rootScope.project.messages.forEach(function(element, index, array){
+        $scope.project.data.messages.forEach(function(element, index, array){
           this.commands.push(element);
         }, this);
 

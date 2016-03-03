@@ -26,7 +26,9 @@ limitations under the License.
  * Controller of the consoleApp
  */
 angular.module('consoleApp')
-  .controller('DevicecodeCtrl', function ($scope, $rootScope) {
+  .controller('DevicecodeCtrl', function ($scope, $rootScope, projectService) {
+    $scope.project = projectService.project;
+    
     this.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
