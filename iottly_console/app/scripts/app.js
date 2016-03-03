@@ -126,9 +126,6 @@ angular
 
     $scope.project = projectService.project;
 
-    this.commands = [];
-    
-
     this.getSectionFromId = function(secId){
       switch(secId){
         case 0:
@@ -143,8 +140,6 @@ angular
     };
     this.setTab = function(value){
       this.tab = value;
-      if (this.isSet(3))
-        this.setCommands();
       $location.path(this.getSectionFromId(value) )
     };
 
@@ -233,32 +228,4 @@ angular
     };
 
 
-    this.setCommands = function() {
-
-      if (this.isSet(3)) {
-        this.commands.push(
-          {
-            'type': 'update firmware',
-            'description': 'Over the air firmware update',
-            'keys':[
-              {
-                'key':'new_firmware_available',
-                'value': 1
-              },
-              {
-                'key':'firmware_name',
-                'value': $scope.project.data.name.split(' ').join('_')
-              }
-            ]
-          });
-
-        $scope.project.data.messages.forEach(function(element, index, array){
-          this.commands.push(element);
-        }, this);
-
-      };
-
-    };
-    this.setTab(0);
-
-  });
+  }); 

@@ -31,18 +31,21 @@ angular.module('consoleApp')
 
     $scope.project = projectService.project;
     
-    self.selectedboardstr = '{}'
-    //self.selectedboard = {};
-
     $scope.events = [];
 
+    self._selectedboard = {};
 
-    self.selectedboard = function(){
-      return JSON.parse(self.selectedboardstr);
-    };
+    Object.defineProperty(self, "selectedboard", {
+      get: function () { 
+        return JSON.stringify(self._selectedboard); 
+      },
+      set: function (selectedboardstr) { 
+        self._selectedboard = JSON.parse(selectedboardstr); 
+      }      
+    });
 
     self.boardisSelected = function(){
-      return typeof self.selectedboard().ID !== 'undefined';
+      return typeof self._selectedboard.ID !== 'undefined';
     };
     
     self.messagetoJSON = function(message){
@@ -52,10 +55,12 @@ angular.module('consoleApp')
     var myListener = $rootScope.$on('events', function (event, data) {
       console.log('events');
       data.msgs.forEach(function(item){
-        self.appendMessage(item);
+        if (item.from.indexOf(self._selectedboard.jid) > -1) {
+          self.appendMessage(item);
+        }
       });      
     });
-
+    $scope.$on('$destroy', myListener);
 
     self.appendMessage = function(message) {
       var el = null;
@@ -84,7 +89,36 @@ angular.module('consoleApp')
       $scope.events.push(message);  
       $scope.$apply();
       //$msgContainer.scrollTop($msgContainer[0].scrollHeight);
-    }
+    };
+
+    if ($scope.project.data.name) {
+      $scope.commands = [
+        {
+          'type': 'update firmware',
+          'description': 'Over the air firmware update',
+          'keys':[
+            {
+              'key':'new_firmware_available',
+              'value': 1
+            },
+            {
+              'key':'firmware_name',
+              'value': $scope.project.data.name.split(' ').join('_')
+            }
+          ]
+        }    
+      ];
+
+      $scope.project.data.messages.forEach(function(element, index, array){
+        $scope.commands.push(element);
+      }, this);
+
+    }    
+
+
+
+
+  
 
 
     self.send = function(command, project){
@@ -97,7 +131,7 @@ angular.module('consoleApp')
       
 
       echo.to = 'iottly.org/' + project.data.name.split(' ').join('_');
-      echo.from =  self.selectedboard().name.split(' ').join('_') + '/' + self.selectedboard().ID;
+      echo.from =  self.selectedboard.name.split(' ').join('_') + '/' + self.selectedboard.ID;
       echo.timestamp = new Date;
 
       
