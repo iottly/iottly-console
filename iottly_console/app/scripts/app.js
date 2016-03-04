@@ -38,11 +38,6 @@ angular
   ]).value('API_URL', 'http://127.0.0.1:8550/')
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
-      })
       .when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl',
@@ -68,8 +63,13 @@ angular
         controller: 'ProjectCtrl',
         controllerAs: 'projectCtrl'
       })
+      .when('/project/:id', {
+        templateUrl: 'views/project.html',
+        controller: 'ProjectCtrl',
+        controllerAs: 'projectCtrl'
+      })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/project'
       });
   });
 
@@ -227,5 +227,5 @@ angular
       return $scope.project.data.messages.length === 0;
     };
 
-    this.setTab(0);
+    //this.setTab(0);
   }); 

@@ -26,10 +26,12 @@ limitations under the License.
  * Controller of the consoleApp
  */
 angular.module('consoleApp')
-  .controller('ProjectCtrl', function ($scope, $rootScope, httpRequestService, websocketService, projectService) {
+  .controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, httpRequestService, websocketService, projectService) {
     $scope.project = projectService.project;
     var self = this;
     //$scope.project = $rootScope.project;
+
+    console.log($routeParams.id);
 
     self.boardalert = '';
 
