@@ -227,5 +227,5 @@ angular
       return $scope.project.data.messages.length === 0;
     };
 
-
+    this.setTab(0);
   }); 
