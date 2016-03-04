@@ -44,7 +44,7 @@ limitations under the License.
                 </div>
                 <div class="row">
                   <div class="btn-group-vertical col-xs-12">
-                    <button ng-repeat="command in panel.commands" class="command btn btn-default" title="{{ command.description }}" ng-click="deviceCtrl.send(command, panel.project)">{{ command.type }} <code class="hidden-xs">{{ deviceCtrl.messagetoJSON(command) }}</code></button>
+                    <button ng-repeat="command in commands" class="command btn btn-default" title="{{ command.description }}" ng-click="deviceCtrl.send(command, panel.project)">{{ command.type }} <code class="hidden-xs">{{ deviceCtrl.messagetoJSON(command) }}</code></button>
                   </div>
                 </div>
               </div>
@@ -68,6 +68,9 @@ limitations under the License.
                 <div class="row msg-object">
                   <pre>{{event.json()}}</pre>
                 </div>
+
+
+
               </div>
             </div>
           </div>
