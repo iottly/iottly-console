@@ -1,0 +1,28 @@
+<!-- 
+
+Copyright 2015 Stefano Terna
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+<div class="jumbotron container-fluid" ng-show="panel.isSet(2)">
+        <h2><span class="label label-success">{{ project.data.name }}</span>  <small>Board: {{ project.data.board }}, Board language: {{ project.data.fwlanguage }}</small></h2>
+        <h2>IOTTLY writes the communication code <small>leaving the fun part to you!</small></h2>
+        <div class="well well-lg">
+          <div codeeditor></div codeeditor>
+          <textarea ui-codemirror="{ onLoad : codeCtrl.codemirrorLoaded }" ui-codemirror-opts="editorOptions" ng-model="codeCtrl.code"></textarea>
+          <button type="button" class="btn btn-warning btn-sm" style="margin-top:20px;">Copy to clipboard</button>
+          <button type="button" class="btn btn-warning btn-sm" style="margin-top:20px;">Save ...</button>
+        </div>
+        <button type="button" class="btn btn-primary btn-lg pull-right next" ng-click="panel.setTab(3)">Next <i class="glyphicon glyphicon-arrow-right"></i></button>         
+</div>
