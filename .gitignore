@@ -1,3 +1,11 @@
 node_modules
+bower_components
 iottly_console/iottly_project/bower_components/
 .tmp/
+.bowerrc
+.editorconfig
+.gitattributes
+.gitignore
+.jscsrc
+.jshintrc
+.yo-rc.json
