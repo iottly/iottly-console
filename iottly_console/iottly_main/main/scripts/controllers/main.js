@@ -44,7 +44,7 @@ angular.module('iottlyMainApp')
         $window.open('http://127.0.0.1:8550/' + 'project' + '/' + projectid.$oid, '_blank');
     };
 
-    $scope.open = function (size) {
+    $scope.newproject = function (size) {
 
       var modalInstance = $uibModal.open({
         animation: true,
@@ -76,6 +76,7 @@ angular.module('iottlyMainApp')
         ['Remove', function ($itemScope) {
           console.log($itemScope.project);
           httpRequestService.deleteProject($itemScope.project._id.$oid);
+          $scope.projects.splice($scope.projects.indexOf($itemScope.project), 1);
         }]
     ];    
 

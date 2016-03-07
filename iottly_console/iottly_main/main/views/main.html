@@ -18,14 +18,13 @@ limitations under the License.
 <div class="jumbotron">
 
 
-
-  <button type="button" class="btn btn-default" ng-click="open()">Open me!</button>
+  <button type="submit" class="btn btn-primary" ng-click="newproject()"><i class="glyphicon glyphicon-plus"></i> New Project</button>  
   <table class="table table-condensed noselect">
     <thead>
       <tr>
         <th>Project Name</th>
         <th>Board Type</th>
-        <th>Firmare Language</th>
+        <th>Firmware Language</th>
         <th>Registered Boards</th>   
       </tr>
     </thead>
@@ -39,5 +38,6 @@ limitations under the License.
       <div ng-bind="selected"></div>
     </tbody>
   </table>
+
 </div>
 
