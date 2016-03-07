@@ -1,23 +1,21 @@
 <div class="jumbotron">
-  <h1>'Allo, 'Allo!</h1>
-  <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#/">Splendid!<span class="glyphicon glyphicon-ok"></span></a></p>
+  <table class="table table-condensed noselect">
+    <thead>
+      <tr>
+        <th>Project Name</th>
+        <th>Board Type</th>
+        <th>Firmare Language</th>
+        <th>Registered Boards</th>                            
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="project in projects" ng-click="setSelected(project._id)" ng-dblclick="openproject(project._id)" ng-class="{selected: project._id.$oid === idSelectedProject.$oid}">
+        <td><img alt="Iottly Project" src="/static/img/logo-iottly-sq.png" style="width: 20px;"><span style="white-space:pre;">   {{ project.name }}</span></td>
+        <td>{{ project.board }}</td>
+        <td>{{ project.fwlanguage }}</td>
+        <td>{{ project.boards.length }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
-<div class="row marketing">
-  <h4>HTML5 Boilerplate</h4>
-  <p>
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-  </p>
-
-  <h4>Angular</h4>
-  <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
-
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
-</div>
