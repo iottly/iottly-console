@@ -26,20 +26,45 @@ limitations under the License.
  * Controller of the iottlyMainApp
  */
 angular.module('iottlyMainApp')
-  .controller('MainCtrl', function ($scope, $window, httpRequestService) {
+  .controller('MainCtrl', function ($scope, $window, $uibModal, $log, httpRequestService) {
 
     httpRequestService.listProjects().then(function(data){
         $scope.projects = data;
       }, function (error) {
         console.error(error);
-      });
+      }
+    );
 
 
     $scope.setSelected = function(projectid){
         $scope.idSelectedProject = projectid;
-    }
+    };
 
     $scope.openproject = function(projectid){
         $window.open('http://127.0.0.1:8550/' + 'project' + '/' + projectid.$oid, '_blank');
-    }
+    };
+
+    $scope.open = function (size) {
+
+      var modalInstance = $uibModal.open({
+        animation: true,
+        templateUrl: 'views/newprojectmodal.html',
+        controller: 'NewprojectmodalCtrl',
+        size: size,
+        resolve: {
+          items: function () {
+            return $scope.username;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (newproject) {
+        $scope.projects.push(newproject);
+        $scope.setSelected(newproject._id);
+      }, function () {
+        $log.info('Modal dismissed at: ' + new Date());
+      });
+    };
+
+
   });

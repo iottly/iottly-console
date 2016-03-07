@@ -25,14 +25,13 @@ limitations under the License.
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
-
-    <link rel="stylesheet" href="/static/css/main.css">    
     <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
-<!--     <link rel="stylesheet" href="styles/main.css"> -->
     <!-- endbuild -->
+    <link rel="stylesheet" href="/static/css/main.css">
+
   </head>
   <body ng-app="iottlyMainApp">
     <!--[if lte IE 8]>
@@ -81,7 +80,7 @@ limitations under the License.
       <div class="container" style="margin-top:20px;">
         <div class="row">
           <div class="col-md-6">              
-            <p>With <span class="glyphicon glyphicon-heart"></span> from
+            <p style="color: #eee;">With <span class="glyphicon glyphicon-heart"></span> from
               <a href="http://tomorrowdata.io" target="_blank">
                 <img alt="Brand" src="/static/img/logo-td.png" style="width: 150px;margin-top: -5px;">          
               </a>
@@ -116,6 +115,8 @@ limitations under the License.
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -127,6 +128,7 @@ limitations under the License.
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/services/http-request-service.js"></script>
+        <script src="scripts/controllers/newprojectmodal.js"></script>
         <!-- endbuild -->
 </body>
 </html>

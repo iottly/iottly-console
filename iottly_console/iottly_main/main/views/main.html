@@ -16,17 +16,21 @@ limitations under the License.
 
 -->
 <div class="jumbotron">
-  <table class="table table-condensed noselect">
+
+
+
+  <button type="button" class="btn btn-default" ng-click="open()">Open me!</button>
+  <table class="table table-condensed">
     <thead>
       <tr>
         <th>Project Name</th>
         <th>Board Type</th>
         <th>Firmare Language</th>
-        <th>Registered Boards</th>                            
+        <th>Registered Boards</th>   
       </tr>
     </thead>
-    <tbody>
-      <tr ng-repeat="project in projects" ng-click="setSelected(project._id)" ng-dblclick="openproject(project._id)" ng-class="{selected: project._id.$oid === idSelectedProject.$oid}">
+    <tbody class="noselsect">
+      <tr ng-repeat="project in projects | orderBy : 'name'" ng-click="setSelected(project._id)" ng-dblclick="openproject(project._id)" ng-class="{selected: project._id.$oid === idSelectedProject.$oid}">
         <td><img alt="Iottly Project" src="/static/img/logo-iottly-sq.png" style="width: 20px;"><span style="white-space:pre;">   {{ project.name }}</span></td>
         <td>{{ project.board }}</td>
         <td>{{ project.fwlanguage }}</td>

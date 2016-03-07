@@ -1,0 +1,20 @@
+<div class="modal-header">
+    <h3 class="modal-title">Create your IoT project</h3>
+</div>
+<div class="modal-body">
+  <form name="createProjectForm" class="css-form" novalidate>
+    <fieldset class="form-group">
+      <input ng-model="project.name" type="text" class="form-control" placeholder="Project name ..." title="Project" required=""></input>
+    </fieldset>
+    <fieldset class="form-group">
+      <select ng-model="project.board" class="form-control" ng-options="board for board in ['Dev Docker Device','Arduino','Raspberry Pi','UDOO']"  title="Board" required> 
+        <option value="">Select the board for your project</option>
+      </select>
+      <div ng-hide="checkBoard()" class="alert alert-danger">'OK, this is a demo. You can just choose Raspberry PI!'</div>
+    </fieldset>
+  </form>            
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="createProjectForm.$valid && ok()">OK</button>
+  <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>
