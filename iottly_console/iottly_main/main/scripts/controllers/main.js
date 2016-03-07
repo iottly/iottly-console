@@ -44,6 +44,8 @@ angular.module('iottlyMainApp')
         $window.open('http://127.0.0.1:8550/' + 'project' + '/' + projectid.$oid, '_blank');
     };
 
+    $scope.mongoIdtoLocalISOString = mongoIdtoLocalISOString;
+
     $scope.newproject = function (size) {
 
       var modalInstance = $uibModal.open({

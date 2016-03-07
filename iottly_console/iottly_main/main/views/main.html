@@ -25,7 +25,8 @@ limitations under the License.
         <th>Project Name</th>
         <th>Board Type</th>
         <th>Firmware Language</th>
-        <th>Registered Boards</th>   
+        <th>Registered Boards</th>
+        <th>Created</th> 
       </tr>
     </thead>
     <tbody>
@@ -34,6 +35,7 @@ limitations under the License.
         <td>{{ project.board }}</td>
         <td>{{ project.fwlanguage }}</td>
         <td><span class="badge">{{ project.boards.length }}</span></td>
+        <td>{{ mongoIdtoLocalISOString(project._id) }}</td>
       </tr>
       <div ng-bind="selected"></div>
     </tbody>

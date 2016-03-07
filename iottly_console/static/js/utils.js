@@ -55,3 +55,11 @@ Date.prototype.toLocalISOString = function(){
         + pad(d.getMinutes())+':'
         + pad(d.getSeconds()) + tzs
 }
+
+function mongoIdToDate(mongoId) {
+  return new Date( parseInt( mongoId.$oid.toString().substring(0,8), 16 ) * 1000 );
+}
+
+function mongoIdtoLocalISOString(mongoId) {
+  return mongoIdToDate(mongoId).toLocalISOString().split(/[\.\+]/)[0];
+}
