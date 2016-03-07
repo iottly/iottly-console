@@ -108,7 +108,7 @@ body, .banner-row {
 }
 
 .commands-panel {
-  display: none;
+  /* display: none; */
   margin-top: 20px;
 }
 
@@ -227,4 +227,21 @@ button.collapse-toggle.collapsed:after {
 
 .sensor-panel button {
   width: 100%;
+}
+
+
+tr.selected {
+  background-color: white;
+}
+
+.noselect {
+  cursor: default;
+
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* IE/Edge */
+  user-select: none;           /* non-prefixed version, currently
+                                  not supported by any browser */
 }
