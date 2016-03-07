@@ -67,4 +67,17 @@ angular.module('iottlyMainApp')
     };
 
 
+    $scope.menuOptions = [
+        ['Open ...', function ($itemScope) {
+          console.log($itemScope.project);
+          $scope.openproject($itemScope.project._id)
+        }],
+        null, // Dividier
+        ['Remove', function ($itemScope) {
+          console.log($itemScope.project);
+          httpRequestService.deleteProject($itemScope.project._id.$oid);
+        }]
+    ];    
+
+
   });

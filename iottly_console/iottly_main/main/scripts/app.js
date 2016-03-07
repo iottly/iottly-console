@@ -34,7 +34,8 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'ui.bootstrap.contextMenu'
   ]).value('API_URL', 'http://127.0.0.1:8550/')
   .config(function ($routeProvider) {
     $routeProvider

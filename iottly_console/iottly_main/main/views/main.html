@@ -20,7 +20,7 @@ limitations under the License.
 
 
   <button type="button" class="btn btn-default" ng-click="open()">Open me!</button>
-  <table class="table table-condensed">
+  <table class="table table-condensed noselect">
     <thead>
       <tr>
         <th>Project Name</th>
@@ -29,13 +29,14 @@ limitations under the License.
         <th>Registered Boards</th>   
       </tr>
     </thead>
-    <tbody class="noselsect">
-      <tr ng-repeat="project in projects | orderBy : 'name'" ng-click="setSelected(project._id)" ng-dblclick="openproject(project._id)" ng-class="{selected: project._id.$oid === idSelectedProject.$oid}">
+    <tbody>
+      <tr ng-repeat="project in projects | orderBy : 'name'" context-menu="menuOptions" ng-click="setSelected(project._id)" ng-right-click="setSelected(project._id)" ng-dblclick="openproject(project._id)" ng-class="{selected: project._id.$oid === idSelectedProject.$oid}">
         <td><img alt="Iottly Project" src="/static/img/logo-iottly-sq.png" style="width: 20px;"><span style="white-space:pre;">   {{ project.name }}</span></td>
         <td>{{ project.board }}</td>
         <td>{{ project.fwlanguage }}</td>
-        <td>{{ project.boards.length }}</td>
+        <td><span class="badge">{{ project.boards.length }}</span></td>
       </tr>
+      <div ng-bind="selected"></div>
     </tbody>
   </table>
 </div>
