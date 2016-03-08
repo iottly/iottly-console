@@ -41,7 +41,7 @@ angular.module('iottlyMainApp')
     };
 
     $scope.openproject = function(projectid){
-        $window.open('http://127.0.0.1:8550/' + 'project' + '/' + projectid.$oid, '_blank');
+        $window.open('http://127.0.0.1:8550/v1.0/' + 'project' + '/' + projectid.$oid, '_blank');
     };
 
     $scope.mongoIdtoLocalISOString = mongoIdtoLocalISOString;

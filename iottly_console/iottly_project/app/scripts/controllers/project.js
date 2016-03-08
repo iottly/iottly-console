@@ -27,11 +27,23 @@ limitations under the License.
  */
 angular.module('consoleApp')
   .controller('ProjectCtrl', function ($scope, $rootScope, $routeParams, httpRequestService, websocketService, projectService) {
-    $scope.project = projectService.project;
+    //$scope.project = projectService.project;
     var self = this;
     //$scope.project = $rootScope.project;
 
+    $scope.project = {
+      data: {
+      }
+    };
+
     console.log($routeParams.id);
+    projectService.getProject($routeParams.id).then(function(data){
+      $scope.project.data = data.data;
+      $scope.$parent.project.data = data.data;
+
+    }, function(error) {
+      console.error(error);
+    });
 
     self.boardalert = '';
 

@@ -3,7 +3,7 @@
 Copyright 2015 Stefano Terna
 
 Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
+you may not use self file except in compliance with the License.
 You may obtain a copy of the License at
 
     http://www.apache.org/licenses/LICENSE-2.0
@@ -44,25 +44,20 @@ angular
         controller: 'AboutCtrl',
         controllerAs: 'about'
       })
-      .when('/messages', {
+      .when('/messages/:id', {
         templateUrl: 'views/messages.html',
         controller: 'MessagesCtrl',
         controllerAs: 'messagesCtrl'        
       })
-      .when('/devicecode', {
+      .when('/devicecode/:id', {
         templateUrl: 'views/devicecode.html',
         controller: 'DevicecodeCtrl',
         controllerAs: 'codeCtrl'
       })
-      .when('/deviceconsole', {
+      .when('/deviceconsole/:id', {
         templateUrl: 'views/deviceconsole.html',
         controller: 'DeviceconsoleCtrl',
         controllerAs: 'deviceCtrl'
-      })
-      .when('/project', {
-        templateUrl: 'views/project.html',
-        controller: 'ProjectCtrl',
-        controllerAs: 'projectCtrl'
       })
       .when('/project/:id', {
         templateUrl: 'views/project.html',
@@ -75,10 +70,15 @@ angular
   });
 
 angular
-  .module('consoleApp').controller('AppCtrl', function ($scope, $rootScope, $location, httpRequestService, websocketService, projectService) {
-        //this.tab = 0;
-    websocketService.init();    
-      
+  .module('consoleApp').controller('AppCtrl', function ($scope, $rootScope, $location, $routeParams, httpRequestService, websocketService, projectService) {
+        //self.tab = 0;
+    self = this;
+    websocketService.init(); 
+ 
+    $scope.project = {
+      data: {
+      }
+    };
     // $rootScope.project = {
     //   'name': 'LEGO motor remote control', 
     //   'board':'Raspberry PI', 
@@ -125,9 +125,8 @@ angular
     //   ]
     // }
 
-    $scope.project = projectService.project;
 
-    this.getSectionFromId = function(secId){
+    self.getSectionFromId = function(secId){
       switch(secId){
         case 0:
           return 'project';
@@ -139,17 +138,19 @@ angular
           return 'deviceconsole';
       }
     };
-    this.setTab = function(value){
-      this.tab = value;
-      $location.path(this.getSectionFromId(value) )
+    self.setTab = function(value){
+      return function(id) {
+        self.tab = value;
+        $location.path(self.getSectionFromId(value) + '/' + id );
+      }($scope.project.data._id.$oid);
     };
 
-    this.editCode = function(codeCtrl){
-      this.setTab(2);
-      $rootScope.projectSourceCode = this.projecttoCode();
+    self.editCode = function(codeCtrl){
+      self.setTab(2);
+      $rootScope.projectSourceCode = self.projecttoCode();
       //$rootScope.editor.getDoc().setValue();
 
-      //codeCtrl.code = this.projecttoCode();
+      //codeCtrl.code = self.projecttoCode();
       //TODO inserire il timeout nel controller
       setTimeout(function(){ 
         $rootScope.editor.refresh(); 
@@ -171,7 +172,7 @@ angular
       return distinct;
     }
 
-    this.projecttoCode = function() {
+    self.projecttoCode = function() {
       var code = '#  Kindly written by IOTTLY for you on ' + (new Date).toISOString();
       code = code + '\n';
       code = code + '\n' + '#  Project: ' + $scope.project.data.name;
@@ -186,7 +187,7 @@ angular
       var uniquemsgs = uniqueBy($scope.project.data.messages, function(x){ return x.typetag; });
 
       uniquemsgs.forEach(function(element, index, array){
-        code = code + '\n' + '#  This function will be called every time';
+        code = code + '\n' + '#  self function will be called every time';
         code = code + '\n' + '#  the board receives the following command: '+ element.type;
         code = code + '\n' + 'def ' +  element.typetag + '(command):';
         code = code + '\n';
@@ -196,7 +197,7 @@ angular
 
         code = code + '\n';
   
-        code = code + '\n' + '  ' + '#  this event is sent back to IOTTLY'
+        code = code + '\n' + '  ' + '#  self event is sent back to IOTTLY'
         code = code + '\n' + '  ' + '#  if you see it on Device Admin Console, all is going right with communication!'
         var echo = JSON.parse(messagetoJSON(element));
         echo.ECHO = 1;
@@ -220,13 +221,13 @@ angular
       return code;
     };
 
-    this.isSet = function(value){
-      return this.tab === value;
+    self.isSet = function(value){
+      return self.tab === value;
     };
 
-    this.checkMessages = function(){
+    self.checkMessages = function(){
       return $scope.project.data.messages.length === 0;
     };
 
-    //this.setTab(0);
+    //self.setTab(0);
   }); 

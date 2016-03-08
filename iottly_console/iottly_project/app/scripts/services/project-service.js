@@ -30,16 +30,29 @@ var s = angular.module('consoleApp')
     // AngularJS will instantiate a singleton by calling "new" on this function
     var self = this;
 
-    var _project = {
-      data: {
-        boards: [],
-        messages: []        
+    self._project = {};
+
+
+    self.getProject = function(id){
+
+      var deferred = $q.defer();
+
+      if (!self._project.data) {
+        httpRequestService.getProject(id).then(function (data){
+          self._project.data = data;
+          deferred.resolve(self._project);
+        }, function (error){
+          console.error(error);
+          deferred.reject(error);
+        });
+
+      } else {
+        deferred.resolve(self._project);
       }
+
+      return deferred.promise;
     };
 
-    Object.defineProperty(self, "project", 
-      { get: function () { return _project; }
-    });
     Object.defineProperty(self, "projectdata", 
       { set: function (data) { _project.data = data; }
     });

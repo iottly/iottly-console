@@ -54,7 +54,7 @@ limitations under the License.
           <a class="navbar-brand" href="#">
             <img alt="Brand" src="/static/img/logo-iottly.png" style="width: 145px;margin-top: -10px;">
           </a>    
-          <p class="navbar-text hidden-xs hidden-sm"><strong>PROJECT: TITLE</strong></p>          
+          <p class="navbar-text hidden-xs hidden-sm"><strong>PROJECT: {{ project.data.name }}</strong></p>          
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -123,9 +123,9 @@ limitations under the License.
     <script src="bower_components/angular-route/angular-route.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
+
     <!-- endbower -->
     <!-- endbuild -->
-
 
     <script src="/static/js/utils.js"></script>
     <script src="/static/js/services/http-request-service-callback.js"></script>
@@ -134,7 +134,6 @@ limitations under the License.
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/controllers/messages.js"></script>
         <script src="scripts/controllers/devicecode.js"></script>
