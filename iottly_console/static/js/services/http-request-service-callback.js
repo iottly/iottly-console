@@ -106,7 +106,7 @@ function http_callback($http, $q, API_URL) {
     };
 
     var _deleteProject = function  (id) {
-        console.log('create project');
+        console.log('delete project');
         return _delete('project', id);
     };
 
