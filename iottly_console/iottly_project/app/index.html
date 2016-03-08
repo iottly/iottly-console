@@ -42,44 +42,59 @@ limitations under the License.
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div class="header">
-      <div class="navbar navbar-default" role="navigation">
-        
-        <div class="container-fluid">
-          <div class="navbar-header">        
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">
-              <img alt="Brand" src="/static/img/logo-iottly.png" style="width: 145px;margin-top: -10px;">
-            </a>    
-          </div>
-          <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li class="active" ng-class="{ active:panel.isSet(0) }"><a href="" ng-click="panel.setTab(0)">IOTTLY Projects</a></li>
-              <li class="" ng-class="{ active:panel.isSet(1) }"><a href="" ng-click="panel.setTab(1)">Messages</a></li>
-              <li class="" ng-class="{ active:panel.isSet(2) }"><a href="" ng-click="panel.setTab(2)">Device Code</a></li>
-              <li class="" ng-class="{ active:panel.isSet(3) }"><a href="" ng-click="panel.setTab(3)">Device Admin Console</a></li>
+    <nav class="navbar navbar-default navbar-fixed-top twoRow">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>      
+          <a class="navbar-brand" href="#">
+            <img alt="Brand" src="/static/img/logo-iottly.png" style="width: 145px;margin-top: -10px;">
+          </a>    
+          <p class="navbar-text hidden-xs hidden-sm"><strong>PROJECT: TITLE</strong></p>          
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active" ng-class="{ active:panel.isSet(0) }"><a href="" ng-click="panel.setTab(0)">Devices</a></li>
+            <li class="" ng-class="{ active:panel.isSet(1) }"><a href="" ng-click="panel.setTab(1)">Messages</a></li>
+            <li class="" ng-class="{ active:panel.isSet(2) }"><a href="" ng-click="panel.setTab(2)">Firmware Code</a></li>
+            <li class="" ng-class="{ active:panel.isSet(3) }"><a href="" ng-click="panel.setTab(3)">Admin Console</a></li>
 
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
-      
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href="">USERNAME
+              <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Logout</a></li>
+              </ul>
+            </li>              
+          </ul>          
+        </div>
       </div>
-    </div>
-
+    </nav>    
     <div class="container">
     <div ng-view=""></div>
     </div>
 
-    <div class="footer">
-      <div class="container">
-        <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+    <footer class="footer" ng-cloak>
+      <div class="container" style="margin-top:20px;">
+        <div class="row">
+          <div class="col-md-6">              
+            <p style="color: #eee;">With <span class="glyphicon glyphicon-heart"></span> from
+              <a href="http://tomorrowdata.io" target="_blank">
+                <img alt="Brand" src="/static/img/logo-td.png" style="width: 150px;margin-top: -5px;">          
+              </a>
+            </p>
+          </div>
+        </div>
+
       </div>
-    </div>
+    </footer>
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->

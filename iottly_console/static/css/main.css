@@ -4,6 +4,8 @@
    Author's custom styles
    ========================================================================== */
 
+body { padding-top: 140px; }
+
 body, .banner-row {
   background-color: #333;
 }
@@ -245,3 +247,20 @@ tr.selected {
   user-select: none;           /* non-prefixed version, currently
                                   not supported by any browser */
 }
+
+.iottly-project-title {
+
+    width: 200px;
+    text-overflow:  ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
+}
+
+
+@media (min-width: 768px) { 
+    .twoRow .navbar-collapse {
+        clear: left;
+    }
+}
+
