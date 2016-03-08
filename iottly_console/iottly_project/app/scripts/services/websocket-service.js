@@ -26,17 +26,19 @@ limitations under the License.
  * Service in the consoleApp.
  */
 angular.module('consoleApp')
-  .service('websocketService', function ($rootScope) {
+  .service('websocketService', function ($rootScope, WS_URL) {
     
     var bigboss = {};
 
     bigboss.eventManager = (function($, self) {
+
+      var wsBasePath = WS_URL;
       var eventListeners = {}
       var conn = null;
 
       function init() {
         disconnect();
-        conn = new SockJS('http://' + window.location.host + '/messageChannel');
+        conn = new SockJS(wsBasePath + 'messageChannel');
 
         conn.onopen = function() {
           fireEvent('onopen');
