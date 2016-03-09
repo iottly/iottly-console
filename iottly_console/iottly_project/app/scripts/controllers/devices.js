@@ -8,7 +8,7 @@
  * Controller of the consoleApp
  */
 angular.module('consoleApp')
-  .controller('DevicesCtrl', function ($scope, $rootScope, $routeParams, $uibModal, httpRequestService, websocketService, projectService) {
+  .controller('DevicesCtrl', function ($scope, $rootScope, $routeParams, $uibModal, $location, httpRequestService, websocketService, projectService) {
     //$scope.project = projectService.project;
     var self = this;
     //$scope.project = $rootScope.project;
@@ -34,7 +34,11 @@ angular.module('consoleApp')
     };
 
     $scope.setSelected = function(board){
-        $scope.SelectedBoard = board;
+      $scope.SelectedBoard = board;
+    };
+
+    $scope.openconsole = function(board){
+      $location.path('/' + 'deviceconsole' + '/' + $scope.project.data._id.$oid + '/' + board.ID);
     };
 
     $scope.editBoard = function (size) {

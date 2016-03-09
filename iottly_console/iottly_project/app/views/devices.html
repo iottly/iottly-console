@@ -42,7 +42,7 @@ limitations under the License.
         </tr>
       </thead>
       <tbody>
-        <tr ng-repeat="board in project.data.boards" context-menu="menuOptions" ng-click="setSelected(board)" ng-right-click="setSelected(board)" ng-dblclick="editBoard(board)" ng-class="{selected: board.ID === SelectedBoard.ID}">
+        <tr ng-repeat="board in project.data.boards" context-menu="menuOptions" ng-click="setSelected(board)" ng-right-click="setSelected(board)" ng-dblclick="openconsole(board)" ng-class="{selected: board.ID === SelectedBoard.ID}">
           <td ng-hide="board.name"><span class="text-muted">Give a name to the board</span></td>
           <td ng-show="board.name">{{ board.name }}</td>
           <td>{{ board.ID }}</td>

@@ -24,7 +24,7 @@ limitations under the License.
     <div class="panel-body">
       <select class="form-control" 
         ng-options="board.name + ' - unique ID: ' + board.ID for board in project.data.boards track by board.ID"
-        ng-model="selected.board">
+        ng-model="selectedboard">
       </select>
       <div class=" commands-panel" ng-show="boardisSelected()">
         <div class="well">
@@ -32,12 +32,12 @@ limitations under the License.
             <div id="sms-container" class="col-sm-9 col-xs-10">
               <span class="inline-lbl hidden-xs">Use the following to send commands to the board:</span>
             </div>
-            <div id="presence-container" class="col-sm-3 col-xs-2 text-right" ng-show="_selected.board">
-              <span class="inline-lbl hidden-xs" ng-show="_selected.board.present">Connected! :)</span>
-              <span class="inline-lbl hidden-xs" ng-show="!_selected.board.present">Not connected :(</span>
+            <div id="presence-container" class="col-sm-3 col-xs-2 text-right" ng-show="selectedboard">
+              <span class="inline-lbl hidden-xs" ng-show="selectedboard.present">Connected! :)</span>
+              <span class="inline-lbl hidden-xs" ng-show="!selectedboard.present">Not connected :(</span>
 
               <div class="led-container led-large">
-                <div id="presence-indicator" class="led" ng-class="((_selected.board.present) ? 'led-green' : 'led-red')"></div>
+                <div id="presence-indicator" class="led" ng-class="((selectedboard.present) ? 'led-green' : 'led-red')"></div>
               </div>
             </div>
           </div>

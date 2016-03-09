@@ -147,27 +147,21 @@ angular
     // }
 
 
-    self.getSectionFromId = function(secId){
-      switch(secId){
-        case 0:
-          return 'devices';
-        case 1: 
-          return 'messages';
-        case 2: 
-          return 'devicecode';
-        case 3: 
-          return 'deviceconsole';
-      }
-    };
-    self.setTab = function(value){
+    $scope.$on('$routeChangeSuccess', function(event) {
+        var pathparts = $location.path().split("/");
+        self.tab = pathparts[1];
+
+    });
+
+    self.setTab = function(tab){
       return function(id) {
-        self.tab = value;
-        $location.path(self.getSectionFromId(value) + '/' + id );
+        self.tab = tab;
+        $location.path(tab + '/' + id );
       }($scope.project.data._id.$oid);
     };
 
     self.editCode = function(codeCtrl){
-      self.setTab(2);
+      self.setTab('devicecode');
       $rootScope.projectSourceCode = self.projecttoCode();
       //$rootScope.editor.getDoc().setValue();
 
@@ -250,5 +244,5 @@ angular
       return $scope.project.data.messages.length === 0;
     };
 
-    //self.setTab(0);
+    
   }); 

@@ -34,56 +34,44 @@ angular.module('consoleApp')
 
     var projectListener = $rootScope.$on('project', function (event, data) {
       $scope.initSelectedBoard();
+      $scope.initCommands();
     });
     $scope.$on('$destroy', projectListener);
 
     $scope.$on('$routeChangeSuccess', function(event) {
       $scope.initSelectedBoard();
+      $scope.initCommands();
     });
     
 
-    $scope._selected = {_board: {}};
+    $scope._selectedboard = undefined;
 
     $scope.initSelectedBoard = function(){
       if ($routeParams.boardid && $scope.project.data.boards) {
 
-        $scope._selected._board = $scope.project.data.boards.find(function(board){
+        $scope._selectedboard = $scope.project.data.boards.find(function(board){
           return board.ID === $routeParams.boardid;
         });
         $scope.selectBoard();
       };
     };
 
-    Object.defineProperty($scope, "selected", {
+    Object.defineProperty($scope, "selectedboard", {
       get: function () { 
-        return $scope._selected;
-      },
-      // set: function (selected) { 
-      //   var pathparts = $location.path().split("/");
-      //   $location.path('/' + pathparts[1] + '/' + pathparts[2] + '/' + board.ID);
-      //   $scope._selected.board = board;
-      //   $scope.selectBoard();
-      // },
-
-    });
-
-    Object.defineProperty($scope._selected, "board", {
-      get: function () { 
-        return $scope._selected._board;
+        return $scope._selectedboard;
       },
       set: function (board) { 
         var pathparts = $location.path().split("/");
-        $location.path('/' + pathparts[1] + '/' + pathparts[2] + '/' + board.ID);
-        //$scope._selected._board = board;
-        //$scope.selectBoard();
-      },
 
+        //change in location will trigger routeChangeSuccess and in turn call selectBoard()
+        $location.path('/' + pathparts[1] + '/' + pathparts[2] + '/' + board.ID);
+      },
     });
 
 
 
     $scope.selectBoard = function() {
-      var jid = $scope._selected._board.jid;
+      var jid = $scope._selectedboard.jid;
 
       // Adjust for JID inconsistency
       if (jid && jid.substring(jid.length - 3) != "/WI" && jid.substring(0,2) == "wi") {
@@ -93,14 +81,13 @@ angular.module('consoleApp')
       }
 
       $scope.pollPresenceForBoard();
-      console.log($scope._selected.board);
 
       //loadLastMessages(jid, 6);
 
     }
 
     $scope.boardisSelected = function(){
-      return $scope.selected.board;
+      return $scope.selectedboard;
     };
     
     $scope.messagetoJSON = function(message){
@@ -110,7 +97,7 @@ angular.module('consoleApp')
     var myListener = $rootScope.$on('events', function (event, data) {
       console.log('events');
       data.msgs.forEach(function(item){
-        if ($scope.boardisSelected() && item.from.indexOf($scope.selected.board.jid) > -1) {
+        if ($scope.boardisSelected() && item.from.indexOf($scope.selectedboard.jid) > -1) {
           $scope.appendMessage(item);
         }
       });      
@@ -148,37 +135,40 @@ angular.module('consoleApp')
 
 
     $scope.pollPresenceForBoard = function() {
-      httpRequestService.pollPresenceForBoard($scope._selected.board.jid).then(function (data){
-          $scope._selected._board.present = data.present;
-          //$scope.$apply();
+      httpRequestService.pollPresenceForBoard($scope._selectedboard.jid).then(function (data){
+          $scope._selectedboard.present = data.present;
       }, function (error){
         console.log(error);
       });
     }
 
-    if ($scope.project.data.name) {
-      $scope.commands = [
-        {
-          'type': 'update firmware',
-          'description': 'Over the air firmware update',
-          'keys':[
-            {
-              'key':'new_firmware_available',
-              'value': 1
-            },
-            {
-              'key':'firmware_name',
-              'value': $scope.project.data.name.split(' ').join('_')
-            }
-          ]
-        }    
-      ];
+    $scope.initCommands = function() {
+      console.log("init commands");
+      if ($scope.project.data.name) {
+        $scope.commands = [
+          {
+            'type': 'update firmware',
+            'description': 'Over the air firmware update',
+            'keys':[
+              {
+                'key':'new_firmware_available',
+                'value': 1
+              },
+              {
+                'key':'firmware_name',
+                'value': $scope.project.data.name.split(' ').join('_')
+              }
+            ]
+          }    
+        ];
 
-      $scope.project.data.messages.forEach(function(element, index, array){
-        $scope.commands.push(element);
-      }, this);
+        $scope.project.data.messages.forEach(function(element, index, array){
+          $scope.commands.push(element);
+        }, this);
+        
+      }
 
-    }    
+    };
 
 
 
@@ -196,7 +186,7 @@ angular.module('consoleApp')
       
 
       echo.to = 'iottly.org/' + project.data.name.split(' ').join('_');
-      echo.from =  $scope.selected.board.name.split(' ').join('_') + '/' + $scope.selected.board.ID;
+      echo.from =  $scope.selectedboard.name.split(' ').join('_') + '/' + $scope.selectedboard.ID;
       echo.timestamp = new Date;
 
       
