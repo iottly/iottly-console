@@ -57,21 +57,8 @@ var s = angular.module('consoleApp')
     };
 
     Object.defineProperty(self, "projectdata", 
-      { set: function (data) { _project.data = data; }
+      { set: function (data) { self._project.data = data; }
     });
-
-
-    // self.project = {
-    //   get value() {
-    //       return _project;
-    //   },
-    //   set data(value) {
-    //     _project.data = value;
-    //   }
-
-    // };
-
-
 
 
     self.createProject = function(project){
@@ -89,17 +76,31 @@ var s = angular.module('consoleApp')
       return deferred.promise;
     };
 
+    self.updateProject = function(project, data){
+      var deferred = $q.defer();
+
+      httpRequestService.updateProject(project.data._id.$oid, data).then(function(data){
+        console.log(self);
+        self.projectdata = data;
+        deferred.resolve(data);
+      }, function (error) {
+        console.error(error);
+        deferred.reject(data);
+      });
+
+      return deferred.promise;
+    };
+
+
+
     var myListener = $rootScope.$on('devices', function (event, data) {
       console.log(data);
 
       if (data.registration.new) {
-        self.project.data.boards.push(data.registration.board);
+        self._project.data.boards.push(data.registration.board);
       }
 
     });
 
 
   });
-
-console.log('s');
-console.log(s);

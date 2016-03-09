@@ -77,8 +77,11 @@ angular.module('iottlyMainApp')
         null, // Dividier
         ['Remove', function ($itemScope) {
           console.log($itemScope.project);
-          httpRequestService.deleteProject($itemScope.project._id.$oid);
-          $scope.projects.splice($scope.projects.indexOf($itemScope.project), 1);
+          httpRequestService.deleteProject($itemScope.project._id.$oid).then(function (data){
+            $scope.projects.splice($scope.projects.indexOf($itemScope.project), 1);
+          }, function (error){
+            console.error(error);
+          });
         }]
     ];    
 

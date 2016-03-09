@@ -26,7 +26,7 @@ limitations under the License.
  * Controller of the consoleApp
  */
 angular.module('consoleApp')
-  .controller('DeviceconsoleCtrl', function ($scope, $rootScope, $timeout, projectService) {
+  .controller('DeviceconsoleCtrl', function ($scope, $rootScope, $timeout, $routeParams, projectService) {
     var self = this;
 
     Utils.controllerhelpers.getProject($scope, $routeParams, projectService);

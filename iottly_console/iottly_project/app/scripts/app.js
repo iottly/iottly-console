@@ -35,7 +35,9 @@ angular
     'ngSanitize',
     'ngTouch',
     'ui.codemirror',
-    'angularSpinner'
+    'angularSpinner',
+    'ui.bootstrap',
+    'ui.bootstrap.contextMenu'    
   ]).value('API_URL', 'http://127.0.0.1:8550/v1.0/') // api
   .value('WS_URL', 'http://127.0.0.1:8560/v1.0/')    // web socket
   .config(function ($routeProvider) {
@@ -55,16 +57,16 @@ angular
         controller: 'DeviceconsoleCtrl',
         controllerAs: 'deviceCtrl'
       })
-      .when('/project/:id', {
-        templateUrl: 'views/project.html',
-        controller: 'ProjectCtrl',
-        controllerAs: 'projectCtrl'
+      .when('/devices/:id', {
+        templateUrl: 'views/devices.html',
+        controller: 'DevicesCtrl',
+        controllerAs: 'devicesCtrl'
       })
       .when('/:id', {
-        redirectTo: '/project/:id'
+        redirectTo: '/devices/:id'
       })
       .otherwise({
-        redirectTo: '/project/:id'
+        redirectTo: '/devices/:id'
       });
   });
 
@@ -73,20 +75,16 @@ angular
 
     self = this;
     
-    websocketService.init(); 
-
- 
-    $scope.project = {
-      data: {
-      }
-    };
-
+    $scope.project = {data: {}};
 
     var projectListener = $rootScope.$on('project', function (event, data) {
       $scope.project.data = data;
+
+      //init websocket only if project is ok
+      websocketService.init(); 
     });
     $scope.$on('$destroy', projectListener);
-    
+
     var projecterrorListener = $rootScope.$on('projecterror', function (event, data) {
       window.location = "/project/404.html";
     });

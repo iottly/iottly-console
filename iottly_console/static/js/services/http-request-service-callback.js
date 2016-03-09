@@ -105,6 +105,11 @@ function http_callback($http, $q, API_URL) {
         return _post('project', projectObj);
     };
 
+    var _updateProject = function  (id, data) {
+        console.log('update project');
+        return _update('project', id, data);
+    };
+
     var _deleteProject = function  (id) {
         console.log('delete project');
         return _delete('project', id);
@@ -124,6 +129,7 @@ function http_callback($http, $q, API_URL) {
 
     return {    
         "createProject" : _createProject,
+        "updateProject" : _updateProject,
         "deleteProject" : _deleteProject,
         "listProjects" : _listProjects,        
         "getProject" : _getProject,        

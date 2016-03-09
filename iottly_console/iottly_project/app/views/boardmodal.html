@@ -1,0 +1,16 @@
+<div class="modal-header">
+    <h3 class="modal-title">Edit your board</h3>
+</div>
+<div class="modal-body">
+  <p>Unique ID: {{ board.ID }}</p>
+  <p>MAC address: {{ board.macaddress }}</p>
+  <form name="editBoardForm" class="css-form" novalidate>
+    <fieldset class="form-group">
+      <input ng-model="board.name" type="text" placeholder="Board name ..." title="Board" required=""></input>
+    </fieldset>
+  </form>            
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="editBoardForm.$valid && ok()">OK</button>
+  <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>
