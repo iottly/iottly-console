@@ -29,7 +29,7 @@ angular.module('consoleApp')
   .controller('DeviceconsoleCtrl', function ($scope, $rootScope, $timeout, projectService) {
     var self = this;
 
-    $scope.project = projectService.project;
+    Utils.controllerhelpers.getProject($scope, $routeParams, projectService);
     
     $scope.events = [];
 

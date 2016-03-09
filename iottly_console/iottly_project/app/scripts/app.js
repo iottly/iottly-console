@@ -35,15 +35,11 @@ angular
     'ngSanitize',
     'ngTouch',
     'ui.codemirror',
+    'angularSpinner'
   ]).value('API_URL', 'http://127.0.0.1:8550/v1.0/') // api
   .value('WS_URL', 'http://127.0.0.1:8560/v1.0/')    // web socket
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
-      })
       .when('/messages/:id', {
         templateUrl: 'views/messages.html',
         controller: 'MessagesCtrl',
@@ -64,21 +60,43 @@ angular
         controller: 'ProjectCtrl',
         controllerAs: 'projectCtrl'
       })
+      .when('/:id', {
+        redirectTo: '/project/:id'
+      })
       .otherwise({
-        redirectTo: '/project'
+        redirectTo: '/project/:id'
       });
   });
 
 angular
   .module('consoleApp').controller('AppCtrl', function ($scope, $rootScope, $location, $routeParams, httpRequestService, websocketService, projectService) {
-        //self.tab = 0;
+
     self = this;
+    
     websocketService.init(); 
+
  
     $scope.project = {
       data: {
       }
     };
+
+
+    var projectListener = $rootScope.$on('project', function (event, data) {
+      $scope.project.data = data;
+    });
+    $scope.$on('$destroy', projectListener);
+    
+    var projecterrorListener = $rootScope.$on('projecterror', function (event, data) {
+      window.location = "/project/404.html";
+    });
+    $scope.$on('$destroy', projecterrorListener);
+
+
+    self.validateProject = function(){
+      return $scope.project.data._id;
+    }
+
     // $rootScope.project = {
     //   'name': 'LEGO motor remote control', 
     //   'board':'Raspberry PI', 

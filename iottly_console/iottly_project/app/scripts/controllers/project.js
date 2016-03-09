@@ -31,19 +31,7 @@ angular.module('consoleApp')
     var self = this;
     //$scope.project = $rootScope.project;
 
-    $scope.project = {
-      data: {
-      }
-    };
-
-    console.log($routeParams.id);
-    projectService.getProject($routeParams.id).then(function(data){
-      $scope.project.data = data.data;
-      $scope.$parent.project.data = data.data;
-
-    }, function(error) {
-      console.error(error);
-    });
+    Utils.controllerhelpers.getProject($scope, $routeParams, projectService);
 
     self.boardalert = '';
 

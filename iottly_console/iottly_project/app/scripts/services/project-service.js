@@ -37,17 +37,20 @@ var s = angular.module('consoleApp')
 
       var deferred = $q.defer();
 
-      if (!self._project.data) {
+      if (!self._project.data || self._project.data._id.$oid !== id) {
         httpRequestService.getProject(id).then(function (data){
           self._project.data = data;
-          deferred.resolve(self._project);
+          $rootScope.$emit('project', self._project.data);
+          deferred.resolve(self._project.data);
         }, function (error){
           console.error(error);
+          $rootScope.$emit('projecterror', error);          
           deferred.reject(error);
         });
 
       } else {
-        deferred.resolve(self._project);
+        $rootScope.$emit('project', self._project.data);
+        deferred.resolve(self._project.data);
       }
 
       return deferred.promise;

@@ -27,7 +27,8 @@ limitations under the License.
  */
 angular.module('consoleApp')
   .controller('DevicecodeCtrl', function ($scope, $rootScope, projectService) {
-    $scope.project = projectService.project;
+    Utils.controllerhelpers.getProject($scope, $routeParams, projectService);
+
     
     this.awesomeThings = [
       'HTML5 Boilerplate',
