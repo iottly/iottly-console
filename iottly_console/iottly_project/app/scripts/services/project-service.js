@@ -49,7 +49,9 @@ var s = angular.module('consoleApp')
         });
 
       } else {
-        $rootScope.$emit('project', self._project.data);
+        //this causes websocket connection close
+        //check why it is needed:
+        //$rootScope.$emit('project', self._project.data);
         deferred.resolve(self._project.data);
       }
 

@@ -56,8 +56,13 @@ angular
       .when('/deviceconsole/:id', {
         templateUrl: 'views/deviceconsole.html',
         controller: 'DeviceconsoleCtrl',
-        controllerAs: 'deviceCtrl'
+        controllerAs: 'consoleCtrl'
       })
+      .when('/deviceconsole/:id/:boardid', {
+        templateUrl: 'views/deviceconsole.html',
+        controller: 'DeviceconsoleCtrl',
+        controllerAs: 'consoleCtrl'
+      })      
       .when('/devices/:id', {
         templateUrl: 'views/devices.html',
         controller: 'DevicesCtrl',
@@ -80,7 +85,6 @@ angular
 
     var projectListener = $rootScope.$on('project', function (event, data) {
       $scope.project.data = data;
-
       //init websocket only if project is ok
       websocketService.init(); 
     });
@@ -146,7 +150,7 @@ angular
     self.getSectionFromId = function(secId){
       switch(secId){
         case 0:
-          return 'project';
+          return 'devices';
         case 1: 
           return 'messages';
         case 2: 

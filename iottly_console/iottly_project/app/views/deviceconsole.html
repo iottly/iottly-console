@@ -22,25 +22,28 @@ limitations under the License.
       <h3 class="panel-title">Command console</h3>
     </div>
     <div class="panel-body">
-      <select class="form-control" ng-model="deviceCtrl.selectedboard">
-        <option ng-repeat="board in project.data.boards" value="{{ board }}">{{ board.name + ' - unique ID: ' + board.ID }}</option>
+      <select class="form-control" 
+        ng-options="board.name + ' - unique ID: ' + board.ID for board in project.data.boards track by board.ID"
+        ng-model="selected.board">
       </select>
-      <div class=" commands-panel" ng-show="deviceCtrl.boardisSelected()">
+      <div class=" commands-panel" ng-show="boardisSelected()">
         <div class="well">
           <div class="row">
             <div id="sms-container" class="col-sm-9 col-xs-10">
               <span class="inline-lbl hidden-xs">Use the following to send commands to the board:</span>
             </div>
-            <div id="presence-container" class="col-sm-3 col-xs-2 text-right">
-              <span class="inline-lbl hidden-xs">Your board is connected!</span>
+            <div id="presence-container" class="col-sm-3 col-xs-2 text-right" ng-show="_selected.board">
+              <span class="inline-lbl hidden-xs" ng-show="_selected.board.present">Connected! :)</span>
+              <span class="inline-lbl hidden-xs" ng-show="!_selected.board.present">Not connected :(</span>
+
               <div class="led-container led-large">
-                <div id="presence-indicator" class="led led-green"></div>
+                <div id="presence-indicator" class="led" ng-class="((_selected.board.present) ? 'led-green' : 'led-red')"></div>
               </div>
             </div>
           </div>
           <div class="row">
             <div class="btn-group-vertical col-xs-12">
-              <button ng-repeat="command in commands" class="command btn btn-default" title="{{ command.description }}" ng-click="deviceCtrl.send(command, panel.project)">{{ command.type }} <code class="hidden-xs">{{ deviceCtrl.messagetoJSON(command) }}</code></button>
+              <button ng-repeat="command in commands" class="command btn btn-default" title="{{ command.description }}" ng-click="send(command, panel.project)">{{ command.type }} <code class="hidden-xs">{{ messagetoJSON(command) }}</code></button>
             </div>
           </div>
         </div>

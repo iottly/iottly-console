@@ -138,6 +138,12 @@ function http_callback($http, $q, API_URL) {
         return deferred.promise;
     };
 
+    var _pollPresenceForBoard = function (jid) {
+        console.log('poll presence');
+        return _get('presence', jid);
+    };
+
+
     return {    
         "createProject" : _createProject,
         "updateProject" : _updateProject,
@@ -145,6 +151,7 @@ function http_callback($http, $q, API_URL) {
         "listProjects" : _listProjects,        
         "getProject" : _getProject,        
         "deleteBoard" : _deleteBoard,
+        "pollPresenceForBoard": _pollPresenceForBoard,
         "list": _list,
         "get": _get,
         "post": _post,
