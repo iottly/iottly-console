@@ -55,13 +55,28 @@ angular.module('consoleApp')
       });
 
       modalInstance.result.then(function (updatedproject) {
-        console.log(updatedproject); 
-        console.log($scope.project);
         $scope.project.data = updatedproject;
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
       });
     };
+
+
+    $scope.menuOptions = [
+        ['Edit ...', function ($itemScope) {
+          console.log($itemScope.board);
+          $scope.editBoard();
+        }],
+        null, // Dividier
+        ['Remove', function ($itemScope) {
+          console.log($itemScope.board);
+          projectService.deleteBoard($scope.project, $itemScope.board).then(function (data){
+            console.log(data);
+          }, function (error){
+            console.error(error);
+          });
+        }]
+    ];    
 
 
   });

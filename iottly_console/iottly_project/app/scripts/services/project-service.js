@@ -70,7 +70,7 @@ var s = angular.module('consoleApp')
         deferred.resolve(data);
       }, function (error) {
         console.error(error);
-        deferred.reject(data);
+        deferred.reject(error);
       });
 
       return deferred.promise;
@@ -85,7 +85,22 @@ var s = angular.module('consoleApp')
         deferred.resolve(data);
       }, function (error) {
         console.error(error);
-        deferred.reject(data);
+        deferred.reject(error);
+      });
+
+      return deferred.promise;
+    };
+
+    self.deleteBoard = function(project, board){
+      var deferred = $q.defer();
+
+      httpRequestService.deleteBoard(project.data._id.$oid, board.macaddress).then(function(data){
+        console.log(self);
+        self._project.data.boards.splice(self._project.data.boards.indexOf(board), 1);
+        deferred.resolve(self._project.data);
+      }, function (error) {
+        console.error(error);
+        deferred.reject(error);
       });
 
       return deferred.promise;

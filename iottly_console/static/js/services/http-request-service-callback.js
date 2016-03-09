@@ -126,6 +126,17 @@ function http_callback($http, $q, API_URL) {
         return _get('project', id);
     };
 
+    var _deleteBoard = function (id, macaddress) {
+        var deferred = $q.defer();
+        var wsUrl = 'project';
+        $http.delete(wsBasePath + wsUrl + '/' + id + '/deviceregistration/' + macaddress).success(function (data) {
+          deferred.resolve(data);
+        }).error(function (error) {
+          deferred.reject(error);
+        });
+
+        return deferred.promise;
+    };
 
     return {    
         "createProject" : _createProject,
@@ -133,6 +144,7 @@ function http_callback($http, $q, API_URL) {
         "deleteProject" : _deleteProject,
         "listProjects" : _listProjects,        
         "getProject" : _getProject,        
+        "deleteBoard" : _deleteBoard,
         "list": _list,
         "get": _get,
         "post": _post,
