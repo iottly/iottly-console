@@ -22,11 +22,14 @@ limitations under the License.
         <li>power up your {{ project.data.board }}</li>
         <li>connect it to your local network (LAN or WiFI)</li>
         <li>ssh (or putty) into the device (this will be the last and only time)</li>
-        <li>copy this command, paste it into ssh (or putty) console and hit return: <br><code>{{ project.data.runinstallercommand }}</code></li>
+        <li>
+          copy this command, paste it into ssh (or putty) console and hit return: <br> 
+          <button class="btn btn-default" ngclipboard data-clipboard-target="#tocopy"><i class="glyphicon glyphicon-copy"></i>
+          </button>
+          <code id="tocopy">{{ project.data.runinstallercommand }}</code>
+        </li>
       </ul>
     </p>
-    {{ project.data.projecturl }}
-
   </div>
 
   <div class="well well-lg" name="createboard" ng-form>
