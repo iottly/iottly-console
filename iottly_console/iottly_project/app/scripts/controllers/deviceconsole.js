@@ -28,8 +28,7 @@ limitations under the License.
 angular.module('consoleApp')
   .controller('DeviceconsoleCtrl', function ($scope, $rootScope, $timeout, $routeParams, $location, projectService, httpRequestService) {
     
-    $scope.events = [];
-
+ 
     Utils.controllerhelpers.getProject($scope, $routeParams, projectService);
 
     var projectListener = $rootScope.$on('project', function (event, data) {
@@ -42,6 +41,7 @@ angular.module('consoleApp')
     });
 
     $scope.init = function(){
+      $scope.emptyEvents();
       $scope.initSelectedBoard();
       $scope.initCommands();
     };
@@ -87,7 +87,7 @@ angular.module('consoleApp')
 
       $scope.pollPresenceForBoard();
 
-      $scope.loadLastMessages(jid, 6);
+      $scope.loadLastMessages();
 
     }
 
@@ -107,6 +107,15 @@ angular.module('consoleApp')
     * BEGIN
     * MESSAGE MANAGEMENT
     */
+
+    $scope.filter = {
+      numMessages: 10,
+      queryJson: undefined 
+    }
+
+    $scope.emptyEvents = function(){
+      $scope.events = [];     
+    };
 
     $scope.messagetoJSON = function(message){
       return messagetoJSON(message);
@@ -153,9 +162,11 @@ angular.module('consoleApp')
     };
 
 
-    $scope.loadLastMessages = function (jid, numMessages) {
-      httpRequestService.getMessages($scope._selectedboard.ID, numMessages).then(function (data){
-        $scope.events = [];
+
+    $scope.loadLastMessages = function () {
+      httpRequestService.getMessages($scope._selectedboard.ID, 
+        $scope.filter.numMessages, $scope.filter.queryJson).then(function (data){
+        $scope.emptyEvents();
         data.messages.forEach(function(item){
           $scope.appendMessage(item);   
         });

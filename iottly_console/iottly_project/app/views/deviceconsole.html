@@ -55,11 +55,18 @@ limitations under the License.
     <div class="panel-heading">
       <div>
         <h3 class="panel-title pull-left">Message console</h3>
+        <button type="button" class="btn btn-default btn-sm pull-right" ng-click="emptyEvents()">
+          <span class="glyphicon glyphicon-trash"></span>
+        </button>        
       </div>
+      <form class="form-horizontal filter-form" role="form">
+        <input type="text" name="numMessages" class="form-control" ng-model="filter.numMessages"  placeholder="#">
+        <input rows="2" type="text" ng-model="filter.queryJson" name="queryJson" class="form-control" placeholder="Mongo JSON">
+        <button type="submit" class="btn btn-default filter" ng-click="loadLastMessages()">Filter</button>
+      </form>      
     </div>
     <div class="panel-body">
       <div class="messages-container row">
-
         <div class="well message" ng-repeat="event in events">
           <div class="col-xs-12 col-md-4 msg-attr"><div class="label label-default msg-lbl">timestamp:</div><code>{{event.timestamp}}</code></div>
           <div class="col-xs-12 col-md-4 msg-attr"><div class="label label-default msg-lbl">from:</div><code>{{event.from}}</code></div>
