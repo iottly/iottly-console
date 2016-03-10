@@ -33,17 +33,24 @@ angular.module('consoleApp')
     Utils.controllerhelpers.getProject($scope, $routeParams, projectService);
 
     var projectListener = $rootScope.$on('project', function (event, data) {
-      $scope.initSelectedBoard();
-      $scope.initCommands();
+      $scope.init();
     });
     $scope.$on('$destroy', projectListener);
 
     $scope.$on('$routeChangeSuccess', function(event) {
+      $scope.init();
+    });
+
+    $scope.init = function(){
       $scope.initSelectedBoard();
       $scope.initCommands();
-    });
-    
+    };
 
+
+    /*
+    * BEGIN
+    * BOARD SELECTION MANAGEMENT
+    */
     $scope._selectedboard = undefined;
 
     $scope.initSelectedBoard = function(){
@@ -68,8 +75,6 @@ angular.module('consoleApp')
       },
     });
 
-
-
     $scope.selectBoard = function() {
       var jid = $scope._selectedboard.jid;
 
@@ -82,7 +87,7 @@ angular.module('consoleApp')
 
       $scope.pollPresenceForBoard();
 
-      //loadLastMessages(jid, 6);
+      $scope.loadLastMessages(jid, 6);
 
     }
 
@@ -90,6 +95,19 @@ angular.module('consoleApp')
       return $scope.selectedboard;
     };
     
+    /*
+    * END
+    * BOARD SELECTION MANAGEMENT
+    */
+
+
+
+
+    /*
+    * BEGIN
+    * MESSAGE MANAGEMENT
+    */
+
     $scope.messagetoJSON = function(message){
       return messagetoJSON(message);
     };    
@@ -100,6 +118,7 @@ angular.module('consoleApp')
         if ($scope.boardisSelected() && item.from.indexOf($scope.selectedboard.jid) > -1) {
           $scope.appendMessage(item);
         }
+        $scope.$apply();
       });      
     });
     $scope.$on('$destroy', myListener);
@@ -129,18 +148,52 @@ angular.module('consoleApp')
       message['timestamp'] = toDateString(message.timestamp.$date);
       
       $scope.events.push(message);  
-      $scope.$apply();
+      
       //$msgContainer.scrollTop($msgContainer[0].scrollHeight);
     };
 
 
+    $scope.loadLastMessages = function (jid, numMessages) {
+      httpRequestService.getMessages($scope._selectedboard.ID, numMessages).then(function (data){
+        $scope.events = [];
+        data.messages.forEach(function(item){
+          $scope.appendMessage(item);   
+        });
+      }, function (error){
+        console.log(error);
+      });
+    }
+
+    /*
+    * END
+    * MESSAGE MANAGEMENT
+    */
+
+
+    /*
+    * BEGIN
+    * PRESENCE MANAGEMENT
+    */
+
     $scope.pollPresenceForBoard = function() {
-      httpRequestService.pollPresenceForBoard($scope._selectedboard.jid).then(function (data){
+      httpRequestService.pollPresenceForBoard($scope._selectedboard.ID).then(function (data){
           $scope._selectedboard.present = data.present;
       }, function (error){
         console.log(error);
       });
     }
+
+    /*
+    * END
+    * PRESENCE MANAGEMENT
+    */
+
+
+
+    /*
+    * BEGIN
+    * COMMAND MANAGEMENT
+    */
 
     $scope.initCommands = function() {
       console.log("init commands");
@@ -170,12 +223,6 @@ angular.module('consoleApp')
 
     };
 
-
-
-
-  
-
-
     $scope.send = function(command, project){
       var echo = {};
       var body = JSON.parse(messagetoJSON(command));
@@ -193,4 +240,11 @@ angular.module('consoleApp')
       $timeout(function(events){ events.push(echo); }, 1000, true, $scope.events);
       
     };
+
+    /*
+    * END
+    * COMMAND MANAGEMENT
+    */
+
+
   });

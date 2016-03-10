@@ -35,13 +35,15 @@ function http_callback($http, $q, API_URL) {
         return deferred.promise;
     };
 
-    var _get = function (wsUrl, id) {
+    var _get = function (wsUrl, id, data) {
         if (id === undefined) {
           return _list(wsUrl);
         }
         var deferred = $q.defer();
         if (wsUrl) {
-          $http.get(wsBasePath + wsUrl + '/' + id).success(function (data) {
+          var config = (data && {params: data}) || undefined
+
+          $http.get(wsBasePath + wsUrl + '/' + id, config).success(function (data) {
             try {
               
                 deferred.resolve(data);
@@ -138,9 +140,20 @@ function http_callback($http, $q, API_URL) {
         return deferred.promise;
     };
 
-    var _pollPresenceForBoard = function (jid) {
+    var _pollPresenceForBoard = function (boardid) {
         console.log('poll presence');
-        return _get('presence', jid);
+        return _get('presence', boardid);
+    };
+
+    var _getMessages = function (boardid, numMessages, queryJson) {
+        console.log('get messages');
+        var data = {
+            numMessages: numMessages,
+            queryJson: queryJson
+        };
+        console.log(data);
+
+        return _get('msg', boardid, data);
     };
 
 
@@ -152,6 +165,7 @@ function http_callback($http, $q, API_URL) {
         "getProject" : _getProject,        
         "deleteBoard" : _deleteBoard,
         "pollPresenceForBoard": _pollPresenceForBoard,
+        "getMessages": _getMessages,
         "list": _list,
         "get": _get,
         "post": _post,
