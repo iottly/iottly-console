@@ -38,7 +38,8 @@ angular
     'angularSpinner',
     'ui.bootstrap',
     'ui.bootstrap.contextMenu',
-    'ngclipboard'
+    'ngclipboard',
+    'ui.select'
   ]).value('API_URL', 'http://127.0.0.1:8550/v1.0/') // api
   .value('WS_URL', 'http://127.0.0.1:8560/v1.0/')    // web socket
   .config(function ($routeProvider) {
