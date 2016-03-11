@@ -206,6 +206,10 @@ angular.module('consoleApp')
     * COMMAND MANAGEMENT
     */
 
+    $scope.messagetoJSON = function(message){
+      return Utils.controllerhelpers.messagetoJSON(message);
+    };
+
     $scope.initCommands = function() {
       console.log("init commands");
       if ($scope.project.data.name) {
@@ -236,14 +240,14 @@ angular.module('consoleApp')
 
     $scope.send = function(command, project){
       var echo = {};
-      var body = JSON.parse(messagetoJSON(command));
+      var body = JSON.parse($scope.messagetoJSON(command));
       delete body.$$hashKey;
       body.ECHO = 1;
 
       echo.json = JSON.stringify(body, null, 2);
       
 
-      echo.to = 'iottly.org/' + project.data.name.split(' ').join('_');
+      echo.to = 'iottly.org/' + $scope.project.data.name.split(' ').join('_');
       echo.from =  $scope.selectedboard.name.split(' ').join('_') + '/' + $scope.selectedboard.ID;
       echo.timestamp = new Date;
 

@@ -26,52 +26,46 @@ limitations under the License.
  * Controller of the consoleApp
  */
 
- var messagetoJSON = function(message){
-    var msg = {};
-
-    message.typetag = message.type.split(' ').join('_');
-    msg[message.typetag] = {};
-    
-
-    message.keys.forEach(function(element, index, array){
-      msg[message.typetag][element.key.split(' ').join('_')] = element.value;
-    });
-
-    return JSON.stringify(msg);
- };
-
 angular.module('consoleApp')
-  .controller('MessagesCtrl', function ($scope, $rootScope, projectService) {
-    $scope.project = projectService.project;
-    this.message = {};
-    this.message.keys = [];
+  .controller('MessagesCtrl', function ($scope, $rootScope, $routeParams, projectService) {
+    Utils.controllerhelpers.getProject($scope, $routeParams, projectService);
 
-    this.addMessage = function(messages){
-      this.message.typetag = this.message.type.split(' ').join('_');
-      messages.push(this.message);
-      this.message = {};
-      this.message.keys = [];
+
+    $scope.message = {};
+    $scope.message.keys = [];
+
+
+    $scope.addMessage = function(messages){
+      $scope.message.typetag = $scope.message.type.split(' ').join('_');
+      messages.push($scope.message);
+      $scope.message = {};
+      $scope.message.keys = [];
       $scope.createMessageForm.$setUntouched();
     };
 
 
-    this.messagetoJSON = function(message){
-      return messagetoJSON(message);
+    $scope.messagetoJSON = function(message){
+      return Utils.controllerhelpers.messagetoJSON(message);
     };
 
-    this.checkKeys = function(){
-      return this.message.keys.length === 0;
+    $scope.checkKeys = function(){
+      return $scope.message.keys.length === 0;
     };
+
+    $scope.checkMessages = function(){
+      return $scope.project.data.messages && $scope.project.data.messages.length === 0;
+    };    
+
   });
 
 angular.module('consoleApp')
-  .controller('KeysController', function () {
+  .controller('KeysController', function ($scope) {
     console.log('NEW KeysController');
-    this.key = {};
+    $scope.key = {};
 
-    this.addKey = function(keys){
-      keys.push(this.key);
-      this.key = {};
+    $scope.addKey = function(keys){
+      keys.push($scope.key);
+      $scope.key = {};
       
     };
   });

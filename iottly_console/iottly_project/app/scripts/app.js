@@ -240,10 +240,5 @@ angular
     self.isSet = function(value){
       return self.tab === value;
     };
-
-    self.checkMessages = function(){
-      return $scope.project.data.messages.length === 0;
-    };
-
     
   }); 
