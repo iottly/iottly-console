@@ -35,7 +35,7 @@ limitations under the License.
         <td>{{ project.board }}</td>
         <td>{{ project.fwlanguage }}</td>
         <td><span class="badge">{{ project.boards.length }}</span></td>
-        <td>{{ project._id && mongoIdtoLocalISOString(project._id) }}</td>
+        <td>{{ project._id && mongoIdtoLocalISOString(project._id) | date : 'medium' }}</td>
       </tr>
       <div ng-bind="selected"></div>
     </tbody>
