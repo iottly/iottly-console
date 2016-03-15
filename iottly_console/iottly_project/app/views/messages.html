@@ -18,28 +18,26 @@ limitations under the License.
 
 
  <div class="jumbotron container-fluid">
-        <h3>Design your messages  <small>specifying which "keywords" the board should understand.</small></h3>
+  <h3>Design your messages  <small>specifying which "keywords" the board should understand.</small></h3>
 
-        <button type="submit" class="btn btn-primary" ng-click="newMessage()"><i class="glyphicon glyphicon-plus"></i> New Message</button>  
-        
-        <table class="table table-condensed noselect">
-          <thead>
-            <tr>
-              <th>Message type</th>
-              <th>Message description</th>
-              <th>Message format</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr ng-repeat="message in project.data.messages | orderBy : 'type'" ng-click="setSelected(message)" ng-class="{selected: message.type === SelectedMessage.type}">
-              <td>{{ message.type }}</td>
-              <td>{{ message.description }}</td>
-              <td><code>{{ messagetoJSON(message) }}</code></td>
-            </tr>
-          </tbody>
-        </table>
-        <div class="well well-sm" ng-show="checkMessages()" style="margin-bottom:10px;">You didn't configured any messages yet.</div>
-        <div class="well well-lg">
-        </div>
-        <button type="button" class="btn btn-primary btn-lg pull-right next" ng-click="!panel.checkMessages() && panel.editCode(codeCtrl)">Next <i class="glyphicon glyphicon-arrow-right"></i></button>
+  <button type="submit" class="btn btn-primary" ng-click="newMessage()"><i class="glyphicon glyphicon-plus"></i> New Message</button>  
+  
+  <table class="table table-condensed noselect">
+    <thead>
+      <tr>
+        <th>Message type (must be unique)</th>
+        <th>Message description</th>
+        <th>Message format</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="message in project.data.messages | orderBy : 'type'" ng-click="setSelected(message)" ng-class="{selected: message.type === SelectedMessage.type}">
+        <td>{{ message.type }}</td>
+        <td>{{ message.description }}</td>
+        <td><code>{{ messagetoJSON(message) }}</code></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="well well-sm" ng-show="checkMessages()" style="margin-bottom:10px;">You didn't configured any messages yet.</div>
+  <button type="button" class="btn btn-primary btn-lg pull-right next" ng-click="!panel.checkMessages() && panel.editCode(codeCtrl)">Next <i class="glyphicon glyphicon-arrow-right"></i></button>
 </div>

@@ -10,12 +10,17 @@
 angular.module('consoleApp')
   .controller('MessagemodalCtrl', function ($scope, $uibModalInstance, httpRequestService, message, project) {
     $scope.title = ((message) ? 'Edit' : 'Define');
-    
+
     $scope.message = angular.copy(message) || {keys: []};
 
+    var gettypeTag = function(type) {
+      return type.split(' ').join('_')
+        .split(',').join('')
+        .split('.').join('');
+    };
 
     $scope.ok = function(){
-      $scope.message.typetag = $scope.message.type.split(' ').join('_');
+      $scope.message.typetag = gettypeTag($scope.message.type);
       project.data.messages.push($scope.message);
       $uibModalInstance.close($scope.message);
     };
@@ -24,6 +29,15 @@ angular.module('consoleApp')
     $scope.cancel = function () {
       $uibModalInstance.dismiss('cancel');
     };
+
+    $scope.checkUnique = function(){
+      project.messages.forEach(function(message){
+        if (message.typetag === gettypeTag($message.type))
+          return false;
+      });
+      return true;
+    };    
+
 
     $scope.checkKeys = function(){
       return $scope.message.keys.length === 0;
