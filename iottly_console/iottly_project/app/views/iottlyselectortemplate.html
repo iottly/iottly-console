@@ -1,0 +1,24 @@
+<fieldset class="form-group">
+  <select ng-model="valuetype.type" ng-change="changetype()" class="form-control" ng-options="valuetype for valuetype in ['FixedValue', 'MultipleChoice', 'FreeValue']"  title="Board" required> 
+    <option value="">Select the value type for this key</option>
+  </select>
+</fieldset>
+
+<fieldset ng-show="valuetype.type === 'FixedValue'">
+  <input ng-model="valuetype.value"  type="text" class="form-control" placeholder="Value ..." title="Value" required="" />
+</fieldset>
+
+<fieldset>
+  <div ng-show="valuetype.type === 'MultipleChoice'">
+    <div ng-repeat="v in valuetype.listvalues track by $index">
+      <div class="input-group">
+        <input  ng-model="valuetype.listvalues[$index]" type="text" class="form-control" placeholder="Value ..." title="Value" required="" />
+
+         <span class="input-group-btn">
+              <button class="btn" type="button" ng-click="removevalue($index)"><i class="glyphicon glyphicon-remove"></i></button>
+         </span>
+      </div>      
+    </div>
+    <button class="btn btn-default" ng-click="addvalue()"><i class="glyphicon glyphicon-plus"></i> Add value</button>
+  </div>
+</fieldset>

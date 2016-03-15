@@ -1,0 +1,47 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{ title }} your message</h3>
+</div>
+<div class="modal-body">
+  <form name="createMessageForm" class="css-form" novalidate>
+
+    <fieldset class="form-group">
+      <input ng-model="message.type" type="text" class="form-control" placeholder="Message type ..." title="Type" required></input>
+    </fieldset>
+    <fieldset class="form-group">
+      <input ng-model="message.description" type="text" class="form-control" placeholder="Message description ..." title="description" required></input>
+    </fieldset>
+    <div ng-controller="KeysController as keysCtrl">
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th>key</th>
+            <th>value</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="key in message.keys">
+            <td>{{ key.key }}</td>
+            <td>{{ key.value }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="well well-sm" ng-show="checkKeys()" style="margin-bottom:5px;">Add some keyworks to tell the board what to do.</div>
+      <div class="form-inline">
+        <fieldset class="form-group">
+          <input ng-model="key.key" type="text" class="form-control" placeholder="Key ..." title="Key"></input>
+        </fieldset>
+        <fieldset class="form-group">
+          <input ng-model="key.value" type="text" class="form-control" placeholder="Value ..." title="value"></input>
+        </fieldset>
+        <button type="button" class="btn btn-sm pull-right" ng-click="addKey(message.keys)" style="vertical-align: middle;"><i class="glyphicon glyphicon-plus"></i></button> 
+
+      </div>
+
+    </div>      
+
+  </form>      
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="createMessageForm.$valid && !checkKeys() && ok()">OK</button>
+  <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>

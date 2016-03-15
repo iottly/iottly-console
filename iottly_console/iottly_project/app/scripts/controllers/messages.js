@@ -27,30 +27,58 @@ limitations under the License.
  */
 
 angular.module('consoleApp')
-  .controller('MessagesCtrl', function ($scope, $rootScope, $routeParams, projectService) {
+  .controller('MessagesCtrl', function ($scope, $rootScope, $routeParams, $uibModal, projectService) {
+    self = this;
+
     Utils.controllerhelpers.getProject($scope, $routeParams, projectService);
 
 
-    $scope.message = {};
-    $scope.message.keys = [];
-
-
-    $scope.addMessage = function(messages){
-      $scope.message.typetag = $scope.message.type.split(' ').join('_');
-      messages.push($scope.message);
-      $scope.message = {};
-      $scope.message.keys = [];
-      $scope.createMessageForm.$setUntouched();
+    
+    $scope.newMessage= function() {
+      return openMessageModal()
     };
+
+    $scope.editMessage= function() {
+      return openMessageModal($scope.SelectedMessage)
+    };
+
+
+    var openMessageModal = function (message) {
+
+      var modalInstance = $uibModal.open({
+        animation: true,
+        templateUrl: 'views/messagemodal.html',
+        controller: 'MessagemodalCtrl',
+        size: 'lg',
+        resolve: {
+          message: function () {
+            return message;
+          },
+          project: function() {
+            return $scope.project;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (message) {
+        $scope.setSelected(message);
+      }, function () {
+        console.log('Modal dismissed at: ' + new Date());
+      });
+    };
+
+    $scope.setSelected = function(message){
+      $scope.SelectedMessage = message;
+    };
+
+
 
 
     $scope.messagetoJSON = function(message){
       return Utils.controllerhelpers.messagetoJSON(message);
     };
 
-    $scope.checkKeys = function(){
-      return $scope.message.keys.length === 0;
-    };
+ 
 
     $scope.checkMessages = function(){
       return $scope.project.data.messages && $scope.project.data.messages.length === 0;
@@ -58,15 +86,4 @@ angular.module('consoleApp')
 
   });
 
-angular.module('consoleApp')
-  .controller('KeysController', function ($scope) {
-    console.log('NEW KeysController');
-    $scope.key = {};
-
-    $scope.addKey = function(keys){
-      keys.push($scope.key);
-      $scope.key = {};
-      
-    };
-  });
 
