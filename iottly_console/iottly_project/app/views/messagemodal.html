@@ -1,11 +1,11 @@
 <div class="modal-header">
-    <h3 class="modal-title">{{ title }} your message</h3>
+    <h3 class="modal-title">{{ mode === 'new' && 'Define' || 'Edit' }} your message</h3>
 </div>
 <div class="modal-body">
   <form name="createMessageForm" class="css-form" novalidate>
 
     <fieldset class="form-group">
-      <input ng-model="message.type" type="text" class="form-control" placeholder="Message type ..." title="Type" required></input>
+      <input ng-model="message.type" type="text" class="form-control" placeholder="Message type ..." title="Type" required ng-disabled="mode === 'edit'"></input>
     </fieldset>
     <fieldset class="form-group">
       <input ng-model="message.description" type="text" class="form-control" placeholder="Message description ..." title="description" required></input>
@@ -42,6 +42,6 @@
   </form>      
 </div>
 <div class="modal-footer">
-  <button class="btn btn-primary" type="button" ng-click="createMessageForm.$valid && !checkKeys() && ok()">OK</button>
+  <button class="btn btn-primary" type="button" ng-click="createMessageForm.$valid && !checkKeys() && checkUnique() && ok()">OK</button>
   <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
 </div>

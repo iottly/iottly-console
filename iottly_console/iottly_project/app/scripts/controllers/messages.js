@@ -72,6 +72,23 @@ angular.module('consoleApp')
     };
 
 
+    $scope.menuOptions = [
+        ['Edit ...', function ($itemScope) {
+          console.log($itemScope.project);
+          $scope.editMessage()
+        }],
+        null, // Dividier
+        ['Remove', function ($itemScope) {
+          //TODO call to api
+          console.log($itemScope.project);
+          httpRequestService.deleteProject($itemScope.project._id.$oid).then(function (data){
+            $scope.projects.splice($scope.projects.indexOf($itemScope.project), 1);
+          }, function (error){
+            console.error(error);
+          });
+        }]
+    ];    
+
 
 
     $scope.messagetoJSON = function(message){

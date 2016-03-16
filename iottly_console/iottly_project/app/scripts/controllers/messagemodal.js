@@ -9,7 +9,7 @@
  */
 angular.module('consoleApp')
   .controller('MessagemodalCtrl', function ($scope, $uibModalInstance, httpRequestService, message, project) {
-    $scope.title = ((message) ? 'Edit' : 'Define');
+    $scope.mode = ((message) ? 'edit' : 'new');
 
     $scope.message = angular.copy(message) || {keys: []};
 
@@ -21,8 +21,11 @@ angular.module('consoleApp')
 
     $scope.ok = function(){
       $scope.message.typetag = gettypeTag($scope.message.type);
-      project.data.messages.push($scope.message);
-      $uibModalInstance.close($scope.message);
+      if (mode === 'new' && checkUnique() || mode === 'edit') {
+        //TODO call to api
+        project.data.messages.push($scope.message);
+        $uibModalInstance.close($scope.message);
+      }
     };
 
 
@@ -30,17 +33,19 @@ angular.module('consoleApp')
       $uibModalInstance.dismiss('cancel');
     };
 
-    $scope.checkUnique = function(){
-      project.messages.forEach(function(message){
-        if (message.typetag === gettypeTag($message.type))
-          return false;
-      });
-      return true;
-    };    
-
 
     $scope.checkKeys = function(){
       return $scope.message.keys.length === 0;
+    };    
+
+
+    var checkUnique = function(){
+      var ret = true;
+      project.data.messages.forEach(function(message){
+        if (message.typetag === gettypeTag($scope.message.type))
+          ret = false;
+      });
+      return ret;
     };    
 
   });
