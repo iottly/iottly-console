@@ -32,8 +32,8 @@ limitations under the License.
     </thead>
     <tbody>
       <tr ng-repeat="message in project.data.messages | orderBy : 'type'" ng-click="setSelected(message)" ng-class="{selected: message.type === SelectedMessage.type}" context-menu="menuOptions" ng-right-click="setSelected(message)">
-        <td>{{ message.type }}</td>
-        <td>{{ message.description }}</td>
+        <td>{{ message.metadata.type }}</td>
+        <td>{{ message.metadata.description }}</td>
         <td><code>{{ messagetoJSON(message) }}</code></td>
       </tr>
     </tbody>

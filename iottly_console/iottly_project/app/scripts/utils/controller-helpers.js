@@ -15,20 +15,19 @@ Utils.controllerhelpers = {
   },
 
   messagetoJSON: function(message){
-    var msg = {};
+    var msg = angular.copy(message);
 
-    message.typetag = message.type.split(' ').join('_');
-    msg[message.typetag] = {};
-    
-
-    message.keys.forEach(function(element, index, array){
-      msg[message.typetag][element.key.split(' ').join('_')] = element.value;
-    });
+    delete msg.metadata;
 
     return JSON.stringify(msg);
+  },
+
+
+  normalizeProperty: function(type) {
+    return type.split(' ').join('_')
+      .split(',').join('')
+      .split('.').join('');
   }
-
-
 
 
 };

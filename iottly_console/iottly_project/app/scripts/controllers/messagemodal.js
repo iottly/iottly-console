@@ -11,21 +11,37 @@ angular.module('consoleApp')
   .controller('MessagemodalCtrl', function ($scope, $uibModalInstance, httpRequestService, message, project) {
     $scope.mode = ((message) ? 'edit' : 'new');
 
-    $scope.message = angular.copy(message) || {keys: []};
+    $scope.message = angular.copy(message) || {metadata: {}};
 
-    var gettypeTag = function(type) {
-      return type.split(' ').join('_')
-        .split(',').join('')
-        .split('.').join('');
-    };
+    $scope._properties = (function(message){
+      if (message.metadata.type){
+        var normtype = Utils.controllerhelpers.normalizeProperty(message.metadata.type);        
+        return message[normtype];
+      } else
+        return {};
+    })($scope.message);
+
+
+    Object.defineProperty($scope, "properties", {
+      get: function () { 
+        //filters out non own properties (from prototype)
+        return Object.keys($scope._properties);
+      }
+    });    
+
 
     $scope.ok = function(){
-      $scope.message.typetag = gettypeTag($scope.message.type);
-      if (mode === 'new' && checkUnique() || mode === 'edit') {
+      if ($scope.mode === 'new' && checkUnique()) {
+        var normtype = Utils.controllerhelpers.normalizeProperty($scope.message.metadata.type);
+        $scope.message[normtype] = $scope._properties;
+
         //TODO call to api
         project.data.messages.push($scope.message);
         $uibModalInstance.close($scope.message);
-      }
+      } else if (mode ==='edit') {
+        //TODO call to api
+
+      };
     };
 
 
@@ -34,15 +50,16 @@ angular.module('consoleApp')
     };
 
 
-    $scope.checkKeys = function(){
-      return $scope.message.keys.length === 0;
+    $scope.checkProperties = function(){
+      return $scope.properties.length === 0;
     };    
 
 
     var checkUnique = function(){
       var ret = true;
+      var normtype = Utils.controllerhelpers.normalizeProperty($scope.message.metadata.type);
       project.data.messages.forEach(function(message){
-        if (message.typetag === gettypeTag($scope.message.type))
+        if (message.hasOwnProperty(normtype))
           ret = false;
       });
       return ret;
@@ -52,14 +69,15 @@ angular.module('consoleApp')
 
 
 angular.module('consoleApp')
-  .controller('KeysController', function ($scope) {
-    console.log('NEW KeysController');
-    $scope.key = {};
+  .controller('PropertiesController', function ($scope) {
+    console.log('NEW PropertiesController');
+    $scope.property = {};
 
-    $scope.addKey = function(keys){
-      
-      keys.push($scope.key);
-      $scope.key = {};
-      
+    $scope.addKey = function(properties){
+      var normkey = Utils.controllerhelpers.normalizeProperty($scope.property.key);
+      if (!properties.hasOwnProperty(normkey)){
+        properties[normkey] = $scope.property.value;
+        $scope.property = {};
+      };      
     };
   });
