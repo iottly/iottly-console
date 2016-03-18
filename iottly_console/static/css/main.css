@@ -20,6 +20,11 @@ body, .banner-row {
   /*float: none;*/
 }
 
+.vertical-align {
+    display: flex;
+    align-items: center;
+}
+
 #presence-container {
   top: 5px;
 }

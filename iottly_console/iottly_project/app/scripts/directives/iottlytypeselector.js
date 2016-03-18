@@ -13,17 +13,26 @@ angular.module('consoleApp')
   .directive('iottlytypeselector', function() {
     return {
       restrict: 'AE',
-      templateUrl: 'view/iottlyselectortemplate.html', 
+      templateUrl: 'views/iottlyselectortemplate.html', 
       scope: {
         valuetype : '=valuetype'
       },        
       controller: function($scope){
         
+        $scope.valuetypes = ['FixedValue', 'MultipleChoice', 'FreeValue'];
+        
         $scope.changetype = function(){
           delete $scope.valuetype.value;
           delete $scope.valuetype.listvalues;
-          if ($scope.valuetype.type ==='MultipleChoice'){
-            $scope.valuetype.listvalues = [undefined];
+          switch ($scope.valuetype.type){
+            case 'FixedValue':
+              $scope.valuetype.value = '';
+              break;
+            case 'MultipleChoice':
+              $scope.valuetype.listvalues = [''];
+              break;
+            default:
+              $scope.valuetype = undefined;
           } 
           
         };

@@ -11,15 +11,9 @@ angular.module('consoleApp')
   .controller('MessagemodalCtrl', function ($scope, $uibModalInstance, httpRequestService, message, project) {
     $scope.mode = ((message) ? 'edit' : 'new');
 
-    $scope.message = angular.copy(message) || {metadata: {}};
+    $scope.message = angular.copy(message) || {metadata: {direction: 'command'}};
 
-    $scope._properties = (function(message){
-      if (message.metadata.type){
-        var normtype = Utils.controllerhelpers.normalizeProperty(message.metadata.type);        
-        return message[normtype];
-      } else
-        return {};
-    })($scope.message);
+    $scope._properties = Utils.controllerhelpers.getTypeProp($scope.message);
 
 
     Object.defineProperty($scope, "properties", {
@@ -38,7 +32,7 @@ angular.module('consoleApp')
         //TODO call to api
         project.data.messages.push($scope.message);
         $uibModalInstance.close($scope.message);
-      } else if (mode ==='edit') {
+      } else if ($scope.mode ==='edit') {
         //TODO call to api
 
       };
@@ -54,6 +48,13 @@ angular.module('consoleApp')
       return $scope.properties.length === 0;
     };    
 
+    $scope.getRenderedProperty = function(property) {
+      return JSON.stringify(Utils.controllerhelpers.getRenderedProperty(property));
+    };
+
+    $scope.removeKey = function(property){
+      delete $scope._properties[property];
+    };    
 
     var checkUnique = function(){
       var ret = true;
@@ -65,6 +66,7 @@ angular.module('consoleApp')
       return ret;
     };    
 
+
   });
 
 
@@ -74,10 +76,16 @@ angular.module('consoleApp')
     $scope.property = {};
 
     $scope.addKey = function(properties){
-      var normkey = Utils.controllerhelpers.normalizeProperty($scope.property.key);
-      if (!properties.hasOwnProperty(normkey)){
-        properties[normkey] = $scope.property.value;
-        $scope.property = {};
-      };      
+      if ($scope.property.value) {
+        var normkey = Utils.controllerhelpers.normalizeProperty($scope.property.key);
+        if (!properties.hasOwnProperty(normkey)){
+          properties[normkey] = $scope.property.value;
+          $scope.property = {};
+        };      
+      };
+
+
+
+
     };
   });

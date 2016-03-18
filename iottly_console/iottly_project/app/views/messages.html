@@ -22,19 +22,22 @@ limitations under the License.
 
   <button type="submit" class="btn btn-primary" ng-click="newMessage()"><i class="glyphicon glyphicon-plus"></i> New Message</button>  
   
+
   <table class="table table-condensed noselect">
     <thead>
       <tr>
-        <th>Message type (must be unique)</th>
-        <th>Message description</th>
-        <th>Message format</th>
+        <th class="col-md-2">Type (unique)</th>
+        <th class="col-md-2">Direction</th>        
+        <th class="col-md-3">Description</th>
+        <th class="col-md-5">Format</th>
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="message in project.data.messages | orderBy : 'type'" ng-click="setSelected(message)" ng-class="{selected: message.type === SelectedMessage.type}" context-menu="menuOptions" ng-right-click="setSelected(message)">
-        <td>{{ message.metadata.type }}</td>
-        <td>{{ message.metadata.description }}</td>
-        <td><code>{{ messagetoJSON(message) }}</code></td>
+      <tr ng-repeat="message in project.data.messages | orderBy : 'type'" ng-click="setSelected(message)" ng-class="{selected: isSelected(message)}" context-menu="menuOptions" ng-right-click="setSelected(message)">
+        <td class="col-md-2">{{ message.metadata.type }}</td>
+        <td class="col-md-2">{{ message.metadata.direction }}</td>        
+        <td class="col-md-3">{{ message.metadata.description }}</td>
+        <td class="col-md-5"><code>{{ renderMessage(message) }}</code></td>
       </tr>
     </tbody>
   </table>

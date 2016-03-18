@@ -71,6 +71,10 @@ angular.module('consoleApp')
       $scope.SelectedMessage = message;
     };
 
+    $scope.isSelected = function(message){
+      return message.metadata.type === $scope.SelectedMessage.metadata.type;
+    };
+
 
     $scope.menuOptions = [
         ['Edit ...', function ($itemScope) {
@@ -93,6 +97,10 @@ angular.module('consoleApp')
 
     $scope.messagetoJSON = function(message){
       return Utils.controllerhelpers.messagetoJSON(message);
+    };
+
+    $scope.renderMessage = function(message){
+      return Utils.controllerhelpers.renderMessage(message);
     };
 
  

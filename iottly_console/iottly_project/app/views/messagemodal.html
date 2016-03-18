@@ -2,46 +2,79 @@
     <h3 class="modal-title">{{ mode === 'new' && 'Define' || 'Edit' }} your message</h3>
 </div>
 <div class="modal-body">
-  <form name="createMessageForm" class="css-form" novalidate>
+<!--   <div class="row">
+    <div class="col-md-8">.col-md-8</div>
+    <div class="col-md-4">.col-md-4</div>
+  </div> -->
+  <div class="well">
+    <h4>Message header:</h4>
+    <form name="createMessageForm" class="css-form" novalidate>
+      <fieldset class="form-group">
+        <div class="row vertical-align">
+          <span class="col-md-8">
+            <input ng-model="message.metadata.type" type="text" class="form-control" placeholder="Message type ..." title="Type" required ng-disabled="mode === 'edit'"></input>
+          </span>
+          <span class="col-md-4">
+            <label class="radio-inline">
+                <input type="radio" ng-model="message.metadata.direction" value="command" required ng-disabled="mode === 'edit'"> Command
+            </label>            
+            <label class="radio-inline">
+                <input type="radio" ng-model="message.metadata.direction" value="event" required ng-disabled="mode === 'edit'"> Event
+            </label>            
+          </span>      
+        </div>
+      </fieldset>      
+      <fieldset class="form-group">
+        <input ng-model="message.metadata.description" type="text" class="form-control" placeholder="Message description ..." title="description" required></input>
+      </fieldset>
+    </form>      
 
-    <fieldset class="form-group">
-      <input ng-model="message.metadata.type" type="text" class="form-control" placeholder="Message type ..." title="Type" required ng-disabled="mode === 'edit'"></input>
-    </fieldset>
-    <fieldset class="form-group">
-      <input ng-model="message.metadata.description" type="text" class="form-control" placeholder="Message description ..." title="description" required></input>
-    </fieldset>
-    <div ng-controller="PropertiesController">
+  </div>
+
+  <div ng-controller="PropertiesController">
+    <div class="well">
+      <h4>Message's keywords:</h4>
       <table class="table table-condensed">
         <thead>
           <tr>
-            <th>key</th>
-            <th>value</th>
+            <th class="col-md-3">key</th>
+            <th class="col-md-8">value</th>
+            <th class="col-md-1"></th>
           </tr>
         </thead>
         <tbody>
           <tr ng-repeat="property in properties">
-            <td>{{ property }}</td>
-            <td>{{ _properties[property] }}</td>
+            <td class="col-md-3">{{ property }}</td>
+            <td class="col-md-8">{{ getRenderedProperty(_properties[property]) }}</td>
+            <td class="col-md-1"><button class="btn btn-sm" type="button" ng-click="removeKey(property)"><i class="glyphicon glyphicon-remove"></i></button></td>
           </tr>
         </tbody>
       </table>
-      <div class="well well-sm" ng-show="checkProperties()" style="margin-bottom:5px;">Add some keyworks to tell the board what to do.</div>
-      <div class="form-inline">
-        <fieldset class="form-group">
-          <input ng-model="property.key" type="text" class="form-control" placeholder="Key ..." title="Key"></input>
+      <span ng-show="checkProperties()">You don't have any keyword configured.</span>
+    </div>
+    <div class="well">
+      <h4>Define new keywords:</h4>
+      <fieldset>
+        <div class="row">
+          <fieldset class="form-group">
+            <span class="col-md-4">
+                <input ng-model="property.key" type="text" class="form-control" placeholder="Key ..." title="Key"></input>
+            </span>
+            <span class="col-md-8">
+              <span iottlytypeselector valuetype="property.value"></span>
+            </span>
+          </fieldset>
+        </div>
+        <fieldset>
+          <button type="button" class="btn pull-left" ng-click="addKey(_properties)" style="vertical-align: middle;"><i class="glyphicon glyphicon-plus"></i> Add key</button> 
         </fieldset>
-        <fieldset class="form-group">
-          <input ng-model="property.value" type="text" class="form-control" placeholder="Value ..." title="value"></input>
-        </fieldset>
-        <button type="button" class="btn btn-sm pull-right" ng-click="addKey(_properties)" style="vertical-align: middle;"><i class="glyphicon glyphicon-plus"></i></button> 
+      </fieldset>
+    </div>
+  </div>      
 
-      </div>
-
-    </div>      
-
-  </form>      
 </div>
 <div class="modal-footer">
+  <!--   -->
   <button class="btn btn-primary" type="button" ng-click="createMessageForm.$valid && !checkProperties() && ok()">OK</button>
   <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
 </div>

@@ -1,5 +1,5 @@
 <fieldset class="form-group">
-  <select ng-model="valuetype.type" ng-change="changetype()" class="form-control" ng-options="valuetype for valuetype in ['FixedValue', 'MultipleChoice', 'FreeValue']"  title="Board" required> 
+  <select ng-model="valuetype.type" ng-change="changetype()" class="form-control" ng-options="valuetype for valuetype in valuetypes"  title="Board" required> 
     <option value="">Select the value type for this key</option>
   </select>
 </fieldset>
@@ -19,6 +19,6 @@
          </span>
       </div>      
     </div>
-    <button class="btn btn-default" ng-click="addvalue()"><i class="glyphicon glyphicon-plus"></i> Add value</button>
+    <button class="btn btn-sm" ng-click="addvalue()"><i class="glyphicon glyphicon-plus"></i> Add value</button>
   </div>
 </fieldset>
