@@ -11,6 +11,7 @@ angular.module('consoleApp')
   .controller('MessagemodalCtrl', function ($scope, $uibModalInstance, httpRequestService, message, project) {
     $scope.mode = ((message) ? 'edit' : 'new');
 
+    $scope.project = angular.copy(project);
     $scope.message = angular.copy(message) || {metadata: {direction: 'command'}};
 
     $scope._properties = Utils.controllerhelpers.getTypeProp($scope.message);
@@ -29,9 +30,13 @@ angular.module('consoleApp')
         var normtype = Utils.controllerhelpers.normalizeProperty($scope.message.metadata.type);
         $scope.message[normtype] = $scope._properties;
 
-        //TODO call to api
-        project.data.messages.push($scope.message);
-        $uibModalInstance.close($scope.message);
+        httpRequestService.createMessage($scope.project.data._id.$oid, $scope.message).then(function(data){
+          $uibModalInstance.close(data, $scope.message);
+        }, function (error) {
+          //TODO error message
+          console.error(error);
+          $uibModalInstance.dismiss(error);
+        });        
       } else if ($scope.mode ==='edit') {
         //TODO call to api
 

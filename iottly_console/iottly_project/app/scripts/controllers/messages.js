@@ -60,7 +60,8 @@ angular.module('consoleApp')
         }
       });
 
-      modalInstance.result.then(function (message) {
+      modalInstance.result.then(function (updatedproject, message) {
+        $scope.project.data = updatedproject;
         $scope.setSelected(message);
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
@@ -72,7 +73,7 @@ angular.module('consoleApp')
     };
 
     $scope.isSelected = function(message){
-      return message.metadata.type === $scope.SelectedMessage.metadata.type;
+      return $scope.SelectedMessage && message.metadata.type === $scope.SelectedMessage.metadata.type;
     };
 
 

@@ -156,6 +156,18 @@ function http_callback($http, $q, API_URL) {
         return _get('msg', boardid, data);
     };
 
+    var _createMessage = function  (id, message) {
+        console.log('create message');
+        var deferred = $q.defer();
+        var wsUrl = 'project';
+        $http.post(wsBasePath + wsUrl + '/' + id + '/messagedefinition', message).success(function (data) {
+          deferred.resolve(data);
+        }).error(function (error) {
+          deferred.reject(error);
+        });
+
+        return deferred.promise;        
+    };
 
     return {    
         "createProject" : _createProject,
@@ -166,6 +178,7 @@ function http_callback($http, $q, API_URL) {
         "deleteBoard" : _deleteBoard,
         "pollPresenceForBoard": _pollPresenceForBoard,
         "getMessages": _getMessages,
+        "createMessage" : _createMessage,
         "list": _list,
         "get": _get,
         "post": _post,
