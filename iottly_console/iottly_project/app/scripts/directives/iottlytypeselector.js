@@ -31,6 +31,8 @@ angular.module('consoleApp')
             case 'MultipleChoice':
               $scope.valuetype.listvalues = [''];
               break;
+            case 'FreeValue':
+              break;              
             default:
               $scope.valuetype = undefined;
           } 

@@ -8,7 +8,7 @@
  * Controller of the consoleApp
  */
 angular.module('consoleApp')
-  .controller('MessagemodalCtrl', function ($scope, $uibModalInstance, httpRequestService, message, project) {
+  .controller('MessagemodalCtrl', function ($scope, $uibModalInstance, projectService, message, project) {
     $scope.mode = ((message) ? 'edit' : 'new');
 
     $scope.project = angular.copy(project);
@@ -30,8 +30,8 @@ angular.module('consoleApp')
         var normtype = Utils.controllerhelpers.normalizeProperty($scope.message.metadata.type);
         $scope.message[normtype] = $scope._properties;
 
-        httpRequestService.createMessage($scope.project.data._id.$oid, $scope.message).then(function(data){
-          $uibModalInstance.close(data, $scope.message);
+        projectService.createMessage($scope.project, $scope.message).then(function(data){
+          $uibModalInstance.close({updatedproject: data, message: $scope.message});
         }, function (error) {
           //TODO error message
           console.error(error);
@@ -88,9 +88,5 @@ angular.module('consoleApp')
           $scope.property = {};
         };      
       };
-
-
-
-
     };
   });

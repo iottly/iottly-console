@@ -33,7 +33,7 @@ limitations under the License.
       </tr>
     </thead>
     <tbody>
-      <tr ng-repeat="message in project.data.messages | orderBy : 'type'" ng-click="setSelected(message)" ng-class="{selected: isSelected(message)}" context-menu="menuOptions" ng-right-click="setSelected(message)">
+      <tr ng-repeat="message in project.data.messages | orderBy : 'metadata.type'" ng-click="setSelected(message)" ng-class="{selected: isSelected(message)}" context-menu="menuOptions" ng-right-click="setSelected(message)">
         <td class="col-md-2">{{ message.metadata.type }}</td>
         <td class="col-md-2">{{ message.metadata.direction }}</td>        
         <td class="col-md-3">{{ message.metadata.description }}</td>

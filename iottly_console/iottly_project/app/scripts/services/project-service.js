@@ -108,7 +108,35 @@ var s = angular.module('consoleApp')
       return deferred.promise;
     };
 
+   self.createMessage = function(project, message){
+      var deferred = $q.defer();
 
+      httpRequestService.createMessage(project.data._id.$oid, message).then(function(data){
+        console.log(self);
+        self.projectdata = data;
+        deferred.resolve(self._project.data);
+      }, function (error) {
+        console.error(error);
+        deferred.reject(error);
+      });
+
+      return deferred.promise;
+    };
+
+   self.deleteMessage = function(project, message){
+      var deferred = $q.defer();
+
+      httpRequestService.deleteMessage(project.data._id.$oid, message).then(function(data){
+        console.log(self);
+        self._project.data.messages.splice(self._project.data.messages.indexOf(message), 1);
+        deferred.resolve(self._project.data);
+      }, function (error) {
+        console.error(error);
+        deferred.reject(error);
+      });
+
+      return deferred.promise;
+    };
 
     var myListener = $rootScope.$on('devices', function (event, data) {
       console.log(data);

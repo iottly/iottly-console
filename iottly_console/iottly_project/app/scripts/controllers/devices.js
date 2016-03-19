@@ -71,7 +71,7 @@ angular.module('consoleApp')
           console.log($itemScope.board);
           $scope.editBoard();
         }],
-        null, // Dividier
+        null, // Divider
         ['Remove', function ($itemScope) {
           console.log($itemScope.board);
           projectService.deleteBoard($scope.project, $itemScope.board).then(function (data){

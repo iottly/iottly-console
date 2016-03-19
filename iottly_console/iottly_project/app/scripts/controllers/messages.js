@@ -60,9 +60,9 @@ angular.module('consoleApp')
         }
       });
 
-      modalInstance.result.then(function (updatedproject, message) {
-        $scope.project.data = updatedproject;
-        $scope.setSelected(message);
+      modalInstance.result.then(function (data) {
+        $scope.project.data = data.updatedproject;
+        $scope.setSelected(data.message);
       }, function () {
         console.log('Modal dismissed at: ' + new Date());
       });
@@ -82,12 +82,12 @@ angular.module('consoleApp')
           console.log($itemScope.project);
           $scope.editMessage()
         }],
-        null, // Dividier
+        null, // Divider
         ['Remove', function ($itemScope) {
           //TODO call to api
-          console.log($itemScope.project);
-          httpRequestService.deleteProject($itemScope.project._id.$oid).then(function (data){
-            $scope.projects.splice($scope.projects.indexOf($itemScope.project), 1);
+          console.log($itemScope.message);
+          projectService.deleteMessage($scope.project,$itemScope.message).then(function (data){
+            console.log(data);
           }, function (error){
             console.error(error);
           });
