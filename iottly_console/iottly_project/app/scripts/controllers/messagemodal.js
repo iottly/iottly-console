@@ -38,7 +38,14 @@ angular.module('consoleApp')
           $uibModalInstance.dismiss(error);
         });        
       } else if ($scope.mode ==='edit') {
-        //TODO call to api
+        projectService.updateMessage($scope.project, $scope.message).then(function(data){
+          $uibModalInstance.close({updatedproject: data, message: $scope.message});
+        }, function (error) {
+          //TODO error message
+          console.error(error);
+          $uibModalInstance.dismiss(error);
+        });        
+
 
       };
     };

@@ -128,7 +128,22 @@ var s = angular.module('consoleApp')
 
       httpRequestService.deleteMessage(project.data._id.$oid, message).then(function(data){
         console.log(self);
-        self._project.data.messages.splice(self._project.data.messages.indexOf(message), 1);
+        self.projectdata = data;
+        deferred.resolve(self._project.data);
+      }, function (error) {
+        console.error(error);
+        deferred.reject(error);
+      });
+
+      return deferred.promise;
+    };
+
+   self.updateMessage = function(project, message){
+      var deferred = $q.defer();
+
+      httpRequestService.updateMessage(project.data._id.$oid, message).then(function(data){
+        console.log(self);
+        self.projectdata = data;
         deferred.resolve(self._project.data);
       }, function (error) {
         console.error(error);

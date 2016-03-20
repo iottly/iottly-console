@@ -181,6 +181,19 @@ function http_callback($http, $q, API_URL) {
         return deferred.promise;
     };
 
+    var _updateMessage = function  (id, message) {
+        console.log('update message');
+        var deferred = $q.defer();
+        var wsUrl = 'project';
+        $http.put(wsBasePath + wsUrl + '/' + id + '/messagedefinition', message).success(function (data) {
+          deferred.resolve(data);
+        }).error(function (error) {
+          deferred.reject(error);
+        });
+
+        return deferred.promise;        
+    };    
+
     return {    
         "createProject" : _createProject,
         "updateProject" : _updateProject,
@@ -192,6 +205,7 @@ function http_callback($http, $q, API_URL) {
         "getMessages": _getMessages,
         "createMessage" : _createMessage,
         "deleteMessage" : _deleteMessage,
+        "updateMessage" : _updateMessage,
         "list": _list,
         "get": _get,
         "post": _post,
