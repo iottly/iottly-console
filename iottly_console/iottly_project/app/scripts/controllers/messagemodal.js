@@ -29,6 +29,7 @@ angular.module('consoleApp')
       if ($scope.mode === 'new' && checkUnique()) {
         var normtype = Utils.controllerhelpers.normalizeProperty($scope.message.metadata.type);
         $scope.message[normtype] = $scope._properties;
+        $scope.message.metadata.jsonfmt = Utils.controllerhelpers.renderMessage($scope.message);
 
         projectService.createMessage($scope.project, $scope.message).then(function(data){
           $uibModalInstance.close({updatedproject: data, message: $scope.message});
@@ -38,6 +39,7 @@ angular.module('consoleApp')
           $uibModalInstance.dismiss(error);
         });        
       } else if ($scope.mode ==='edit') {
+        $scope.message.metadata.jsonfmt = Utils.controllerhelpers.renderMessage($scope.message);
         projectService.updateMessage($scope.project, $scope.message).then(function(data){
           $uibModalInstance.close({updatedproject: data, message: $scope.message});
         }, function (error) {

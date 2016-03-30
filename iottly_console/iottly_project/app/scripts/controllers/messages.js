@@ -88,6 +88,7 @@ angular.module('consoleApp')
           console.log($itemScope.message);
           projectService.deleteMessage($scope.project,$itemScope.message).then(function (data){
             console.log(data);
+            $scope.project.data = data;
           }, function (error){
             console.error(error);
           });
