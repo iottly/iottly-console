@@ -22,11 +22,6 @@ limitations under the License.
       <h3 class="panel-title">Command console</h3>
     </div>
     <div class="panel-body">
-<!--       <select class="form-control" 
-        ng-options="board.name + ' - unique ID: ' + board.ID for board in project.data.boards track by board.ID"
-        ng-model="selectedboard">
-      </select>
- -->
       <ui-select ng-model="selectedboard" theme="select2" style="width: 100% !important;" >
         <ui-select-match placeholder="Select a board in the list or search its name/MAC...">{{$select.selected.name || $select.selected.ID}}</ui-select-match>
         <ui-select-choices repeat="board in project.data.boards | propsFilter: {name: $select.search, macaddress: $select.search}">
@@ -55,7 +50,7 @@ limitations under the License.
           </div>
           <div class="row">
             <div class="btn-group-vertical col-xs-12">
-              <button ng-repeat="command in commands" class="command btn btn-default" title="{{ command.description }}" ng-click="send(command, panel.project)">{{ command.type }} <code class="hidden-xs">{{ messagetoJSON(command) }}</code></button>
+              <div ng-repeat="command in commands" iottlystandardcommand="" command="command" send="send(msg)"></div>              
             </div>
           </div>
         </div>

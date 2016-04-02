@@ -126,7 +126,7 @@ body, .banner-row {
   padding: 10px;
   background-color: #f5f5f5;
   border: 1px solid #e3e3e3;
-  display: none;
+  /*display: none;*/
 }
 
 .form-horizontal .row > * {

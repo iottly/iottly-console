@@ -25,6 +25,10 @@ limitations under the License.
  * # DeviceconsoleCtrl
  * Controller of the consoleApp
  */
+
+//  http://plnkr.co/edit/VUkeNvzmOLVYVjKfsCiy?p=preview
+
+
 angular.module('consoleApp')
   .controller('DeviceconsoleCtrl', function ($scope, $rootScope, $timeout, $routeParams, $location, projectService, httpRequestService) {
     
@@ -213,25 +217,12 @@ angular.module('consoleApp')
     $scope.initCommands = function() {
       console.log("init commands");
       if ($scope.project.data.name) {
-        $scope.commands = [
-          {
-            'type': 'update firmware',
-            'description': 'Over the air firmware update',
-            'keys':[
-              {
-                'key':'new_firmware_available',
-                'value': 1
-              },
-              {
-                'key':'firmware_name',
-                'value': $scope.project.data.name.split(' ').join('_')
-              }
-            ]
-          }    
-        ];
+        $scope.commands = [];
 
         $scope.project.data.messages.forEach(function(element, index, array){
-          $scope.commands.push(element);
+          if (element.metadata.direction === 'command') {
+            $scope.commands.push(element);
+          };
         }, this);
         
       }

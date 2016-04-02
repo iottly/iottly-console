@@ -13,7 +13,7 @@ angular.module('consoleApp')
   .directive('iottlytypeselector', function() {
     return {
       restrict: 'AE',
-      templateUrl: 'views/iottlyselectortemplate.html', 
+      templateUrl: 'views/iottlyselector.tpl.html', 
       scope: {
         valuetype : '=valuetype'
       },        
