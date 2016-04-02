@@ -55,6 +55,7 @@ angular.module('consoleApp')
         $scope._send = function() {
           var values = {};
           $scope.properties.forEach(function(prop){
+            //this key mapping is for compatibility with API hierarc. management
             values[$scope.command.metadata.type + '.' + prop] = $scope.values[prop];
           });
           $scope.send({msg: $scope.command, values: values});
