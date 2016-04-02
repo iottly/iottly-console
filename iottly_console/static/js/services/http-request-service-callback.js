@@ -192,7 +192,22 @@ function http_callback($http, $q, API_URL) {
         });
 
         return deferred.promise;        
-    };    
+    };  
+
+    var _sendCommand = function  (id, deviceid, cmd_type, values) {
+        console.log('send command');
+        var deferred = $q.defer();
+        var wsUrl = wsBasePath + 'project' + '/' + id + '/device'  + '/' + deviceid + '/command';
+        var params = {cmd_type: cmd_type, values: values};
+        $http.post(wsUrl, params).success(function (data) {
+          deferred.resolve(data);
+        }).error(function (error) {
+          deferred.reject(error);
+        });
+
+        return deferred.promise;        
+    };
+
 
     return {    
         "createProject" : _createProject,
@@ -206,6 +221,7 @@ function http_callback($http, $q, API_URL) {
         "createMessage" : _createMessage,
         "deleteMessage" : _deleteMessage,
         "updateMessage" : _updateMessage,
+        "sendCommand" : _sendCommand,        
         "list": _list,
         "get": _get,
         "post": _post,

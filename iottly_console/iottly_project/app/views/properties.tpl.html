@@ -25,7 +25,7 @@ limitations under the License.
               <label class="control-label" for="{{ property }}">{{ property }}:</label>
             </div>
             <div class="col-xs-6 col-sm-6">
-              <input type="text" ng-model="test" class="form-control" placeholder="{{ property }} value" id="{{ property }}" name="{{ property }}" required>
+              <input type="text" ng-model="values[property]" class="form-control" placeholder="{{ property }} value" id="{{ property }}" name="{{ property }}" required>
             </div>
           </div>
           <div ng-switch-when="MultipleChoice">
@@ -33,7 +33,7 @@ limitations under the License.
               <label class="control-label" for="{{ property }}">{{ property }}:</label>
             </div>
             <div class="col-xs-6 col-sm-6">
-              <select ng-model="project.board" class="form-control" ng-options="v for v in _properties[property].listvalues"  title="{{ property }}" required> 
+              <select ng-model="values[property]" class="form-control" ng-options="v for v in _properties[property].listvalues"  title="{{ property }}" required> 
                 <option value="">Select the value for {{ property }}</option>
               </select>
             </div>
@@ -43,7 +43,7 @@ limitations under the License.
     </div>
     <div class="row">
       <div class="col-xs-12 col-sm-12">
-        <button type="submit" class="command btn btn-default btn-block" ng-click="sendcommandform.$valid && send({msg: command})">Send</button>
+        <button type="submit" class="command btn btn-default btn-block" ng-click="sendcommandform.$valid && _send()">Send</button>
       </div>
     </div>
   </form>

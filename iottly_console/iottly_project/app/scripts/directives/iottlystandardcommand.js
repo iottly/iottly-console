@@ -44,10 +44,20 @@ angular.module('consoleApp')
             return Object.keys($scope._properties);
           }
         });             
-        
+
+        $scope.values = {};
+
         $scope.isCollapsed = true;
         $scope.addvalue = function() {
           $scope.valuetype.listvalues.push(undefined);
+        };
+
+        $scope._send = function() {
+          var values = {};
+          $scope.properties.forEach(function(prop){
+            values[$scope.command.metadata.type + '.' + prop] = $scope.values[prop];
+          });
+          $scope.send({msg: $scope.command, values: values});
         };
 
       },        

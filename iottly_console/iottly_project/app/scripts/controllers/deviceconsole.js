@@ -38,6 +38,7 @@ angular.module('consoleApp')
     var projectListener = $rootScope.$on('project', function (event, data) {
       $scope.init();
     });
+
     $scope.$on('$destroy', projectListener);
 
     $scope.$on('$routeChangeSuccess', function(event) {
@@ -229,22 +230,21 @@ angular.module('consoleApp')
 
     };
 
-    $scope.send = function(command, project){
-      var echo = {};
-      var body = JSON.parse($scope.messagetoJSON(command));
-      delete body.$$hashKey;
-      body.ECHO = 1;
+    $scope.send = function(command, values){
+      console.log(command);
+      console.log(values);
 
-      echo.json = JSON.stringify(body, null, 2);
-      
-
-      echo.to = 'iottly.org/' + $scope.project.data.name.split(' ').join('_');
-      echo.from =  $scope.selectedboard.name.split(' ').join('_') + '/' + $scope.selectedboard.ID;
-      echo.timestamp = new Date;
-
-      
-      $timeout(function(events){ events.push(echo); }, 1000, true, $scope.events);
-      
+      httpRequestService.sendCommand(
+        $scope.project.data._id.$oid, 
+        $scope.selectedboard.ID,
+        command.metadata.type,
+        values
+        )
+      .then(function (data){
+        console.log('command successfull');
+      }, function (error){
+        console.log(error);
+      });
     };
 
     /*
