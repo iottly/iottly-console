@@ -28,7 +28,7 @@ The *iottly-console* repo hosts the html and js files for the iottly console fro
 
 Please refer to [Iottly docker](https://github.com/iottly/iottly-docker) for prerequisites and full Iottly setup.
 
-# Yeoman app Generator
+# bower install and Yeoman app Generator 
 
 A specific dev [container](https://github.com/iottly/iottly-console/blob/mvcangular/Dockerfile) is provided to manage all bower, npm, grunt and yeoman stuff:
 - execute [`./start_nodedev.sh`](https://github.com/iottly/iottly-console/blob/mvcangular/start_nodedev.sh) to build and start the interactive container. The guest working dir is a Docker mount of the host dir `iottly-console/iottly_console`
