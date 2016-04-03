@@ -52,3 +52,26 @@ A specific dev [container](https://github.com/iottly/iottly-console/blob/mvcangu
 - to install new packages use bower again (from proper app dir):
   - `bower install <package> --save`
   - `--save` will persist the package into bower.json to be committed later
+
+# Iottly usage
+
+## Create an IoT project
+- navigate to `http://127.0.0.1:8580`
+- click on "new project"
+- give the project a name
+- choose a board type (Dev Docker Device if you plan to test the project with virtual containerized devices)
+- you are done!
+
+Contextual menu on right-click is available on any table.
+
+
+
+## Manage a project
+- navigate to `http://127.0.0.1:8580`
+- double click on the project 
+- a new project page will open
+- the URL is permanent, thanks to Angular front end routing
+- from the project page you have access to the following panels:
+
+### 
+  - control which board have been registerd to the project
