@@ -30,9 +30,14 @@ Please refer to [Iottly docker](https://github.com/iottly/iottly-docker) for pre
 
 # Yeoman app Generator
 
-A specific dev [container](https://github.com/iottly/iottly-console/blob/mvcangular/Dockerfile) is provided to manage all npm, grunt and yeoman stuff:
-- execute [`./start_nodedev.sh`](https://github.com/iottly/iottly-console/blob/mvcangular/start_nodedev.sh) to build and start the container
-- from within the container use following expressions for yeoman to generate web app components (https://github.com/yeoman/generator-angular):
+A specific dev [container](https://github.com/iottly/iottly-console/blob/mvcangular/Dockerfile) is provided to manage all bower, npm, grunt and yeoman stuff:
+- execute [`./start_nodedev.sh`](https://github.com/iottly/iottly-console/blob/mvcangular/start_nodedev.sh) to build and start the interactive container. The guest working dir is a Docker mount of the host dir `iottly-console/iottly_console`
+- so from within the container `cd iottly_main` or `cd iottly_project` depending on which app you woant to work on;
+- after a fresh clone you'll need to generate all the bower_components resources for both apps:
+  - `cd iottly_main` and then `bower install`
+  - `cd iottly_project` and then `bower install`
+  - will install all the required packages as for bower.json config files
+- to generate new web app components use following expressions for [yeoman](https://github.com/yeoman/generator-angular) (from proper app dir):
   - `yo angular:controller  <controller>`
   - `yo angular:directive   <directive>`
   - `yo angular:filter      <filter>`
@@ -44,3 +49,6 @@ A specific dev [container](https://github.com/iottly/iottly-console/blob/mvcangu
   - `yo angular:constant    <constant>`
   - `yo angular:decorator   <decorator>`
   - `yo angular:view        <view>`
+- to install new packages use bower again (from proper app dir):
+  - `bower install <package> --save`
+  - `--save` will persist the package into bower.json to be committed later
