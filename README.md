@@ -73,5 +73,11 @@ Contextual menu on right-click is available on any table.
 - the URL is permanent, thanks to Angular front end routing
 - from the project page you have access to the following panels:
 
-### 
-  - control which board have been registerd to the project
+### Devices
+control which board have been registerd to the project
+
+![Iottly Project Devices Page](http://tomorrowdata.io/wp-content/uploads/2016/04/Iottly-Project-Devices-Page.png)
+
+### Messages
+
+### Admin Console
