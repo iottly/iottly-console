@@ -22,7 +22,7 @@ RUN mkdir /iottly_console
 
 WORKDIR /iottly_console 
 
-RUN npm install -g grunt-cli bower yo generator-karma generator-angular
+RUN npm install -g grunt-cli bower yo generator-karma generator-angular --verbose
 
 
 RUN adduser --disabled-password --gecos "" yeoman && \
