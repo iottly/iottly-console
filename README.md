@@ -64,7 +64,7 @@ A specific dev [container](https://github.com/iottly/iottly-console/blob/mvcangu
 
 Contextual menu on right-click is available on any table.
 
-![Iottly Main Page](http://tomorrowdata.io/wp-content/uploads/2016/04/Iottly-Main-Page.png)
+![Iottly Main Page](http://tomorrowdata.io/wp-content/uploads/2016/04/Iottly-Main-Page-1.png)
 
 ## Manage a project
 - navigate to `http://127.0.0.1:8580`
