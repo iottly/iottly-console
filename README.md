@@ -16,9 +16,13 @@ limitations under the License.
 
 # iottly-console
 The *iottly-console* repo hosts the html and js files for the iottly console frontend:
-- files are served by the [iottly-core](https://github.com/iottly/iottly-core) service;
-- it connects to the [iottly-core](https://github.com/iottly/iottly-core) service via websockets to receives messages in real-time.
+- files are served by the [iottly-http-load-balancer](https://github.com/iottly/iottly-http-load-balancer) service;
+- it calls [API](https://github.com/iottly/iottly-core) service to interact with database and IoT devices;
+- it connects to [iottly-core](https://github.com/iottly/iottly-core) service via websockets to receives real-time notifications from IoT devices.
 
+*iottly-console* is based on angularjs v1 and it's actually two angular applications:
+- iottly-main: provides access to the list of IoT projects the user has created
+- iottly-project: provides access to each specific IoT project for devices, messages, and communication management
 
 # Setup instructions
 
