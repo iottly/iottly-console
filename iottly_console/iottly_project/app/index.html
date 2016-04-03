@@ -1,0 +1,175 @@
+<!doctype html>
+<!-- 
+
+Copyright 2015 Stefano Terna
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="shortcut icon" href="/static/favicon.ico" type="image/x-icon" />    
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <!-- build:css(.) styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+
+
+    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
+
+    <link rel="stylesheet" href="bower_components/ui-select/dist/select.css" />
+
+    <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="styles/codemirror.css">
+    <link rel="stylesheet" href="styles/select2.css">
+    <link rel="stylesheet" href="styles/select2-bootstrap.css">
+    <!-- endbuild -->
+  </head>
+  <body ng-app="consoleApp" ng-controller="AppCtrl as panel">
+    <!--[if lte IE 8]>
+      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+    <![endif]-->
+
+    <!-- Add your site or application content here -->
+    <span us-spinner="{radius:30, width:8, length: 16, color: '#f05222'}" spinner-on="!panel.validateProject()"></span>
+    <div ng-cloak ng-show="panel.validateProject()">
+      <nav class="navbar navbar-default navbar-fixed-top twoRow">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>      
+            <a class="navbar-brand" href="#">
+              <img alt="Brand" src="/static/img/logo-iottly.png" style="width: 145px;margin-top: -10px;">
+            </a>    
+            <p class="navbar-text hidden-xs iottly-project-title"><strong>Project: {{ project.data.name }}</strong></p><p class="navbar-text hidden-xs hidden-sm iottly-project-title"><span class="label label-primary">{{ project.data.board }}</span></p><p class="navbar-text hidden-xs hidden-sm iottly-project-title"><span class="label label-default">{{ project.data.fwlanguage }}</span></p>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+              <li class="" ng-class="{ active:panel.isSet('devices') }"><a href="" ng-click="panel.setTab('devices')">Devices</a></li>
+              <li class="" ng-class="{ active:panel.isSet('messages') }"><a href="" ng-click="panel.setTab('messages')">Messages</a></li>
+              <li class="" ng-class="{ active:panel.isSet('devicecode') }"><a href="" ng-click="panel.setTab('devicecode')">Firmware Code</a></li>
+              <li class="" ng-class="{ active:panel.isSet('deviceconsole') }"><a href="" ng-click="panel.setTab('deviceconsole')">Admin Console</a></li>
+
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="">USERNAME
+                <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                  <li><a href="#">Settings</a></li>
+                  <li><a href="#">Logout</a></li>
+                </ul>
+              </li>              
+            </ul>          
+          </div>
+        </div>
+      </nav>    
+      <div class="container">
+      <div ng-view=""></div>
+      </div>
+
+      <footer class="footer" ng-cloak>
+        <div class="container" style="margin-top:20px;">
+          <div class="row">
+            <div class="col-md-6">              
+              <p style="color: #eee;">With <span class="glyphicon glyphicon-heart"></span> from
+                <a href="http://tomorrowdata.io" target="_blank">
+                  <img alt="Brand" src="/static/img/logo-td.png" style="width: 150px;margin-top: -5px;">          
+                </a>
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </footer>      
+    </div>
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+     <script>
+       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
+       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
+       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
+       }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+       ga('create', 'UA-XXXXX-X');
+       ga('send', 'pageview');
+    </script>
+    <script src="scripts/vendor/codemirror.js"></script>
+    <script src="scripts/vendor/python.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.0.3/sockjs.min.js"></script>
+    <script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"></script>
+    
+
+    <!-- build:js(.) scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.js"></script>
+    <script src="bower_components/angular-route/angular-route.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.js"></script>
+    <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="bower_components/angular-bootstrap-contextmenu/contextMenu.js"></script>
+
+    <!-- endbower -->
+    <!-- endbuild -->
+    <script src="bower_components/spin.js/spin.js"></script>
+    <script src="bower_components/angular-spinner/angular-spinner.js"></script>
+
+    <script src="bower_components/ngclipboard/dist/ngclipboard.min.js"></script>    
+    <script src="bower_components/ui-select/dist/select.js"></script>    
+
+    <script src="/static/js/utils.js"></script>
+    <script src="/static/js/services/http-request-service-callback.js"></script>
+    <script type="text/javascript" src="scripts/vendor/ui-codemirror.js"></script>
+
+
+
+        <script src="scripts/utils/namespace.js"></script>    
+        <script src="scripts/utils/controller-helpers.js"></script>    
+
+        <!-- build:js({.tmp,app}) scripts/scripts.js -->
+        <script src="scripts/app.js"></script>
+        <script src="scripts/controllers/about.js"></script>
+        <script src="scripts/controllers/messages.js"></script>
+        <script src="scripts/controllers/devicecode.js"></script>
+        <script src="scripts/directives/code-editor.js"></script>
+        <script src="scripts/controllers/deviceconsole.js"></script>
+        <script src="scripts/controllers/boardscontroller.js"></script>
+        <script src="scripts/services/http-request-service.js"></script>
+        <script src="scripts/services/websocket-service.js"></script>
+        <script src="scripts/services/project-service.js"></script>
+        <script src="scripts/controllers/devices.js"></script>
+        <script src="scripts/controllers/boardmodal.js"></script>
+        <script src="scripts/directives/ngrightclick.js"></script>
+        <script src="scripts/directives/iottlytypeselector.js"></script>
+        <script src="scripts/controllers/messagemodal.js"></script>
+        <script src="scripts/directives/iottlystandardcommand.js"></script>
+        <!-- endbuild -->
+
+
+</body>
+</html>

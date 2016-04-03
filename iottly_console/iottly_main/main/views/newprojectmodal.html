@@ -1,0 +1,37 @@
+<!-- 
+
+Copyright 2015 Stefano Terna
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+<div class="modal-header">
+    <h3 class="modal-title">Create your IoT project</h3>
+</div>
+<div class="modal-body">
+  <form name="createProjectForm" class="css-form" novalidate>
+    <fieldset class="form-group">
+      <input ng-model="project.name" type="text" class="form-control" placeholder="Project name ..." title="Project" required=""></input>
+    </fieldset>
+    <fieldset class="form-group">
+      <select ng-model="project.board" class="form-control" ng-options="board for board in ['Dev Docker Device','Arduino','Raspberry Pi','UDOO']"  title="Board" required> 
+        <option value="">Select the board for your project</option>
+      </select>
+      <div ng-hide="checkBoard()" class="alert alert-danger">'OK, this is a demo. You can just choose Raspberry PI!'</div>
+    </fieldset>
+  </form>            
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="createProjectForm.$valid && ok()">OK</button>
+  <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>

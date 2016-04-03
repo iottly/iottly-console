@@ -1,28 +1,122 @@
+[ng\:cloak],[ng-cloak],.ng-cloak{display:none !important}
+
+
+/* responsive text queries */
+@media screen and (max-width: 992px) {
+  p,.btn,input,div,span,h4 {
+    font-size: 95%;
+  }
+  h1 {
+    font-size: 24px;  
+  }
+  h2 {
+    font-size: 22px;  
+  }
+  h3 {
+    font-size: 18px;  
+  }
+}
+
+@media screen and (max-width: 768px) {
+  p,.btn,input,div,span,h4 {
+    font-size: 90%;
+  }
+  h1 {
+    font-size: 20px;  
+  }
+  h2 {
+    font-size: 18px;  
+  }
+  h3 {
+    font-size: 16px;  
+  }
+}
+
+/* Sticky footer styles
+-------------------------------------------------- */
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #f5f5f5;
+}
+
+
+/* Custom page CSS
+-------------------------------------------------- */
+/* Not required for template or sticky footer method. */
+
+/*
+body > .container {
+  padding: 60px 15px 0;
+}
+*/
+.container .text-muted {
+  margin: 20px 0;
+}
+
+.footer > .container {
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+code {
+  font-size: 80%;
+}
+
+
+.navbar {
+  margin-bottom: 20px;
+}
+
+.jumbotron {
+  padding-top: 1px;
+}
+
+.CodeMirror {
+  height: 100% !important;
+}
+
+.next {
+  margin-top:20px;
+}
+
+.css-form input.ng-invalid.ng-touched {
+border-color: #FA787E;
+}
+
+.css-form input.ng-valid.ng-touched {
+border-color: #78FA89;
+}
+
 
 
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
 
-body { padding-top: 140px; }
-
 body, .banner-row {
-  background-color: #333;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  /*background-color: #333;*/
+  margin-bottom: 60px;
 }
 
 #ib-board-chooser {
   /*margin-bottom: 20px;*/
 }
 
-.vcenter {
-  /*display: inline-block;*/
-  /*vertical-align: middle;*/
-  /*float: none;*/
-}
-
-.vertical-align {
-    display: flex;
-    align-items: center;
+.vcenterloading {
+  display: inline-block;
+  vertical-align: middle;
+  float: none;
 }
 
 #presence-container {
@@ -115,7 +209,7 @@ body, .banner-row {
 }
 
 .commands-panel {
-  /* display: none; */
+  /*display: none;*/
   margin-top: 20px;
 }
 
@@ -133,7 +227,7 @@ body, .banner-row {
   padding: 10px;
   background-color: #f5f5f5;
   border: 1px solid #e3e3e3;
-  /*display: none;*/
+  display: none;
 }
 
 .form-horizontal .row > * {
@@ -234,41 +328,4 @@ button.collapse-toggle.collapsed:after {
 
 .sensor-panel button {
   width: 100%;
-}
-
-
-tr.selected {
-  background-color: white;
-}
-
-.noselect {
-  cursor: default;
-
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none;   /* Chrome/Safari/Opera */
-  -khtml-user-select: none;    /* Konqueror */
-  -moz-user-select: none;      /* Firefox */
-  -ms-user-select: none;       /* IE/Edge */
-  user-select: none;           /* non-prefixed version, currently
-                                  not supported by any browser */
-}
-
-.iottly-project-title {
-
-    width: 200px;
-    text-overflow:  ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-
-}
-
-
-@media (min-width: 768px) { 
-    .twoRow .navbar-collapse {
-        clear: left;
-    }
-}
-
-[ng\:cloak], [ng-cloak], .ng-cloak {
-  display: none !important;
 }

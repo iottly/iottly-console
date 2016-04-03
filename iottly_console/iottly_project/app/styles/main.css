@@ -4,8 +4,6 @@
    Author's custom styles
    ========================================================================== */
 
-body { padding-top: 140px; }
-
 body, .banner-row {
   background-color: #333;
 }
@@ -18,11 +16,6 @@ body, .banner-row {
   /*display: inline-block;*/
   /*vertical-align: middle;*/
   /*float: none;*/
-}
-
-.vertical-align {
-    display: flex;
-    align-items: center;
 }
 
 #presence-container {
@@ -234,41 +227,4 @@ button.collapse-toggle.collapsed:after {
 
 .sensor-panel button {
   width: 100%;
-}
-
-
-tr.selected {
-  background-color: white;
-}
-
-.noselect {
-  cursor: default;
-
-  -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none;   /* Chrome/Safari/Opera */
-  -khtml-user-select: none;    /* Konqueror */
-  -moz-user-select: none;      /* Firefox */
-  -ms-user-select: none;       /* IE/Edge */
-  user-select: none;           /* non-prefixed version, currently
-                                  not supported by any browser */
-}
-
-.iottly-project-title {
-
-    width: 200px;
-    text-overflow:  ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-
-}
-
-
-@media (min-width: 768px) { 
-    .twoRow .navbar-collapse {
-        clear: left;
-    }
-}
-
-[ng\:cloak], [ng-cloak], .ng-cloak {
-  display: none !important;
 }

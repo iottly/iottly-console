@@ -1,0 +1,97 @@
+<!-- 
+
+Copyright 2015 Stefano Terna
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+<div class="modal-header">
+    <h3 class="modal-title">{{ mode === 'new' && 'Define' || 'Edit' }} your message</h3>
+</div>
+<div class="modal-body">
+<!--   <div class="row">
+    <div class="col-md-8">.col-md-8</div>
+    <div class="col-md-4">.col-md-4</div>
+  </div> -->
+  <div class="well">
+    <h4>Message header:</h4>
+    <form name="createMessageForm" class="css-form" novalidate>
+      <fieldset class="form-group">
+        <div class="row vertical-align">
+          <span class="col-md-8">
+            <input ng-model="message.metadata.type" type="text" class="form-control" placeholder="Message type ..." title="Type" required ng-disabled="mode === 'edit'"></input>
+          </span>
+          <span class="col-md-4">
+            <label class="radio-inline">
+                <input type="radio" ng-model="message.metadata.direction" value="command" required ng-disabled="mode === 'edit'"> Command
+            </label>            
+            <label class="radio-inline">
+                <input type="radio" ng-model="message.metadata.direction" value="event" required ng-disabled="mode === 'edit'"> Event
+            </label>            
+          </span>      
+        </div>
+      </fieldset>      
+      <fieldset class="form-group">
+        <input ng-model="message.metadata.description" type="text" class="form-control" placeholder="Message description ..." title="description" required></input>
+      </fieldset>
+    </form>      
+
+  </div>
+
+  <div ng-controller="PropertiesController">
+    <div class="well">
+      <h4>Message's keywords:</h4>
+      <table class="table table-condensed">
+        <thead>
+          <tr>
+            <th class="col-md-3">key</th>
+            <th class="col-md-8">value</th>
+            <th class="col-md-1"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="property in properties">
+            <td class="col-md-3">{{ property }}</td>
+            <td class="col-md-8">{{ getRenderedProperty(_properties[property]) }}</td>
+            <td class="col-md-1"><button class="btn btn-sm" type="button" ng-click="removeKey(property)"><i class="glyphicon glyphicon-remove"></i></button></td>
+          </tr>
+        </tbody>
+      </table>
+      <span ng-show="checkProperties()">You don't have any keyword configured.</span>
+    </div>
+    <div class="well">
+      <h4>Define new keywords:</h4>
+      <fieldset>
+        <div class="row">
+          <fieldset class="form-group">
+            <span class="col-md-4">
+                <input ng-model="property.key" type="text" class="form-control" placeholder="Key ..." title="Key"></input>
+            </span>
+            <span class="col-md-8">
+              <span iottlytypeselector valuetype="property.value"></span>
+            </span>
+          </fieldset>
+        </div>
+        <fieldset>
+          <button type="button" class="btn pull-left" ng-click="addKey(_properties)" style="vertical-align: middle;"><i class="glyphicon glyphicon-plus"></i> Add key</button> 
+        </fieldset>
+      </fieldset>
+    </div>
+  </div>      
+
+</div>
+<div class="modal-footer">
+  <!--   -->
+  <button class="btn btn-primary" type="button" ng-click="createMessageForm.$valid && !checkProperties() && ok()">OK</button>
+  <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>

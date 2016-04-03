@@ -1,0 +1,88 @@
+<!-- 
+
+Copyright 2015 Stefano Terna
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+
+-->
+<div class="jumbotron">
+  <h3>Control your boards from the Internet</h3>  
+  <div id="command-console" class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">Command console</h3>
+    </div>
+    <div class="panel-body">
+      <ui-select ng-model="selectedboard" theme="select2" style="width: 100% !important;" >
+        <ui-select-match placeholder="Select a board in the list or search its name/MAC...">{{$select.selected.name || $select.selected.ID}}</ui-select-match>
+        <ui-select-choices repeat="board in project.data.boards | propsFilter: {name: $select.search, macaddress: $select.search}">
+          <div ng-bind-html="board.name || 'No name'"></div>
+          <small>
+            ID: {{board.ID}}
+            MAC: <span ng-bind-html="''+board.macaddress"></span>
+          </small>
+        </ui-select-choices>
+      </ui-select>
+
+      <div class=" commands-panel" ng-show="boardisSelected()">
+        <div class="well">
+          <div class="row">
+            <div id="sms-container" class="col-sm-9 col-xs-10">
+              <span class="inline-lbl hidden-xs">Use the following to send commands to the board:</span>
+            </div>
+            <div id="presence-container" class="col-sm-3 col-xs-2 text-right" ng-show="selectedboard">
+              <span class="inline-lbl hidden-xs" ng-show="selectedboard.present">Connected! :)</span>
+              <span class="inline-lbl hidden-xs" ng-show="!selectedboard.present">Not connected :(</span>
+
+              <div class="led-container led-large">
+                <div id="presence-indicator" class="led" ng-class="((selectedboard.present) ? 'led-green' : 'led-red')"></div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="btn-group-vertical col-xs-12">
+              <div ng-repeat="command in commands" iottlystandardcommand="" command="command" send="send(msg, values)"></div>              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="messages-panel" class="panel panel-default">
+    <div class="panel-heading">
+      <div>
+        <h3 class="panel-title pull-left">Message console</h3>
+        <button type="button" class="btn btn-default btn-sm pull-right" ng-click="emptyEvents()">
+          <span class="glyphicon glyphicon-trash"></span>
+        </button>        
+      </div>
+      <form class="form-horizontal filter-form" role="form">
+        <input type="text" name="numMessages" class="form-control" ng-model="filter.numMessages"  placeholder="#">
+        <input rows="2" type="text" ng-model="filter.queryJson" name="queryJson" class="form-control" placeholder="Mongo JSON">
+        <button type="submit" class="btn btn-default filter" ng-click="loadLastMessages()">Filter</button>
+      </form>      
+    </div>
+    <div class="panel-body">
+      <div class="messages-container row">
+        <div class="well message" ng-repeat="event in events">
+          <div class="col-xs-12 col-md-4 msg-attr"><div class="label label-default msg-lbl">timestamp:</div><code>{{event.timestamp}}</code></div>
+          <div class="col-xs-12 col-md-4 msg-attr"><div class="label label-default msg-lbl">from:</div><code>{{event.from}}</code></div>
+          <div class="col-xs-12 col-md-4 msg-attr"><div class="label label-default msg-lbl">to:</div><code>{{event.to}}</code></div>
+          <div class="row msg-object">
+            <pre>{{event.json()}}</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -59,7 +59,7 @@ limitations under the License.
               <!-- Obligatory placeholder element -->
               <option></option>
               {% for ib in ib_boards %}
-              <option data-jid="{{ib['JID']}}" data-macaddress="{{ib['macaddress']}}" data-simnumber="{{ib['simnumber']}}" value="{{ib['macaddress']}}">{{ '{JID} - {macaddress} - {simnumber}'.format(**ib) }}</option>
+              <option data-jid="{{ib['jid']}}" data-macaddress="{{ib['macaddress']}}" data-simnumber="{{ib['simnumber']}}" value="{{ib['macaddress']}}">{{ '{jid} - {macaddress} - {simnumber}'.format(**ib) }}</option>
               {% end %}
             </select>
             <div class=" commands-panel" >
