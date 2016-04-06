@@ -54,9 +54,10 @@ angular.module('consoleApp')
 
         $scope._send = function() {
           var values = {};
+          var normtype = Utils.controllerhelpers.normalizeProperty($scope.command.metadata.type);        
           $scope.properties.forEach(function(prop){
             //this key mapping is for compatibility with API hierarc. management
-            values[$scope.command.metadata.type + '.' + prop] = $scope.values[prop];
+            values[normtype + '.' + prop] = $scope.values[prop];
           });
           $scope.send({msg: $scope.command, values: values});
         };
