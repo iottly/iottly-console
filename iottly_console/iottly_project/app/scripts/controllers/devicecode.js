@@ -26,16 +26,10 @@ limitations under the License.
  * Controller of the consoleApp
  */
 angular.module('consoleApp')
-  .controller('DevicecodeCtrl', function ($scope, $routeParams, projectService) {
+  .controller('DevicecodeCtrl', function ($scope, $timeout, $routeParams, projectService) {
     Utils.controllerhelpers.getProject($scope, $routeParams, projectService);
 
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-
-
+    $scope.refresh = true;
     $scope.loaded = 1;
 
     $scope.editorOptions = {
@@ -44,11 +38,15 @@ angular.module('consoleApp')
         mode: 'python',
     };
 
-    $scope.code = '';
+    $scope.code = 'pass';
+
 
     $scope.codemirrorLoaded = function(_editor){
-      _editor.getDoc().setValue('ciao');
-      _editor.refresh(); 
+
+      //fix codemirror refresh bug with angular
+      $timeout(function() {
+        _editor.refresh();
+      });
 
     };
     

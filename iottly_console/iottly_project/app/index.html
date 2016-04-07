@@ -34,10 +34,9 @@ limitations under the License.
     <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
 
     <link rel="stylesheet" href="bower_components/ui-select/dist/select.css" />
-
+    <link rel="stylesheet" type="text/css" href="bower_components/codemirror/lib/codemirror.css">
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="/static/css/main.css">
-    <link rel="stylesheet" href="styles/codemirror.css">
     <link rel="stylesheet" href="styles/select2.css">
     <link rel="stylesheet" href="styles/select2-bootstrap.css">
     <!-- endbuild -->
@@ -114,8 +113,6 @@ limitations under the License.
        ga('create', 'UA-XXXXX-X');
        ga('send', 'pageview');
     </script>
-    <script src="scripts/vendor/codemirror.js"></script>
-    <script src="scripts/vendor/python.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.0.3/sockjs.min.js"></script>
     <script src="https://cdn.rawgit.com/zenorocha/clipboard.js/master/dist/clipboard.min.js"></script>
     
@@ -133,7 +130,8 @@ limitations under the License.
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
     <script src="bower_components/angular-bootstrap-contextmenu/contextMenu.js"></script>
-
+    <script type="text/javascript" src="bower_components/codemirror/lib/codemirror.js"></script>
+    <script type="text/javascript" src="bower_components/angular-ui-codemirror/ui-codemirror.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     <script src="bower_components/spin.js/spin.js"></script>
@@ -147,6 +145,7 @@ limitations under the License.
     <script type="text/javascript" src="scripts/vendor/ui-codemirror.js"></script>
 
 
+        <script src="scripts/vendor/python.js"></script>    
 
         <script src="scripts/utils/namespace.js"></script>    
         <script src="scripts/utils/controller-helpers.js"></script>    
