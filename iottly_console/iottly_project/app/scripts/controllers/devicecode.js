@@ -26,7 +26,7 @@ limitations under the License.
  * Controller of the consoleApp
  */
 angular.module('consoleApp')
-  .controller('DevicecodeCtrl', function ($scope, $rootScope, $routeParams, projectService) {
+  .controller('DevicecodeCtrl', function ($scope, $routeParams, projectService) {
     Utils.controllerhelpers.getProject($scope, $routeParams, projectService);
 
     $scope.awesomeThings = [
@@ -47,19 +47,9 @@ angular.module('consoleApp')
     $scope.code = '';
 
     $scope.codemirrorLoaded = function(_editor){
-      // Editor part
-      //var _doc = _editor.getDoc();
-      $rootScope.editor = _editor;
-      //$rootScope.editor.getDoc().setValue($rootScope.projectSourceCode);
-      $rootScope.editor.getDoc().setValue('ciao');
-      //codeCtrl.code = $scope.projecttoCode();
+      _editor.getDoc().setValue('ciao');
+      _editor.refresh(); 
 
-      setTimeout(function(){ 
-        $rootScope.editor.refresh(); 
-      }, 100);
-      // _editor.on("change", function(){
-      //   _editor.refresh();
-      // });
     };
     
   });
