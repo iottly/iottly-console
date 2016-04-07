@@ -18,29 +18,31 @@ limitations under the License.
 
 
  <div class="jumbotron container-fluid">
-  <h3>Design your messages  <small>specifying which "keywords" the board should understand.</small></h3>
+  <h4>Design your messages  <small>specifying which "keywords" the board should understand.</small></h4>
+  <div class="well well-lg">
+    <button type="submit" class="btn btn-primary" ng-click="newMessage()"><i class="glyphicon glyphicon-plus"></i> New Message</button>  
+    
 
-  <button type="submit" class="btn btn-primary" ng-click="newMessage()"><i class="glyphicon glyphicon-plus"></i> New Message</button>  
-  
+    <table class="table table-condensed noselect">
+      <thead>
+        <tr>
+          <th class="col-md-2">Type (unique)</th>
+          <th class="col-md-2">Direction</th>        
+          <th class="col-md-3">Description</th>
+          <th class="col-md-5">Format</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="message in project.data.messages | orderBy : 'metadata.type'" ng-click="setSelected(message)" ng-class="{selected: isSelected(message)}" context-menu="menuOptions" ng-right-click="setSelected(message)">
+          <td class="col-md-2">{{ message.metadata.type }}</td>
+          <td class="col-md-2">{{ message.metadata.direction }}</td>        
+          <td class="col-md-3">{{ message.metadata.description }}</td>
+          <td class="col-md-5"><code>{{ message.metadata.jsonfmt }}</code></td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="well well-sm" ng-show="checkMessages()" style="margin-bottom:10px;">You didn't configured any messages yet.</div>
 
-  <table class="table table-condensed noselect">
-    <thead>
-      <tr>
-        <th class="col-md-2">Type (unique)</th>
-        <th class="col-md-2">Direction</th>        
-        <th class="col-md-3">Description</th>
-        <th class="col-md-5">Format</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="message in project.data.messages | orderBy : 'metadata.type'" ng-click="setSelected(message)" ng-class="{selected: isSelected(message)}" context-menu="menuOptions" ng-right-click="setSelected(message)">
-        <td class="col-md-2">{{ message.metadata.type }}</td>
-        <td class="col-md-2">{{ message.metadata.direction }}</td>        
-        <td class="col-md-3">{{ message.metadata.description }}</td>
-        <td class="col-md-5"><code>{{ message.metadata.jsonfmt }}</code></td>
-      </tr>
-    </tbody>
-  </table>
-  <div class="well well-sm" ng-show="checkMessages()" style="margin-bottom:10px;">You didn't configured any messages yet.</div>
+  </div>
   <button type="button" class="btn btn-primary btn-lg pull-right next" ng-click="!panel.checkMessages() && panel.editCode(codeCtrl)">Next <i class="glyphicon glyphicon-arrow-right"></i></button>
 </div>
