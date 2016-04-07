@@ -98,7 +98,7 @@ angular
 angular
   .module('consoleApp').controller('AppCtrl', function ($scope, $rootScope, $location, $routeParams, httpRequestService, websocketService, projectService) {
 
-    self = this;
+    var self = this;
     
     $scope.project = {data: {}};
 
@@ -118,52 +118,6 @@ angular
     self.validateProject = function(){
       return $scope.project.data._id;
     }
-
-    // $rootScope.project = {
-    //   'name': 'LEGO motor remote control', 
-    //   'board':'Raspberry PI', 
-    //   'fwlanguage':'Python',
-    //   'boards': [
-    //     {
-    //       'name':'My Board 1',
-    //       'ID': 'jn9wn6x0f6r'
-    //     },
-    //     {
-    //       'name':'My Board 2',
-    //       'ID': 't57wh281tt9'
-    //     }        
-    //   ],
-    //   'messages': [
-    //     {
-    //       'type': 'operate motor',
-    //       'description': 'operates the motor clockwise',
-    //       'keys':[
-    //         {
-    //           'key':'motor_number',
-    //           'value': 1
-    //         },
-    //         {
-    //           'key':'direction',
-    //           'value': 'right'
-    //         }
-    //       ]
-    //     },
-    //     {
-    //       'type': 'operate motor',
-    //       'description': 'operates the motor counter clockwise',
-    //       'keys':[
-    //         {
-    //           'key':'motor_number',
-    //           'value': 1
-    //         },
-    //         {
-    //           'key':'direction',
-    //           'value': 'left'
-    //         }
-    //       ]
-    //     }
-    //   ]
-    // }
 
 
     $scope.$on('$routeChangeSuccess', function(event) {
