@@ -3,7 +3,7 @@
 Copyright 2015 Stefano Terna
 
 Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
+you may not use $scope file except in compliance with the License.
 You may obtain a copy of the License at
 
     http://www.apache.org/licenses/LICENSE-2.0
@@ -29,15 +29,14 @@ angular.module('consoleApp')
   .controller('DevicecodeCtrl', function ($scope, $rootScope, $routeParams, projectService) {
     Utils.controllerhelpers.getProject($scope, $routeParams, projectService);
 
-    
-    this.awesomeThings = [
+    $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'
     ];
 
 
-    this.loaded = 1;
+    $scope.loaded = 1;
 
     $scope.editorOptions = {
         lineWrapping : true,
@@ -45,15 +44,15 @@ angular.module('consoleApp')
         mode: 'python',
     };
 
-    this.code = '';
+    $scope.code = '';
 
-    this.codemirrorLoaded = function(_editor){
+    $scope.codemirrorLoaded = function(_editor){
       // Editor part
       //var _doc = _editor.getDoc();
       $rootScope.editor = _editor;
-      $rootScope.editor.getDoc().setValue($rootScope.projectSourceCode);
-
-      //codeCtrl.code = this.projecttoCode();
+      //$rootScope.editor.getDoc().setValue($rootScope.projectSourceCode);
+      $rootScope.editor.getDoc().setValue('ciao');
+      //codeCtrl.code = $scope.projecttoCode();
 
       setTimeout(function(){ 
         $rootScope.editor.refresh(); 
