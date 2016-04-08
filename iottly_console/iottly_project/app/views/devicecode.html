@@ -19,15 +19,15 @@ limitations under the License.
   <h4>IOTTLY writes the communication code <small>leaving the fun part to you!</small></h4>
   <div class="well well-lg">
     <div class="col-md-3">
-<!--     <ul class="nav nav-pills nav-stacked">
-      <li ng-repeat="message in project.data.messages | orderBy : 'metadata.type'" role="presentation"><a ng-click="setCurrentCommand(message)" href = "">{{ message.metadata.type }}</a></li>      
-    </ul>           -->
-    <abn-tree tree-data="code_data" on-select="tree_handler(branch)" expand-level="2" initial-selection="South America"></abn-tree>
+    <abn-tree tree-data="tree_data" tree-control="tree_ctrl" on-select="tree_handler(branch)" expand-level="2" initial-selection="Init sections" icon-expand="glyphicon glyphicon-folder-close" icon-collapse="glyphicon glyphicon-folder-open"></abn-tree>
     </div>
-    <div class="col-md-9">
-      <textarea ui-codemirror="{ onLoad : codemirrorLoaded }" ui-codemirror-opts="editorOptions" ng-model="code"></textarea>
+    <div class="col-md-9" style="height:400px">
+      <div ng-repeat="snippet in project.data.fwcode.snippets" ng-show="isEditorSelected(snippet.description)">
+        <textarea ui-codemirror="{ onLoad : codemirrorLoaded }" ui-codemirror-opts="editorOptions" ng-model="snippet.code" ui-refresh="isEditorSelected(snippet.description)"></textarea>
+      </div>
+      <div class="well" style="height:400px" ng-show="selectedEditor === ''">Select an item to edit the code.</div>
     </div>
-    {{ selectedCodeArea }}
+    
     <button type="button" class="btn btn-warning btn-sm" style="margin-top:20px;">Copy to clipboard</button>
     <button type="button" class="btn btn-warning btn-sm" style="margin-top:20px;">Save ...</button>
   </div>

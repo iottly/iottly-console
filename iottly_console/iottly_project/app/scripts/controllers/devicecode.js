@@ -33,6 +33,9 @@ angular.module('consoleApp')
       $scope.init();
     });
 
+    $scope.$on('$routeChangeSuccess', function(event) {
+      $scope.init();
+    });
 
     $scope.init = function(){
       $scope.initTree();
@@ -44,7 +47,7 @@ angular.module('consoleApp')
     $scope.loaded = 1;
 
     $scope.editorOptions = {
-        lineWrapping : true,
+        lineWrapping : false,
         lineNumbers: true,
         mode: 'python',
     };
@@ -61,55 +64,46 @@ angular.module('consoleApp')
 
     };
 
+    $scope.selectedEditor = '';
+    $scope.isEditorSelected = function(description){
+      return $scope.selectedEditor === description;
+    };
+
     //END CODE MGM
 
     //BEGIN TREE MGM
-    var commands_children =[];
-    $scope.code_data = [
-      {
-        label: 'Init secions',
-        children: [
-          {
-            label: 'Import and globals',
-            data: {
-
-            }
-          },
-          {
-            label: 'Init function'
-          }
-        ]
-      },
-      {
-        label: 'Loop sections',
-        children: [
-          {
-            label: 'Loop function'
-          }
-        ]
-      },
-      {
-        label: 'Command Handlers',
-        children: commands_children
-      }
-    ];
+    $scope.tree_ctrl = {};
+    $scope.tree_data = [];
 
     $scope.initTree = function() {
-      $scope.project.data.messages.forEach(function(message){
-        if (message.metadata.direction == 'command') {
-          commands_children.push(
-            {
-              label: message.metadata.type,
-              data: {command: message}
-            }
-          );
-        }
-      });
+      if ($scope.project.data.fwcode) {
+        $scope.project.data.fwcode.snippets.forEach(function(snippet){
+
+          var category = $scope.tree_data.filter(function(section){
+            return section.label === ' ' + snippet.category;
+          })[0];
+          if (category === undefined) {
+            category = {
+              label: ' ' + snippet.category,
+              children: []
+            };
+            $scope.tree_data.push(category); 
+          };
+          category.children.push({
+            label: snippet.description
+          });
+        });
+        $scope.tree_ctrl.expand_all();
+
+      };
     };
 
     $scope.tree_handler = function(branch) {
-      var _ref;
-      $scope.selectedCodeArea = branch.data;
+      if (branch.children.length === 0) {
+        $scope.selectedEditor = branch.label;
+      } else {
+        $scope.selectedEditor = '';
+      }
     };
     
 
