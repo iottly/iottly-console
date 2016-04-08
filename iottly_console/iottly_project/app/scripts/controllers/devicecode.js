@@ -26,8 +26,19 @@ limitations under the License.
  * Controller of the consoleApp
  */
 angular.module('consoleApp')
-  .controller('DevicecodeCtrl', function ($scope, $timeout, $routeParams, projectService) {
+  .controller('DevicecodeCtrl', function ($scope, $rootScope, $timeout, $routeParams, projectService) {
     Utils.controllerhelpers.getProject($scope, $routeParams, projectService);
+
+    var projectListener = $rootScope.$on('project', function (event, data) {
+      $scope.init();
+    });
+
+
+    $scope.init = function(){
+      $scope.initTree();
+    };
+
+    //BEGIN CODE MGM
 
     $scope.refresh = true;
     $scope.loaded = 1;
@@ -49,5 +60,59 @@ angular.module('consoleApp')
       });
 
     };
+
+    //END CODE MGM
+
+    //BEGIN TREE MGM
+    var commands_children =[];
+    $scope.code_data = [
+      {
+        label: 'Init secions',
+        children: [
+          {
+            label: 'Import and globals',
+            data: {
+
+            }
+          },
+          {
+            label: 'Init function'
+          }
+        ]
+      },
+      {
+        label: 'Loop sections',
+        children: [
+          {
+            label: 'Loop function'
+          }
+        ]
+      },
+      {
+        label: 'Command Handlers',
+        children: commands_children
+      }
+    ];
+
+    $scope.initTree = function() {
+      $scope.project.data.messages.forEach(function(message){
+        if (message.metadata.direction == 'command') {
+          commands_children.push(
+            {
+              label: message.metadata.type,
+              data: {command: message}
+            }
+          );
+        }
+      });
+    };
+
+    $scope.tree_handler = function(branch) {
+      var _ref;
+      $scope.selectedCodeArea = branch.data;
+    };
     
+
+    //END TREE MGM
+
   });
