@@ -32,7 +32,8 @@ limitations under the License.
       </div>
     </div>
     
-    <button type="button" class="btn btn-warning btn-sm" style="margin-top:20px;" ng-disabled="snippetsSaved" ng-click="saveCode()">Save</button>
+    <button type="button" class="btn btn-warning" style="margin-top:20px;" ng-disabled="snippetsSaved" ng-click="saveCode()"><i class="glyphicon glyphicon-floppy-disk"></i> Save</button>
+    <button type="button" class="btn btn-warning pull-right" style="margin-top:20px;" ng-disabled="!snippetsSaved" ng-click="saveCode()"><i class="glyphicon glyphicon-send"></i> Flash over the air</button>
+
   </div>
-  <button type="button" class="btn btn-primary btn-lg pull-right next" ng-click="panel.setTab(3)">Next <i class="glyphicon glyphicon-arrow-right"></i></button>         
 </div>
