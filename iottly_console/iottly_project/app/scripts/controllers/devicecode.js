@@ -26,7 +26,7 @@ limitations under the License.
  * Controller of the consoleApp
  */
 angular.module('consoleApp')
-  .controller('DevicecodeCtrl', function ($scope, $rootScope, $timeout, $routeParams, $window, projectService) {
+  .controller('DevicecodeCtrl', function ($scope, $rootScope, $timeout, $routeParams, projectService) {
     Utils.controllerhelpers.getProject($scope, $routeParams, projectService);
 
     var projectListener = $rootScope.$on('project', function (event, data) {
@@ -47,18 +47,18 @@ angular.module('consoleApp')
     $scope.$on('$routeChangeStart', function(event, next, current) {
       var message = checkForSaveOnExit();
       if (message){
-        if (!$window.confirm(message)) {
+        if (!window.confirm(message)) {
           event.preventDefault();    
           $scope.panel.setTab('devicecode');
         };
       };
     });
 
-    $window.onbeforeunload = function(event) {
+    window.onbeforeunload = function(event) {
       var message = checkForSaveOnExit();
       if (message){
         if (typeof event == 'undefined') {
-          event = $window.event;
+          event = window.event;
         };
         if (event) {
           event.returnValue = message;
@@ -67,8 +67,8 @@ angular.module('consoleApp')
       };
     };
 
-    $scope.$on('$destroy', function() {
-        delete $window.onbeforeunload;
+    $scope.$on('$destroy', function(){
+      window.onbeforeunload = undefined;
     });
 
     $scope.init = function(){
