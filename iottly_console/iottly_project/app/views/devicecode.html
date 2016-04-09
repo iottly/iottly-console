@@ -18,19 +18,21 @@ limitations under the License.
 <div class="jumbotron container-fluid">
   <h4>IOTTLY writes the communication code <small>leaving the fun part to you!</small></h4>
   <div class="well well-lg">
-    <div class="col-md-3">
-    <abn-tree tree-data="tree_data" tree-control="tree_ctrl" on-select="tree_handler(branch)" expand-level="2" initial-selection="Init sections" icon-expand="glyphicon glyphicon-folder-close" icon-collapse="glyphicon glyphicon-folder-open"></abn-tree>
-    </div>
-    <div class="col-md-9" style="height:400px">
-      <div ng-cloak ng-show="editorsLoaded">
-        <div ng-repeat="snippet in project.data.fwcode.snippets" ng-show="isSnippetSelected(snippet.snippetid)">
-          <textarea ui-codemirror="{ onLoad : codemirrorLoaded}" ui-codemirror-opts="editorOptions" ng-model="snippet.code" ui-refresh="isSnippetSelected(snippet.snippetid)" id="snippet.snippetid"></textarea>
+    <div class="row">
+      <div class="col-md-3">
+      <abn-tree tree-data="tree_data" tree-control="tree_ctrl" on-select="tree_handler(branch)" expand-level="2" initial-selection="Init sections" icon-expand="glyphicon glyphicon-folder-close" icon-collapse="glyphicon glyphicon-folder-open"></abn-tree>
+      </div>
+      <div class="col-md-9" style="height:400px">
+        <div ng-cloak ng-show="editorsLoaded">
+          <div ng-repeat="snippet in project.data.fwcode.snippets" ng-show="isSnippetSelected(snippet.snippetid)">
+            <textarea ui-codemirror="{ onLoad : codemirrorLoaded}" ui-codemirror-opts="editorOptions" ng-model="snippet.code" ui-refresh="isSnippetSelected(snippet.snippetid)" id="snippet.snippetid"></textarea>
+          </div>
+          <div class="well" style="height:400px" ng-show="selectedSnippetid === ''">Select an item to edit the code.</div>
         </div>
-        <div class="well" style="height:400px" ng-show="selectedSnippetid === ''">Select an item to edit the code.</div>
       </div>
     </div>
     
-    <button type="button" class="btn btn-warning btn-sm" style="margin-top:20px;" ng-disabled="!snippetsSaved" ng-click="saveCode()">Save</button>
+    <button type="button" class="btn btn-warning btn-sm" style="margin-top:20px;" ng-disabled="snippetsSaved" ng-click="saveCode()">Save</button>
   </div>
   <button type="button" class="btn btn-primary btn-lg pull-right next" ng-click="panel.setTab(3)">Next <i class="glyphicon glyphicon-arrow-right"></i></button>         
 </div>

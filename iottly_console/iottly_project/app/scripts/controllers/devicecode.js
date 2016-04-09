@@ -26,7 +26,7 @@ limitations under the License.
  * Controller of the consoleApp
  */
 angular.module('consoleApp')
-  .controller('DevicecodeCtrl', function ($scope, $rootScope, $timeout, $routeParams, projectService) {
+  .controller('DevicecodeCtrl', function ($scope, $rootScope, $timeout, $routeParams, $window, projectService) {
     Utils.controllerhelpers.getProject($scope, $routeParams, projectService);
 
     var projectListener = $rootScope.$on('project', function (event, data) {
@@ -35,6 +35,40 @@ angular.module('consoleApp')
 
     $scope.$on('$routeChangeSuccess', function(event) {
       $scope.init();
+    });
+
+    var checkForSaveOnExit = function(){
+      if ($scope.snippetsSaved) {
+        return undefined;
+      } else {
+        return 'If you leave this page you are going to lose all unsaved changes, are you sure you want to leave?';
+      };
+    };
+    $scope.$on('$routeChangeStart', function(event, next, current) {
+      var message = checkForSaveOnExit();
+      if (message){
+        if (!$window.confirm(message)) {
+          event.preventDefault();    
+          $scope.panel.setTab('devicecode');
+        };
+      };
+    });
+
+    $window.onbeforeunload = function(event) {
+      var message = checkForSaveOnExit();
+      if (message){
+        if (typeof event == 'undefined') {
+          event = $window.event;
+        };
+        if (event) {
+          event.returnValue = message;
+        };
+        return message;        
+      };
+    };
+
+    $scope.$on('$destroy', function() {
+        delete $window.onbeforeunload;
     });
 
     $scope.init = function(){
@@ -105,8 +139,8 @@ angular.module('consoleApp')
 
     Object.defineProperty($scope, "snippetsSaved", {
       get: function () { 
-        return tree_data_flattened.some(function(sn) {
-          return !sn.data.saved;
+        return tree_data_flattened.every(function(sn) {
+          return sn.data.saved;
         });
       },
       set: function (saved) {
