@@ -38,35 +38,103 @@ angular.module('consoleApp')
     });
 
     $scope.init = function(){
-      $scope.initTree();
+      if ($scope.project.data.fwcode) {
+        $scope.initTree();
+      };
     };
 
     //BEGIN CODE MGM
+    // $scope.snippets = [];
+    // $scope.initSnippets = function(){
+    //   $scope.project.data.fwcode.snippets.forEach(function(snippet) {
+    //     var _snippet = {
+    //       data: snippet,
+    //       codecache: snippet.code,
+    //       saved: true
+    //     };
 
-    $scope.refresh = true;
-    $scope.loaded = 1;
+    //     Object.defineProperty(_snippet, "code", {
+    //       get: function () { 
+    //         return _snippet.data.code;
+    //       },
+    //       set: function (value) {
+    //         _snippet.data.code = value;
+    //         _snippet.saved = (_snippet.data.code === _snippet.codecache);
+    //       }
+    //     });
+    //     $scope.snippets.push(_snippet);
+    //   });
+    // };
+
 
     $scope.editorOptions = {
-        lineWrapping : false,
-        lineNumbers: true,
-        mode: 'python',
+      lineWrapping : false,
+      lineNumbers: true,
+      mode: 'python',
     };
 
-    $scope.code = 'pass';
-
-
+    var loadededitorcount = 0;
     $scope.codemirrorLoaded = function(_editor){
 
       //fix codemirror refresh bug with angular
       $timeout(function() {
         _editor.refresh();
+        loadededitorcount++;
+      });
+
+      _editor.on("change", function(instance, changeObj){
+        var tree_snippet = tree_data_flattened.filter(function(ts){
+          //FIXME: don't use global selectedSnippetid, instead inject some annotation inside CodeMirror
+          return ts.data.snippetid === $scope.selectedSnippetid;
+        })[0];
+        if (tree_snippet){
+          tree_snippet.data.saved = false;
+        };
       });
 
     };
 
-    $scope.selectedEditor = '';
-    $scope.isEditorSelected = function(description){
-      return $scope.selectedEditor === description;
+
+    Object.defineProperty($scope, "editorsLoaded", {
+      get: function () { 
+        return tree_data_flattened.length > 0 && 
+          tree_data_flattened.length === loadededitorcount;
+      }
+    });     
+
+
+    Object.defineProperty($scope, "snippetsSaved", {
+      get: function () { 
+        return tree_data_flattened.some(function(sn) {
+          return !sn.data.saved;
+        });
+      },
+      set: function (saved) {
+        tree_data_flattened.forEach(function(sn){
+          sn.data.saved = saved;
+        });
+      }
+    });     
+
+    $scope.selectedSnippetid = '';
+    $scope.isSnippetSelected = function(snippetid){
+      return $scope.selectedSnippetid === snippetid;
+    };
+
+    $scope.saveCode = function(){
+
+      var update = {
+          filter: undefined,
+          document: {"fwcode.snippets": $scope.project.data.fwcode.snippets}
+      };
+
+
+      projectService.updateProject($scope.project, update).then(function(data){
+        $scope.snippetsSaved = true;
+      }, function (error) {
+        //TODO error message
+        console.error(error);
+      });      
     };
 
     //END CODE MGM
@@ -74,35 +142,48 @@ angular.module('consoleApp')
     //BEGIN TREE MGM
     $scope.tree_ctrl = {};
     $scope.tree_data = [];
+    var tree_data_flattened = [];
 
     $scope.initTree = function() {
-      if ($scope.project.data.fwcode) {
-        $scope.project.data.fwcode.snippets.forEach(function(snippet){
+      $scope.project.data.fwcode.snippets.forEach(function(snippet){
 
-          var category = $scope.tree_data.filter(function(section){
-            return section.label === ' ' + snippet.category;
-          })[0];
-          if (category === undefined) {
-            category = {
-              label: ' ' + snippet.category,
-              children: []
-            };
-            $scope.tree_data.push(category); 
+        var category = $scope.tree_data.filter(function(section){
+          return section.label === ' ' + snippet.category;
+        })[0];
+        if (category === undefined) {
+          category = {
+            label: ' ' + snippet.category,
+            children: []
           };
-          category.children.push({
+          $scope.tree_data.push(category); 
+        };
+        var tree_snippet = {
+          label: snippet.description,
+          data: {
+            snippetid: snippet.snippetid,
+            saved: true,
             label: snippet.description
-          });
-        });
-        $scope.tree_ctrl.expand_all();
-
-      };
+          }
+        };
+        Object.defineProperty(tree_snippet, "label", {
+          get: function () { 
+            if (tree_snippet.data.saved)
+              return tree_snippet.data.label;
+            else
+              return tree_snippet.data.label + ' *';
+          }
+        });        
+        category.children.push(tree_snippet);
+        tree_data_flattened.push(tree_snippet);
+      });
+      $scope.tree_ctrl.expand_all();
     };
 
     $scope.tree_handler = function(branch) {
       if (branch.children.length === 0) {
-        $scope.selectedEditor = branch.label;
+        $scope.selectedSnippetid = branch.data.snippetid;
       } else {
-        $scope.selectedEditor = '';
+        $scope.selectedSnippetid = '';
       }
     };
     
