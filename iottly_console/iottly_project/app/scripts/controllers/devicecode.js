@@ -83,6 +83,15 @@ angular.module('consoleApp')
       lineWrapping : false,
       lineNumbers: true,
       mode: 'python',
+      extraKeys: {
+        Tab: function(cm) {
+          var spaces = Array(cm.getOption("indentUnit") + 1).join(" ");
+          cm.replaceSelection(spaces);
+        },
+        "Ctrl-S": function(instance) { 
+          $scope.saveCode(); 
+        }
+      }
     };
 
     var loadededitorcount = 0;
