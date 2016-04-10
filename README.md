@@ -80,4 +80,7 @@ control which board have been registerd to the project
 
 ### Messages
 
+### Device Code
+![Iottly Project Device Code Page](http://tomorrowdata.io/wp-content/uploads/2016/04/Iottly-Project-Device-Code-Page.png)
+
 ### Admin Console
