@@ -26,7 +26,7 @@ limitations under the License.
  * Controller of the consoleApp
  */
 angular.module('consoleApp')
-  .controller('DevicecodeCtrl', function ($scope, $rootScope, $timeout, $routeParams, projectService) {
+  .controller('DevicecodeCtrl', function ($scope, $rootScope, $timeout, $routeParams, $uibModal, projectService) {
     Utils.controllerhelpers.getProject($scope, $routeParams, projectService);
 
     var projectListener = $rootScope.$on('project', function (event, data) {
@@ -78,28 +78,6 @@ angular.module('consoleApp')
     };
 
     //BEGIN CODE MGM
-    // $scope.snippets = [];
-    // $scope.initSnippets = function(){
-    //   $scope.project.data.fwcode.snippets.forEach(function(snippet) {
-    //     var _snippet = {
-    //       data: snippet,
-    //       codecache: snippet.code,
-    //       saved: true
-    //     };
-
-    //     Object.defineProperty(_snippet, "code", {
-    //       get: function () { 
-    //         return _snippet.data.code;
-    //       },
-    //       set: function (value) {
-    //         _snippet.data.code = value;
-    //         _snippet.saved = (_snippet.data.code === _snippet.codecache);
-    //       }
-    //     });
-    //     $scope.snippets.push(_snippet);
-    //   });
-    // };
-
 
     $scope.editorOptions = {
       lineWrapping : false,
@@ -128,14 +106,12 @@ angular.module('consoleApp')
 
     };
 
-
     Object.defineProperty($scope, "editorsLoaded", {
       get: function () { 
         return tree_data_flattened.length > 0 && 
           tree_data_flattened.length === loadededitorcount;
       }
     });     
-
 
     Object.defineProperty($scope, "snippetsSaved", {
       get: function () { 
@@ -170,6 +146,29 @@ angular.module('consoleApp')
         console.error(error);
       });      
     };
+
+
+    $scope.flashCode = function (size) {
+
+      var modalInstance = $uibModal.open({
+        animation: true,
+        templateUrl: 'views/flashboardmodal.html',
+        controller: 'FlashboardmodalCtrl',
+        size: 'lg',
+        resolve: {
+          project: function() {
+            return $scope.project;
+          }
+        }
+      });
+
+      modalInstance.result.then(function (data) {
+        console.log(data);
+      }, function () {
+        console.log('Modal dismissed at: ' + new Date());
+      });
+    };
+
 
     //END CODE MGM
 

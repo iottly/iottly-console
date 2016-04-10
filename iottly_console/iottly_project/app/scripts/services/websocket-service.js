@@ -111,6 +111,9 @@ angular.module('consoleApp')
             else if (e.devices) {
               $rootScope.$emit('devices', e.devices); 
             }
+            else if (e.interface) {
+              $rootScope.$emit('interface', e.interface);  
+            }
           }
         });
       }

@@ -208,25 +208,38 @@ function http_callback($http, $q, API_URL) {
         return deferred.promise;        
     };
 
+    var _flashfw = function  (id, deviceid) {
+        console.log('flash fw');
+        var deferred = $q.defer();
+        var wsUrl = wsBasePath + 'project' + '/' + id + '/device'  + '/' + deviceid + '/flashfw';
+        $http.post(wsUrl).success(function (data) {
+          deferred.resolve(data);
+        }).error(function (error) {
+          deferred.reject(error);
+        });
+
+        return deferred.promise;        
+    };
 
     return {    
-        "createProject" : _createProject,
-        "updateProject" : _updateProject,
-        "deleteProject" : _deleteProject,
-        "listProjects" : _listProjects,        
-        "getProject" : _getProject,        
-        "deleteBoard" : _deleteBoard,
-        "pollPresenceForBoard": _pollPresenceForBoard,
-        "getMessages": _getMessages,
-        "createMessage" : _createMessage,
-        "deleteMessage" : _deleteMessage,
-        "updateMessage" : _updateMessage,
-        "sendCommand" : _sendCommand,        
-        "list": _list,
-        "get": _get,
-        "post": _post,
-        "create": _update,
-        "update":  _update,
-        "remove": _delete
+        "createProject"         : _createProject,
+        "updateProject"         : _updateProject,
+        "deleteProject"         : _deleteProject,
+        "listProjects"          : _listProjects,        
+        "getProject"            : _getProject,        
+        "deleteBoard"           : _deleteBoard,
+        "pollPresenceForBoard"  : _pollPresenceForBoard,
+        "getMessages"           : _getMessages,
+        "createMessage"         : _createMessage,
+        "deleteMessage"         : _deleteMessage,
+        "updateMessage"         : _updateMessage,
+        "sendCommand"           : _sendCommand,   
+        "flashfw"               : _flashfw,
+        "list"                  : _list,
+        "get"                   : _get,
+        "post"                  : _post,
+        "create"                : _update,
+        "update"                :  _update,
+        "remove"                : _delete
     };
 }
