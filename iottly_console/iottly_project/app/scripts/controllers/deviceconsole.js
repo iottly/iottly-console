@@ -126,6 +126,11 @@ angular.module('consoleApp')
       return messagetoJSON(message);
     };    
 
+    $scope.scrollTop = function() {
+      var msgpanel = angular.element('#messages-panel > div.panel-body > div');
+      msgpanel.scrollTop(msgpanel[0].scrollHeight);
+    };
+
     var myListener = $rootScope.$on('events', function (event, data) {
       console.log('events');
       data.msgs.forEach(function(item){
@@ -134,9 +139,7 @@ angular.module('consoleApp')
         }
         $scope.$apply();
 
-        // #messages-panel > div.panel-body > div
-        var msgpanel = $('#messages-panel > div.panel-body > div');
-        msgpanel.scrollTop(msgpanel[0].scrollHeight);
+        $scope.scrollTop();
       });      
     });
     $scope.$on('$destroy', myListener);
@@ -179,6 +182,7 @@ angular.module('consoleApp')
         data.messages.forEach(function(item){
           $scope.appendMessage(item);   
         });
+        $scope.scrollTop();
       }, function (error){
         console.log(error);
       });
