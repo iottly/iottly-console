@@ -133,6 +133,10 @@ angular.module('consoleApp')
           $scope.appendMessage(item);
         }
         $scope.$apply();
+
+        // #messages-panel > div.panel-body > div
+        var msgpanel = $('#messages-panel > div.panel-body > div');
+        msgpanel.scrollTop(msgpanel[0].scrollHeight);
       });      
     });
     $scope.$on('$destroy', myListener);
