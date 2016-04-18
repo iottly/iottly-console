@@ -28,20 +28,8 @@ limitations under the License.
 angular.module('iottlyMainApp')
   .controller('MainCtrl', function ($scope, $window, $uibModal, $log, httpRequestService) {
 
-    httpRequestService.listProjects().then(function(data){
-        $scope.projects = data;
-      }, function (error) {
-        console.error(error);
-      }
-    );
-
-
-    $scope.setSelected = function(projectid){
-        $scope.idSelectedProject = projectid;
-    };
-
     $scope.openproject = function(projectid){
-        $window.open(window.location.protocol + '//' + window.location.host + '/' + 'project' + '/#/' + projectid.$oid, '_blank');
+        $window.open(window.location.protocol + '//' + window.location.host + '/' + 'project' + '/#/' + projectid.$oid, '_self');
     };
 
     $scope.mongoIdtoLocalISOString = mongoIdtoLocalISOString;
@@ -61,29 +49,10 @@ angular.module('iottlyMainApp')
       });
 
       modalInstance.result.then(function (newproject) {
-        $scope.projects.push(newproject);
-        $scope.setSelected(newproject._id);
+        $scope.openproject(newproject._id);
       }, function () {
         $log.info('Modal dismissed at: ' + new Date());
       });
     };
-
-
-    $scope.menuOptions = [
-        ['Open ...', function ($itemScope) {
-          console.log($itemScope.project);
-          $scope.openproject($itemScope.project._id)
-        }],
-        null, // Dividier
-        ['Remove', function ($itemScope) {
-          console.log($itemScope.project);
-          httpRequestService.deleteProject($itemScope.project._id.$oid).then(function (data){
-            $scope.projects.splice($scope.projects.indexOf($itemScope.project), 1);
-          }, function (error){
-            console.error(error);
-          });
-        }]
-    ];    
-
 
   });

@@ -17,29 +17,34 @@ limitations under the License.
 -->
 <div class="jumbotron">
 
+  <div class="well well-lg">
+    <div class="span7 text-center">
+      
+        <button type="submit" class="btn btn-primary btn-lg" ng-click="newproject('lg')"><h4>Create your IoT Project</h4></button>  
+      
+    </div>
+  </div>
 
-  <button type="submit" class="btn btn-primary" ng-click="newproject()"><i class="glyphicon glyphicon-plus"></i> New Project</button>  
-  <table class="table table-condensed noselect">
-    <thead>
-      <tr>
-        <th>Project Name</th>
-        <th>Board Type</th>
-        <th>Firmware Language</th>
-        <th>Registered Boards</th>
-        <th>Created</th> 
-      </tr>
-    </thead>
-    <tbody>
-      <tr ng-repeat="project in projects | orderBy : 'name'" context-menu="menuOptions" ng-click="setSelected(project._id)" ng-right-click="setSelected(project._id)" ng-dblclick="openproject(project._id)" ng-class="{selected: project._id.$oid === idSelectedProject.$oid}">
-        <td><img alt="Iottly Project" src="/static/img/logo-iottly-sq.png" style="width: 20px;"><span style="white-space:pre;">   {{ project.name }}</span></td>
-        <td>{{ project.board }}</td>
-        <td>{{ project.fwlanguage }}</td>
-        <td><span class="badge">{{ project.boards.length }}</span></td>
-        <td>{{ project._id && mongoIdtoLocalISOString(project._id) | date : 'medium' }}</td>
-      </tr>
-      <div ng-bind="selected"></div>
-    </tbody>
-  </table>
-
+  <div class="well well-lg">
+    <h3>This demo is a fully functional working version of Iottly. It exposes all of the Iottly features to help you <strong>create IoT projects quickly and easily.</strong></h3>
+    <h3>Please feel free to try out any of the Iottly functionalities with your <strong>real devices</strong>.</h3>
+  </div>
+  <div class="well well-lg">
+    <h3>Your feedback is important to us. Please drop us a line <a href="http://www.iottly.org" target="_blank">here</a> or open an issue on <a href="https://github.com/iottly" target="_blank"><i class="fa fa-github"></i> Github</a>.</h3>
+  </div> 
+  <div class="well well-lg">
+    <h3 style="color:red;">DISCLAIMER:</h3>
+    <h3>Keep in mind that this demo ... is a demo, so don't rely on it for any purpose other than trying out Iottly functionalities.</h3>
+    <h4>
+      Specifically:
+      <ul>
+        <li>we make no guarantees on availability</li>
+        <li>projects may be removed any time depending on available space</li>
+        <li>device communication may be interrupted if they generate too much traffic</li>
+        <li>in this demo, the communication with devices is not encrypted, so don't send sensitive data in your messages</li>
+      </ul>
+    </h4>
+    <h3>At last: we provide this demo on an "AS IS" BASIS, WITHOUT ANY WARRANTIES. Use it at your own risk.</h3>    
+  </div>
 </div>
 

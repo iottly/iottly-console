@@ -17,19 +17,35 @@ limitations under the License.
 -->
 <div class="jumbotron">
   <h4>Connect your <mark>{{ project.data.board }}s</mark> to the project</h4>
-  <div class="well well-lg" ng-show="validateProject()">
-    Follow these steps for each device:
-    <ul>
-      <li>power up your {{ project.data.board }}</li>
-      <li>connect it to your local network (LAN or WiFI)</li>
-      <li>ssh (or putty) into the device (this will be the last and only time)</li>
-      <li>
-        copy this command, paste it into ssh (or putty) console and hit return: <br> 
-        <button class="btn btn-default" ngclipboard data-clipboard-target="#tocopy"><i class="glyphicon glyphicon-copy"></i>
-        </button>
-        <code id="tocopy">{{ project.data.runinstallercommand }}</code>
-      </li>
-    </ul>
+  <div ng-show="validateProject()">
+    <div class="well well-lg" ng-show="project.data.board === 'Raspberry Pi'">
+      Follow these steps for each device:
+      <ul>
+        <li><a href="https://github.com/iottly/iottly-device-agent-py/blob/master/raspberry-pi-instructions.md" target="_blank">Setup the Raspbian image on the board</a></li>
+        <li>power up your {{ project.data.board }}</li>
+        <li>connect it to your local network (LAN or WiFI)</li>
+        <li>ssh (or putty) into the device (this will be the last and only time)</li>
+        <li>
+          copy this command, paste it into ssh (or putty) console and hit return: <br> 
+          <button class="btn btn-default" ngclipboard data-clipboard-target="#tocopy"><i class="glyphicon glyphicon-copy"></i>
+          </button>
+          <code id="tocopy">{{ project.data.runinstallercommand }}</code>
+        </li>
+      </ul>
+    </div>
+    <div class="well well-lg" ng-show="project.data.board === 'Dev Docker Device'">
+      Follow these steps to setup and start virtual devices on your laptop:
+      <ul>
+        <li><a href="https://github.com/iottly/iottly-device-agent-py/blob/master/dev-docker-device-instructions.md" target="_blank">Setup docker and Iottly virtual devices</a></li>
+        <li>
+          copy this command, paste it into ssh (or putty) console and hit return: <br> 
+          <button class="btn btn-default" ngclipboard data-clipboard-target="#tocopy"><i class="glyphicon glyphicon-copy"></i>
+          </button>
+          <code id="tocopy">{{ project.data.runinstallercommand }}</code>
+        </li>
+      </ul>
+    </div>
+
   </div>
 
   <div class="well well-lg" name="createboard" ng-form>

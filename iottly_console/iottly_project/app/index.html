@@ -63,7 +63,9 @@ limitations under the License.
             <span class="navbar-brand">
               <img alt="Brand" src="/static/img/logo-iottly.png" style="width: 145px;margin-top: -10px;">
             </span>    
+            <p class="navbar-text hidden-xs"><span class="glyphicon glyphicon-arrow-up"></span> Save this link for later access to this project.</p>
             <p class="navbar-text hidden-xs iottly-project-title"><strong>Project: {{ project.data.name }}</strong></p><p class="navbar-text hidden-xs hidden-sm iottly-project-title"><span class="label label-primary">{{ project.data.board }}</span></p><p class="navbar-text hidden-xs hidden-sm iottly-project-title"><span class="label label-default">{{ project.data.fwlanguage }}</span></p>
+            <p class="navbar-text hidden-xs iottly-project-title"><strong>You: {{ project.data.user.email }}</strong></p>            
           </div>
           <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
@@ -73,16 +75,6 @@ limitations under the License.
               <li class="" ng-class="{ active:panel.isSet('deviceconsole') }"><a href="" ng-click="panel.setTab('deviceconsole')">Admin Console</a></li>
 
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-              <li class="dropdown">
-                <a class="dropdown-toggle" data-toggle="dropdown" href="">PUBLIC GUEST
-                <span class="caret"></span></a>
-                <ul class="dropdown-menu">
-                  <li><a href="#">Settings</a></li>
-                  <li><a href="#">Logout</a></li>
-                </ul>
-              </li>              
-            </ul>          
           </div>
         </div>
       </nav>    

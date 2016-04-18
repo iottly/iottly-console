@@ -27,8 +27,16 @@ limitations under the License.
       <select ng-model="project.board" class="form-control" ng-options="board for board in ['Dev Docker Device','Arduino','Raspberry Pi','UDOO']"  title="Board" required> 
         <option value="">Select the board for your project</option>
       </select>
-      <div ng-hide="checkBoard()" class="alert alert-danger">'OK, this is a demo. You can just choose Raspberry PI!'</div>
+      <div ng-hide="checkBoard()" class="alert alert-danger">OK, this is a demo. You can just choose Raspberry PI or Dev Docker Device!</div>
+      <div class="well well-lg">
+        <p>Choose <strong>Raspberry Pi</strong> if you want to connect your Raspberry Pi to Iottly.</p>
+        <p>Otherwise, if you don't have one, choose <strong>Dev Docker Device</strong> to try out Iottly connecting to a virtual device running on your laptop.</p>
+        <p>Further instructions on the next page.</p>
+      <div>
     </fieldset>
+    <fieldset class="form-group">
+      <input ng-model="project.user.email" type="email" class="form-control" placeholder="Your email ..." title="Email" required="" pattern="(^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$)"></input>
+    </fieldset>    
   </form>            
 </div>
 <div class="modal-footer">

@@ -48,7 +48,7 @@ angular.module('iottlyMainApp').controller('NewprojectmodalCtrl', function ($sco
   $scope.ok = function () {
     $scope.project.fwlanguage = $scope.fwlanguage();
     $scope.project.messages = [];
-    $scope.project.user = {'email': 'test@test.test'};
+    //$scope.project.user = {'email': 'test@test.test'};
     httpRequestService.createProject($scope.project).then(function(data){
       $uibModalInstance.close(data);
     }, function (error) {
