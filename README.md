@@ -30,8 +30,16 @@ Please refer to [Iottly docker](https://github.com/iottly/iottly-docker) for pre
 
 # bower install and Yeoman app Generator 
 
-A specific dev [container](https://github.com/iottly/iottly-console/blob/mvcangular/Dockerfile) is provided to manage all bower, npm, grunt and yeoman stuff:
-- execute [`./start_nodedev.sh`](https://github.com/iottly/iottly-console/blob/mvcangular/start_nodedev.sh) to build and start the interactive container. The guest working dir is a Docker mount of the host dir `iottly-console/iottly_console`
+A specific dev [container](https://github.com/iottly/iottly-console/blob/mvcangular/Dockerfile) is provided to manage all bower, npm, grunt and yeoman stuff.
+
+## After a fresh clone:
+You'll need to generate all the bower_components resources for both apps:
+- [`./install_nodedev`](https://github.com/iottly/iottly-console/blob/master/install_nodedev.sh)
+- will start a temporary container with working dir mapped onto a Docker mount of the host dir `iottly-console/iottly_console` 
+- will install all the required packages as for bower.json config files in the host dir `iottly-console/iottly_console`
+
+## During development:
+- execute [`./start_nodedev.sh`](https://github.com/iottly/iottly-console/blob/master/start_nodedev.sh) to build and start an interactive container. The guest working dir is a Docker mount of the host dir `iottly-console/iottly_console`
 - so from within the container `cd iottly_main` or `cd iottly_project` depending on which app you want to work on;
 - after a fresh clone you'll need to generate all the bower_components resources for both apps:
   - `cd iottly_main` and then `bower install`

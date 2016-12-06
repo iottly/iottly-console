@@ -14,7 +14,7 @@
 # limitations under the License.
 # 
 
-FROM node:latest
+FROM node:7.2
 MAINTAINER iottly
 
 RUN mkdir /iottly_console
@@ -25,9 +25,6 @@ WORKDIR /iottly_console
 RUN npm install -g grunt-cli bower yo generator-karma generator-angular --verbose
 
 
-RUN adduser --disabled-password --gecos "" yeoman && \
-  echo "yeoman ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
-
-USER yeoman
+USER node
 
 CMD /bin/bash
