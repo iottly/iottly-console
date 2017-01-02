@@ -31,6 +31,28 @@ module.exports = function (grunt) {
     // Project settings
     yeoman: appConfig,
 
+
+    // replace
+    replace: {
+      dist: {
+        options: {
+          patterns: [
+            {
+              match: 'develop',
+              replacement: 'dist'
+            },
+            {
+              match: 'localhost',
+              replacement: 'localserver'
+            }
+          ]
+        },
+        files: [
+          {expand: true, flatten: true, src: ['<%= yeoman.dist %>/index.html'], dest: '<%= yeoman.dist %>'},
+        ]
+      }
+    },    
+
     // Watches files for changes and runs tasks based on the changed files
     watch: {
       bower: {
@@ -471,7 +493,8 @@ module.exports = function (grunt) {
     'uglify',
     'filerev',
     'usemin',
-    'htmlmin'
+    'htmlmin',
+    'replace'
   ]);
 
   grunt.registerTask('default', [
