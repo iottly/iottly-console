@@ -29,6 +29,12 @@ limitations under the License.
       </select>
       <div ng-hide="checkBoard()" class="alert alert-danger">'OK, this is a demo. You can just choose Raspberry PI!'</div>
     </fieldset>
+    <fieldset class="form-group">
+      <select ng-model="project.iotprotocol" class="form-control" ng-options="iotprotocol for iotprotocol in ['XMPP', 'MQTT']"  title="IoT Protocol" required> 
+        <option value="">Select the communication protocol for your project</option>
+      </select>
+      <div ng-hide="checkBoard()" class="alert alert-danger">'OK, this is a demo. You can just choose Raspberry PI!'</div>
+    </fieldset>
   </form>            
 </div>
 <div class="modal-footer">
