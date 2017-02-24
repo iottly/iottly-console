@@ -200,8 +200,9 @@ angular.module('consoleApp')
     */
 
     $scope.pollPresenceForBoard = function() {
-      httpRequestService.pollPresenceForBoard($scope._selectedboard.ID).then(function (data){
-          $scope._selectedboard.present = data.present;
+      httpRequestService.pollPresenceForBoard($scope.project.data._id.$oid, $scope._selectedboard.ID).then(function (data){
+          console.log(data);
+          $scope._selectedboard.present = data.data.connected;
       }, function (error){
         console.log(error);
       });

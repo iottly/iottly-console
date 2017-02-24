@@ -140,9 +140,19 @@ function http_callback($http, $q, API_URL) {
         return deferred.promise;
     };
 
-    var _pollPresenceForBoard = function (boardid) {
+    var _pollPresenceForBoard = function (projectid, boardid) {
+
+
         console.log('poll presence');
-        return _get('presence', boardid);
+        var deferred = $q.defer();
+        var wsUrl = 'project';
+        return $http.get(wsBasePath + wsUrl + '/' + projectid + '/device/' + boardid + '/status').success(function (data) {
+          deferred.resolve(data);
+        }).error(function (error) {
+          deferred.reject(error);
+        });
+
+        return deferred.promise;
     };
 
     var _getMessages = function (boardid, numMessages, queryJson) {
