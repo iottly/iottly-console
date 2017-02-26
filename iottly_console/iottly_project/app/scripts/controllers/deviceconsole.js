@@ -134,7 +134,7 @@ angular.module('consoleApp')
     var myListener = $rootScope.$on('events', function (event, data) {
       console.log('events');
       data.msgs.forEach(function(item){
-        if ($scope.boardisSelected() && item.from.indexOf($scope.selectedboard.jid) > -1) {
+        if ($scope.boardisSelected() && item.from.indexOf($scope.selectedboard.ID) > -1) {
           $scope.appendMessage(item);
         }
         $scope.$apply();
