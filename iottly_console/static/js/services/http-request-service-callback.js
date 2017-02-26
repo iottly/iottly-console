@@ -155,15 +155,15 @@ function http_callback($http, $q, API_URL) {
         return deferred.promise;
     };
 
-    var _getMessages = function (boardid, numMessages, queryJson) {
+    var _getMessages = function (projectid, boardid, numMessages, queryJson) {
         console.log('get messages');
         var data = {
             numMessages: numMessages,
             queryJson: queryJson
         };
         console.log(data);
-
-        return _get('msg', boardid, data);
+        var wsUrl = 'project' + '/' + projectid + '/' + 'device'
+        return _get(wsUrl, boardid + '/' + 'msgs', data);
     };
 
     var _createMessage = function  (id, message) {

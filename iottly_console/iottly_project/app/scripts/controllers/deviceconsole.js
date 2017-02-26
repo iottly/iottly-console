@@ -176,7 +176,7 @@ angular.module('consoleApp')
 
 
     $scope.loadLastMessages = function () {
-      httpRequestService.getMessages($scope._selectedboard.ID, 
+      httpRequestService.getMessages($scope.project.data._id.$oid, $scope._selectedboard.ID, 
         $scope.filter.numMessages, $scope.filter.queryJson).then(function (data){
         $scope.emptyEvents();
         data.messages.forEach(function(item){
