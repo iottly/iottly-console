@@ -47,7 +47,7 @@ angular.module('consoleApp')
   
   var myListener = $rootScope.$on('interface', function (event, data) {
     if (data.type === 'progress') {
-      if (data.to === $scope.selectedboard.jid) {
+      if (data.to === $scope.selectedboard.ID) {
         $scope.dynamic = Math.floor(data.chunks_sent / data.total_chunks * 100);
         if (data.chunks_sent == 0) {
           $scope.progresstext = "Flash starting"  
