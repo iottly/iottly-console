@@ -106,7 +106,7 @@ angular
     var projectListener = $rootScope.$on('project', function (event, data) {
       $scope.project.data = data;
       //init websocket only if project is ok
-      websocketService.init(); 
+      websocketService.init($scope.project.data._id.$oid); 
     });
     $scope.$on('$destroy', projectListener);
 

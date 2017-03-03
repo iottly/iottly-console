@@ -36,11 +36,12 @@ angular.module('consoleApp')
       var eventListeners = {}
       var conn = null;
 
-      function init() {
+      function init(projectid) {
         disconnect();
         conn = new SockJS(wsBasePath + 'messageChannel');
 
         conn.onopen = function() {
+          conn.send(JSON.stringify({'projectid': projectid}));
           fireEvent('onopen');
         };
 
@@ -83,7 +84,7 @@ angular.module('consoleApp')
       var self = {};
       var reconnectAttempts = 0;
 
-      self.init = function() {
+      self.init = function(projectid) {
         bigboss.eventManager.addEventListener('onopen', {
           handleEvent: function() {
             console.log("Connected");
@@ -98,7 +99,7 @@ angular.module('consoleApp')
             console.log("Reconnect in " + delay + "ms");
             setTimeout(function() {
               console.log("Attempting reconnect...");
-              bigboss.eventManager.init();
+              bigboss.eventManager.init(projectid);
             }, delay);
           }
         });
@@ -121,9 +122,9 @@ angular.module('consoleApp')
       return self;
     })(window.jQuery, bigboss.eventDispatcher || {})
 
-    var _init = function(){
-      bigboss.eventManager.init();
-      bigboss.eventDispatcher.init();        
+    var _init = function(projectid){
+      bigboss.eventManager.init(projectid);
+      bigboss.eventDispatcher.init(projectid);        
     };
 
     return {
